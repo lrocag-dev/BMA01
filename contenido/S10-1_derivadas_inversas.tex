@@ -1,0 +1,279 @@
+\documentclass[10pt,aspectratio=169]{beamer}
+\usepackage{bma01}
+
+\title[Derivadas de funciones inversas]{Derivadas de las funciones inversas}
+\subtitle{Inversas de las funciones trigonométricas e hiperbólicas\\[2pt]\small Semana 10 -- Sesión 1}
+
+\begin{document}
+
+\begin{frame}
+  \titlepage
+\end{frame}
+
+\begin{frame}{Objetivos de la sesión}
+  \begin{enumerate}
+    \item Enunciar y aplicar el \resaltar{teorema de la derivada de la función inversa}.
+    \item Definir $\arcsen$, $\arccos$, $\arctan$ y $\operatorname{arcsec}$ y obtener sus derivadas.
+    \item Derivar las funciones hiperbólicas y sus inversas.
+    \item Combinar estas derivadas con la regla de la cadena.
+  \end{enumerate}
+  \begin{block}{Plan (2 horas)}
+    \begin{tabular}{ll}
+      0:00 -- 0:30 & Derivada de la inversa: teorema e interpretación geométrica\\
+      0:30 -- 1:15 & Funciones trigonométricas inversas y sus derivadas\\
+      1:15 -- 1:45 & Hiperbólicas y sus inversas\\
+      1:45 -- 2:00 & Ejercicios y resumen
+    \end{tabular}
+  \end{block}
+\end{frame}
+
+\section{Derivada de la función inversa}
+
+\begin{frame}{Teorema de la función inversa}
+  \begin{columns}
+    \begin{column}{0.55\textwidth}
+      \begin{teorema}
+        Sea $f$ continua y estrictamente monótona en un intervalo, derivable en $a$ con $f'(a)\neq0$, y $b=f(a)$.
+        Entonces $f^{-1}$ es derivable en $b$ y
+        \[ \left(f^{-1}\right)'(b)=\frac{1}{f'(a)}=\frac{1}{f'\big(f^{-1}(b)\big)}. \]
+      \end{teorema}
+      \textbf{Deducción (con la cadena).} $f\big(f^{-1}(x)\big)=x$; derivando: $f'\big(f^{-1}(x)\big)\cdot(f^{-1})'(x)=1$.
+      \smallskip
+
+      En notación de Leibniz: \ $\dfrac{dx}{dy}=\dfrac{1}{dy/dx}$.
+    \end{column}
+    \begin{column}{0.45\textwidth}
+      \centering
+      \begin{tikzpicture}
+        \begin{axis}[bma, xmin=-0.5, xmax=5, ymin=-0.5, ymax=5, axis equal image, width=6.5cm, height=6.5cm, xtick={1,4}, ytick={1,4}, samples=100]
+          \addplot[curva, domain=0:2.2] {x^2};
+          \addplot[curva2, domain=0:4.9] {sqrt(x)};
+          \addplot[gray, dashed, domain=-0.5:5] {x};
+          \addplot[uniAzul, thin, domain=1.2:2.7] {4+4*(x-2)};
+          \addplot[uniGranate, thin, domain=2.5:5] {2+(x-4)/4};
+          \addplot[only marks, mark=*, uniAzul] coordinates {(2,4)};
+          \addplot[only marks, mark=*, uniGranate] coordinates {(4,2)};
+        \end{axis}
+      \end{tikzpicture}
+
+      \small Pendientes recíprocas en puntos simétricos: $4$ y $\frac14$.
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\begin{frame}{Ejemplos}
+  \begin{ejemplo}[1: sin despejar la inversa]
+    $f(x)=x^3+x+1$ es estrictamente creciente ($f'=3x^2+1>0$). Halle $\left(f^{-1}\right)'(3)$.\\
+    $f(1)=3$, así $f^{-1}(3)=1$ y \ $\left(f^{-1}\right)'(3)=\dfrac{1}{f'(1)}=\dfrac14$.
+  \end{ejemplo}
+  \begin{ejemplo}[2: logaritmo]
+    $y=\ln x\iff x=e^y$. \ $\dfrac{dy}{dx}=\dfrac{1}{dx/dy}=\dfrac1{e^y}=\dfrac1x$.
+  \end{ejemplo}
+  \begin{ejemplo}[3: raíz $n$-ésima]
+    $y=\sqrt[n]x\iff x=y^n$: \ $\dfrac{dy}{dx}=\dfrac1{ny^{n-1}}=\dfrac{1}{n\,x^{(n-1)/n}}=\dfrac1nx^{\frac1n-1}$. \checkmark
+  \end{ejemplo}
+  \begin{observacion}
+    Si $f'(a)=0$, la inversa tiene tangente \textbf{vertical} en $b$: $x^3$ tiene tangente horizontal en $0$ y $\sqrt[3]x$ vertical.
+  \end{observacion}
+\end{frame}
+
+\section{Trigonométricas inversas}
+
+\begin{frame}{Arcoseno}
+  \begin{columns}
+    \begin{column}{0.55\textwidth}
+      $\sen$ es biyectiva de $\left[-\frac\pi2,\frac\pi2\right]$ en $[-1,1]$.
+      \begin{definicion}
+        $y=\arcsen x\iff\sen y=x$, \ $y\in\left[-\frac\pi2,\frac\pi2\right]$.
+      \end{definicion}
+      \begin{teorema}
+        $\dfrac{d}{dx}\arcsen x=\dfrac{1}{\sqrt{1-x^2}}$, \ $|x|<1$.
+      \end{teorema}
+      \textbf{Prueba.} $\sen y=x\Rightarrow\cos y\,y'=1\Rightarrow y'=\dfrac{1}{\cos y}$. Como $y\in\left(-\frac\pi2,\frac\pi2\right)$, $\cos y>0$ y
+      $\cos y=\sqrt{1-\sen^2y}=\sqrt{1-x^2}$. \ $\blacksquare$
+      \begin{ejemplo}
+        $\arcsen\frac12=\frac\pi6$, \ $\arcsen(-1)=-\frac\pi2$; \ $\sen(\arcsen x)=x$, pero $\arcsen(\sen\pi)=0\neq\pi$.
+      \end{ejemplo}
+    \end{column}
+    \begin{column}{0.45\textwidth}
+      \centering
+      \begin{tikzpicture}
+        \begin{axis}[bma, xmin=-2, xmax=2, ymin=-2, ymax=2, axis equal image, width=6.4cm, height=6.4cm, xtick={-1,1}, ytick={-1.5708,1.5708}, yticklabels={$-\frac\pi2$,$\frac\pi2$}, samples=200]
+          \addplot[curva, domain=-1.5708:1.5708] {sin(deg(x))};
+          \addplot[curva2, domain=-1:1] {rad(asin(x))};
+          \addplot[gray, dashed, domain=-2:2] {x};
+          \node[uniGranate] at (axis cs:0.4,1.6) {\scriptsize $\arcsen$};
+          \node[uniAzul] at (axis cs:1.6,0.7) {\scriptsize $\sen$};
+        \end{axis}
+      \end{tikzpicture}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\begin{frame}{Arcocoseno y arcotangente}
+  \begin{columns}
+    \begin{column}{0.5\textwidth}
+      \begin{definicion}
+        \begin{itemize}
+          \item $y=\arccos x\iff\cos y=x$, \ $y\in[0,\pi]$.
+          \item $y=\arctan x\iff\tan y=x$, \ $y\in\left(-\frac\pi2,\frac\pi2\right)$.
+        \end{itemize}
+      \end{definicion}
+      \begin{teorema}
+        \[ (\arccos x)'=-\frac{1}{\sqrt{1-x^2}},\qquad (\arctan x)'=\frac{1}{1+x^2}. \]
+      \end{teorema}
+      \textbf{Prueba} ($\arctan$). $\tan y=x\Rightarrow\sec^2y\,y'=1\Rightarrow y'=\dfrac1{\sec^2y}=\dfrac1{1+\tan^2y}=\dfrac1{1+x^2}$.
+      \smallskip
+
+      \small Consecuencia: $\arcsen x+\arccos x=\frac\pi2$ (derivada nula).
+    \end{column}
+    \begin{column}{0.5\textwidth}
+      \centering
+      \begin{tikzpicture}
+        \begin{axis}[bma, xmin=-5, xmax=5, ymin=-2, ymax=3.6, width=6.6cm, height=5.6cm, xtick={-1,1}, ytick={-1.5708,1.5708,3.1416}, yticklabels={$-\frac\pi2$,$\frac\pi2$,$\pi$}, samples=200]
+          \addplot[uniVerde, very thick, domain=-1:1] {rad(acos(x))};
+          \addplot[curva2, domain=-5:5] {rad(atan(x))};
+          \draw[dashed, gray] (axis cs:-5,1.5708) -- (axis cs:5,1.5708);
+          \draw[dashed, gray] (axis cs:-5,-1.5708) -- (axis cs:5,-1.5708);
+          \node[uniVerde] at (axis cs:-1.8,2.9) {\scriptsize $\arccos$};
+          \node[uniGranate] at (axis cs:3.5,1.1) {\scriptsize $\arctan$};
+        \end{axis}
+      \end{tikzpicture}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\begin{frame}{Tabla y ejemplos con la regla de la cadena}
+  \begin{columns}
+    \begin{column}{0.45\textwidth}
+      \renewcommand{\arraystretch}{2.4}
+      \begin{tabular}{|l|l|}
+        \hline
+        $f(x)$ & $f'(x)$\\ \hline
+        $\arcsen x$ & $\dfrac{1}{\sqrt{1-x^2}}$\\
+        $\arccos x$ & $-\dfrac{1}{\sqrt{1-x^2}}$\\
+        $\arctan x$ & $\dfrac{1}{1+x^2}$\\
+        $\operatorname{arcctg}x$ & $-\dfrac{1}{1+x^2}$\\
+        $\operatorname{arcsec}x$ & $\dfrac{1}{|x|\sqrt{x^2-1}}$\\ \hline
+      \end{tabular}
+    \end{column}
+    \begin{column}{0.55\textwidth}
+      \begin{ejemplo}[4]
+        $\left[\arctan(x^2)\right]'=\dfrac{2x}{1+x^4}$.
+      \end{ejemplo}
+      \begin{ejemplo}[5]
+        $\left[\arcsen\left(\dfrac x3\right)\right]'=\dfrac{1/3}{\sqrt{1-\frac{x^2}9}}=\dfrac{1}{\sqrt{9-x^2}}$.
+      \end{ejemplo}
+      \begin{ejemplo}[6]
+        $\left[x\arctan x-\tfrac12\ln(1+x^2)\right]'=\arctan x+\dfrac{x}{1+x^2}-\dfrac{x}{1+x^2}=\arctan x$.
+      \end{ejemplo}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\begin{frame}{Aplicación: ángulo de visión}
+  \begin{columns}
+    \begin{column}{0.55\textwidth}
+      \begin{ejemplo}[7]
+        Un cuadro de $2$ m de alto cuelga con su borde inferior $1$ m sobre los ojos de un observador. ¿A qué distancia $x$ de la pared debe
+        pararse para ver el cuadro con el mayor ángulo $\theta$?
+        \[ \theta(x)=\arctan\frac3x-\arctan\frac1x,\quad x>0. \]
+        \[ \theta'(x)=-\frac{3}{x^2+9}+\frac{1}{x^2+1}=0\iff x^2=3. \]
+        A $x=\sqrt3\approx1.73$ m: \ $\theta=\frac\pi3-\frac\pi6=\frac\pi6=30^\circ$.
+      \end{ejemplo}
+    \end{column}
+    \begin{column}{0.45\textwidth}
+      \centering
+      \begin{tikzpicture}[scale=0.9]
+        \fill[uniAzul!20] (3.5,1) rectangle (3.7,3);
+        \draw[thick] (3.6,-0.3) -- (3.6,3.5);
+        \fill (0,0) circle (2pt) node[left] {\scriptsize ojo};
+        \draw[uniGranate] (0,0) -- (3.6,1); \draw[uniGranate] (0,0) -- (3.6,3);
+        \draw[dashed] (0,0) -- (3.6,0);
+        \draw (1,0.28) arc (15.5:39.8:1.04); \node at (1.35,0.6) {\scriptsize $\theta$};
+        \draw[<->] (0,-0.3) -- (3.6,-0.3) node[midway, below] {\scriptsize $x$};
+        \node[right] at (3.7,2) {\scriptsize $2$};
+        \node[right] at (3.7,0.5) {\scriptsize $1$};
+      \end{tikzpicture}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\section{Hiperbólicas y sus inversas}
+
+\begin{frame}{Derivadas de las funciones hiperbólicas}
+  \begin{columns}
+    \begin{column}{0.5\textwidth}
+      \begin{teorema}
+        \renewcommand{\arraystretch}{1.4}
+        \begin{tabular}{l}
+          $(\senh x)'=\cosh x$\\
+          $(\cosh x)'=\senh x$\\
+          $(\tanh x)'=\sech^2x$\\
+          $(\coth x)'=-\csch^2x$\\
+          $(\sech x)'=-\sech x\tanh x$
+        \end{tabular}
+      \end{teorema}
+    \end{column}
+    \begin{column}{0.5\textwidth}
+      \textbf{Prueba.} $(\senh x)'=\left(\frac{e^x-e^{-x}}2\right)'=\frac{e^x+e^{-x}}2=\cosh x$.
+      \smallskip
+
+      $(\tanh x)'=\dfrac{\cosh^2x-\senh^2x}{\cosh^2x}=\dfrac{1}{\cosh^2x}$.
+      \begin{observacion}
+        Compare: $(\cos x)'=-\sen x$ pero $(\cosh x)'=+\senh x$.
+      \end{observacion}
+    \end{column}
+  \end{columns}
+  \begin{ejemplo}[8: catenaria]
+    La pendiente de $y=a\cosh\frac xa$ es $y'=\senh\frac xa$; \ $1+y'^2=\cosh^2\frac xa$ (útil para su longitud en Cálculo Integral).
+  \end{ejemplo}
+\end{frame}
+
+\begin{frame}{Derivadas de las hiperbólicas inversas}
+  \begin{teorema}
+    \[ (\arcsenh x)'=\frac{1}{\sqrt{x^2+1}},\qquad(\arccosh x)'=\frac{1}{\sqrt{x^2-1}}\ (x>1),\qquad(\arctanh x)'=\frac{1}{1-x^2}\ (|x|<1). \]
+  \end{teorema}
+  \textbf{Prueba 1} (función inversa). $y=\arcsenh x\iff\senh y=x$; \ $\cosh y\,y'=1$; \ $\cosh y=\sqrt{1+\senh^2y}=\sqrt{1+x^2}$.
+  \smallskip
+
+  \textbf{Prueba 2} (fórmula logarítmica). $\left[\ln\left(x+\sqrt{x^2+1}\right)\right]'=\dfrac{1+\frac{x}{\sqrt{x^2+1}}}{x+\sqrt{x^2+1}}=\dfrac{1}{\sqrt{x^2+1}}$.
+  \begin{ejemplo}[9]
+    $\left[\arctanh(\sen x)\right]'=\dfrac{\cos x}{1-\sen^2x}=\sec x$. \qquad $\left[\arcsenh(2x)\right]'=\dfrac{2}{\sqrt{4x^2+1}}$.
+  \end{ejemplo}
+  \begin{idea}
+    Estas derivadas son algebraicas: serán las primitivas clave de $\frac{1}{\sqrt{x^2\pm1}}$ y $\frac{1}{1-x^2}$ en Cálculo Integral.
+  \end{idea}
+\end{frame}
+
+\section{Ejercicios}
+
+\begin{frame}{Ejercicios propuestos}
+  \small
+  \begin{ejercicio}
+    \begin{enumerate}
+      \item Si $f(x)=x^5+2x^3+x-1$, halle $(f^{-1})'(3)$. Si $g(x)=2x+\cos x$, halle $(g^{-1})'(1)$.
+      \item Pruebe: $(\arccos x)'=-\frac{1}{\sqrt{1-x^2}}$ \ y \ $(\operatorname{arcsec}x)'=\frac{1}{|x|\sqrt{x^2-1}}$.
+      \item Derive: (a) $\arcsen\sqrt{x}$, \ (b) $\arctan\dfrac{1+x}{1-x}$ (¡simplifique!), \ (c) $x\arcsen x+\sqrt{1-x^2}$, \ (d) $e^{\arctan x}$,
+        \ (e) $\ln(\arccos x)$ (indique el dominio), \ (f) $\arctanh\left(\tanh\frac x2\right)$.
+      \item Halle la tangente a $y=\arctan x$ en $x=1$.
+      \item Pruebe que $\arctan x+\arctan\frac1x=\frac\pi2$ para $x>0$. ¿Qué pasa para $x<0$?
+      \item Un faro está a $3$ km de una costa recta y su haz gira a $4$ rev/min. ¿Con qué rapidez se mueve el punto de luz sobre la costa cuando
+        está a $5$ km del punto más cercano al faro? (Use $\theta=\arctan\frac x3$.)
+      \item Derive $\arccosh x$ usando su forma logarítmica.
+    \end{enumerate}
+  \end{ejercicio}
+\end{frame}
+
+\begin{frame}{Resumen}
+  \begin{itemize}
+    \item $\left(f^{-1}\right)'(b)=\dfrac{1}{f'(a)}$ con $b=f(a)$: pendientes recíprocas.
+    \item $(\arcsen x)'=\frac1{\sqrt{1-x^2}}$, \ $(\arccos x)'=-\frac1{\sqrt{1-x^2}}$, \ $(\arctan x)'=\frac1{1+x^2}$.
+    \item $(\senh)'=\cosh$, $(\cosh)'=\senh$, $(\tanh)'=\sech^2$.
+    \item $(\arcsenh x)'=\frac1{\sqrt{x^2+1}}$, \ $(\arccosh x)'=\frac1{\sqrt{x^2-1}}$, \ $(\arctanh x)'=\frac1{1-x^2}$.
+  \end{itemize}
+  \vspace{3mm}
+  \textbf{Próxima sesión:} tasa de cambio instantánea (razones relacionadas) y esbozo de gráficas.
+\end{frame}
+
+\end{document}

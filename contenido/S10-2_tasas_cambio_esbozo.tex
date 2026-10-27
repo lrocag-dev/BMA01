@@ -1,0 +1,277 @@
+\documentclass[10pt,aspectratio=169]{beamer}
+\usepackage{bma01}
+
+\title[Tasas de cambio y gráficas]{Tasa de cambio instantánea}
+\subtitle{Razones relacionadas. Esbozo de gráficas\\[2pt]\small Semana 10 -- Sesión 2}
+
+\begin{document}
+
+\begin{frame}
+  \titlepage
+\end{frame}
+
+\begin{frame}{Objetivos de la sesión}
+  \begin{enumerate}
+    \item Interpretar la derivada como \resaltar{tasa de cambio instantánea} en física, química y otras ciencias.
+    \item Resolver problemas de \resaltar{razones relacionadas} con la regla de la cadena.
+    \item \resaltar{Esbozar gráficas} usando dominio, simetrías, cortes, asíntotas, monotonía y extremos.
+  \end{enumerate}
+  \begin{block}{Plan (2 horas)}
+    \begin{tabular}{ll}
+      0:00 -- 0:20 & Tasas de cambio en las ciencias\\
+      0:20 -- 1:05 & Razones relacionadas: estrategia y ejemplos\\
+      1:05 -- 1:45 & Esbozo de gráficas: guía y ejemplos\\
+      1:45 -- 2:00 & Ejercicios y resumen
+    \end{tabular}
+  \end{block}
+\end{frame}
+
+\section{Tasas de cambio}
+
+\begin{frame}{La derivada como tasa de cambio}
+  Si $y=f(x)$: \ $\dfrac{\Delta y}{\Delta x}$ es la tasa de cambio \textbf{media}; \ $\dfrac{dy}{dx}$ la tasa \textbf{instantánea} (unidades de $y$ por unidad de $x$).
+  \renewcommand{\arraystretch}{1.4}
+  \begin{center}
+    \begin{tabular}{l|l|l}
+      \textbf{Área} & \textbf{Cantidad} & \textbf{Tasa de cambio}\\ \hline
+      Física & posición $s(t)$ & velocidad $v=s'(t)$, aceleración $a=v'(t)$\\
+      Física & carga $q(t)$ & corriente $i=q'(t)$\\
+      Física & masa de una varilla $m(x)$ & densidad lineal $\rho=m'(x)$\\
+      Química & concentración $[A](t)$ & velocidad de reacción $-\frac{d[A]}{dt}$\\
+      Termodinámica & volumen $V(P)$ & compresibilidad $-\frac1V\frac{dV}{dP}$\\
+      Biología & población $P(t)$ & tasa de crecimiento $P'(t)$\\
+      Economía & costo $C(q)$ & costo marginal $C'(q)$
+    \end{tabular}
+  \end{center}
+  \begin{ejemplo}[1]
+    Gas ideal a temperatura constante: $V=\frac{nRT}{P}$, \ $\frac{dV}{dP}=-\frac{nRT}{P^2}$. La compresibilidad es $-\frac1V\frac{dV}{dP}=\frac1P$.
+  \end{ejemplo}
+\end{frame}
+
+\begin{frame}{Ejemplo: movimiento rectilíneo}
+  \begin{columns}
+    \begin{column}{0.55\textwidth}
+      \begin{ejemplo}[2]
+        $s(t)=t^3-6t^2+9t$ (m), $t\ge0$.
+        \begin{itemize}
+          \item $v(t)=3t^2-12t+9=3(t-1)(t-3)$: se detiene en $t=1$ y $t=3$.
+          \item Avanza ($v>0$) en $[0,1)$ y $(3,\infty)$; retrocede en $(1,3)$.
+          \item $a(t)=6t-12$: frena/acelera según el signo de $v\cdot a$.
+          \item Distancia recorrida en $[0,5]$: $|s(1)-s(0)|+|s(3)-s(1)|+|s(5)-s(3)|=4+4+20=28$ m.
+        \end{itemize}
+      \end{ejemplo}
+    \end{column}
+    \begin{column}{0.45\textwidth}
+      \centering
+      \begin{tikzpicture}
+        \begin{axis}[bma, xlabel={$t$}, xmin=0, xmax=5.3, ymin=-12, ymax=24, width=6.3cm, height=5.6cm, xtick={1,3,5}, ytick={4,20}, samples=100, domain=0:5]
+          \addplot[curva] {x^3-6*x^2+9*x};
+          \addplot[curva2, dashed] {3*x^2-12*x+9};
+          \node[uniAzul] at (axis cs:4.2,15) {\scriptsize $s(t)$};
+          \node[uniGranate] at (axis cs:4.9,8) {\scriptsize $v(t)$};
+        \end{axis}
+      \end{tikzpicture}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\section{Razones relacionadas}
+
+\begin{frame}{Razones relacionadas: estrategia}
+  \begin{block}{Pasos}
+    \begin{enumerate}
+      \item Dibujar; nombrar las cantidades que \textbf{varían con el tiempo}.
+      \item Escribir datos y la incógnita como derivadas respecto de $t$.
+      \item Hallar una \textbf{ecuación} que relacione las cantidades (geometría, leyes físicas).
+      \item \textbf{Derivar} respecto de $t$ (regla de la cadena / derivación implícita).
+      \item \textbf{Después} de derivar, sustituir los valores del instante pedido y despejar.
+    \end{enumerate}
+  \end{block}
+  \begin{observacion}
+    Error común: sustituir valores numéricos \emph{antes} de derivar (convierte variables en constantes).
+  \end{observacion}
+\end{frame}
+
+\begin{frame}{Ejemplo 3: la escalera que resbala}
+  \begin{columns}
+    \begin{column}{0.58\textwidth}
+      \begin{ejemplo}
+        Una escalera de $10$ m está apoyada en una pared. Su base se aleja a $1$ m/s. ¿Con qué rapidez baja el extremo superior cuando la base está a $6$ m de la pared?
+        \begin{itemize}
+          \item Relación: $x^2+y^2=100$.
+          \item Derivando: $2x\dfrac{dx}{dt}+2y\dfrac{dy}{dt}=0\Rightarrow\dfrac{dy}{dt}=-\dfrac xy\dfrac{dx}{dt}$.
+          \item Cuando $x=6$: $y=8$, \ $\dfrac{dy}{dt}=-\dfrac68\cdot1=-0.75$ m/s.
+        \end{itemize}
+        El extremo baja a $0.75$ m/s.
+      \end{ejemplo}
+      \small ¿Qué ocurre cuando $y\to0$? (El modelo deja de ser válido: la escalera se despega.)
+    \end{column}
+    \begin{column}{0.42\textwidth}
+      \centering
+      \begin{tikzpicture}[scale=0.32]
+        \fill[pattern=north east lines] (-0.6,0) rectangle (0,11);
+        \draw[thick] (0,0) -- (0,11);
+        \draw[thick] (0,0) -- (11,0);
+        \draw[very thick, uniGranate] (0,8) -- (6,0);
+        \draw[<->] (0,-0.8) -- (6,-0.8) node[midway, below] {\scriptsize $x$};
+        \draw[<->] (-1.2,0) -- (-1.2,8) node[midway, left] {\scriptsize $y$};
+        \node[uniGranate] at (3.8,4.6) {\scriptsize $10$};
+        \draw[->, uniAzul, thick] (6,0.6) -- (8,0.6);
+        \draw[->, uniAzul, thick] (0.6,8) -- (0.6,6.3);
+      \end{tikzpicture}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\begin{frame}{Ejemplo 4: llenado de un tanque cónico}
+  \begin{columns}
+    \begin{column}{0.58\textwidth}
+      \begin{ejemplo}
+        Un tanque cónico invertido tiene radio $2$ m y altura $4$ m. Entra agua a $2$ m$^3$/min. ¿A qué rapidez sube el nivel cuando $h=3$ m?
+        \begin{itemize}
+          \item Semejanza: $\frac rh=\frac24\Rightarrow r=\frac h2$, \ $V=\frac13\pi r^2h=\frac{\pi h^3}{12}$.
+          \item $\dfrac{dV}{dt}=\dfrac{\pi h^2}{4}\dfrac{dh}{dt}$.
+          \item Con $h=3$: \ $2=\dfrac{9\pi}{4}\dfrac{dh}{dt}\Rightarrow\dfrac{dh}{dt}=\dfrac{8}{9\pi}\approx0.28$ m/min.
+        \end{itemize}
+      \end{ejemplo}
+      \small Al subir el nivel, la superficie es mayor y el nivel sube más despacio.
+    \end{column}
+    \begin{column}{0.42\textwidth}
+      \centering
+      \begin{tikzpicture}[scale=0.7]
+        \fill[uniAzul!25] (0,0) -- (-1.5,3) arc (180:360:1.5 and 0.3) -- cycle;
+        \draw[thick] (0,0) -- (-2,4); \draw[thick] (0,0) -- (2,4);
+        \draw[thick] (0,4) ellipse (2 and 0.4);
+        \draw[uniAzul] (0,3) ellipse (1.5 and 0.3);
+        \draw[<->] (2.6,0) -- (2.6,3) node[midway, right] {\scriptsize $h$};
+        \draw (0,3) -- (1.5,3) node[midway, above] {\scriptsize $r$};
+        \draw[<->] (-2.6,0) -- (-2.6,4) node[midway, left] {\scriptsize $4$};
+        \node at (1,4.3) {\scriptsize $2$};
+      \end{tikzpicture}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\begin{frame}{Más ejemplos}
+  \begin{ejemplo}[5: química, ley de Boyle]
+    Un gas se comprime a temperatura constante: $PV=C$. Si $V=600$ cm$^3$, $P=150$ kPa y la presión aumenta a $20$ kPa/min:
+    \[ P\frac{dV}{dt}+V\frac{dP}{dt}=0\Rightarrow\frac{dV}{dt}=-\frac VP\frac{dP}{dt}=-\frac{600}{150}\cdot20=-80\ \text{cm}^3/\text{min}. \]
+  \end{ejemplo}
+  \begin{ejemplo}[6: sombra]
+    Una persona de $1.8$ m camina a $1.5$ m/s alejándose de un poste de luz de $6$ m. Por semejanza, si $x$ es su distancia al poste y $s$ la longitud de su
+    sombra: $\frac{6}{x+s}=\frac{1.8}{s}\Rightarrow s=\frac{3}{7}x$. \ Luego $\frac{ds}{dt}=\frac37\cdot1.5\approx0.64$ m/s
+    (la punta de la sombra se mueve a $1.5+0.64\approx2.14$ m/s).
+  \end{ejemplo}
+\end{frame}
+
+\section{Esbozo de gráficas}
+
+\begin{frame}{Guía para esbozar gráficas}
+  \begin{block}{Información a reunir}
+    \begin{enumerate}
+      \item \textbf{Dominio} y continuidad.
+      \item \textbf{Cortes} con los ejes.
+      \item \textbf{Simetrías}: par, impar, periódica.
+      \item \textbf{Asíntotas}: verticales, horizontales, oblicuas (Semana 4).
+      \item \textbf{Monotonía}: signo de $f'$ (intervalos de crecimiento/decrecimiento).
+      \item \textbf{Extremos locales}: puntos críticos y criterio de la primera derivada.
+      \item (Semana 11: concavidad y puntos de inflexión con $f''$.)
+    \end{enumerate}
+  \end{block}
+  \begin{idea}
+    Una tabla de signos de $f'$ resume la ``forma'' de la gráfica: $\nearrow$ y $\searrow$.
+  \end{idea}
+\end{frame}
+
+\begin{frame}{Ejemplo 7: un polinomio}
+  \begin{columns}
+    \begin{column}{0.55\textwidth}
+      \begin{ejemplo}
+        $f(x)=x^3-3x^2=x^2(x-3)$.
+        \begin{itemize}
+          \item Dominio $\R$; cortes: $(0,0)$ y $(3,0)$.
+          \item $f'(x)=3x^2-6x=3x(x-2)$.
+        \end{itemize}
+        \begin{center}
+          \begin{tabular}{c|ccc}
+            & $(-\infty,0)$ & $(0,2)$ & $(2,\infty)$\\ \hline
+            $f'$ & $+$ & $-$ & $+$\\
+            $f$ & $\nearrow$ & $\searrow$ & $\nearrow$
+          \end{tabular}
+        \end{center}
+        \begin{itemize}
+          \item Máximo local $f(0)=0$; mínimo local $f(2)=-4$.
+          \item $f\to\pm\infty$ si $x\to\pm\infty$.
+        \end{itemize}
+      \end{ejemplo}
+    \end{column}
+    \begin{column}{0.45\textwidth}
+      \centering
+      \begin{tikzpicture}
+        \begin{axis}[bma, xmin=-1.5, xmax=4, ymin=-6, ymax=5, width=6.3cm, height=6cm, xtick={2,3}, ytick={-4}, samples=100, domain=-1.2:3.7]
+          \addplot[curva] {x^3-3*x^2};
+          \addplot[only marks, mark=*, uniGranate] coordinates {(0,0) (2,-4)};
+          \addplot[only marks, mark=*, black] coordinates {(3,0)};
+        \end{axis}
+      \end{tikzpicture}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\begin{frame}{Ejemplo 8: una función racional}
+  \begin{columns}
+    \begin{column}{0.55\textwidth}
+      \begin{ejemplo}
+        $f(x)=\dfrac{x^2}{x-1}$.
+        \begin{itemize}
+          \item Dominio $\R\setminus\{1\}$; corte $(0,0)$.
+          \item Asíntota vertical $x=1$ ($f\to\pm\infty$ si $x\to1^\pm$).
+          \item $f(x)=x+1+\frac1{x-1}$: asíntota oblicua $y=x+1$.
+          \item $f'(x)=\dfrac{x(x-2)}{(x-1)^2}$: crece en $(-\infty,0)$ y $(2,\infty)$; decrece en $(0,1)$ y $(1,2)$.
+          \item Máximo local $f(0)=0$; mínimo local $f(2)=4$.
+        \end{itemize}
+      \end{ejemplo}
+    \end{column}
+    \begin{column}{0.45\textwidth}
+      \centering
+      \begin{tikzpicture}
+        \begin{axis}[bma, xmin=-4, xmax=5, ymin=-8, ymax=10, width=6.3cm, height=6.2cm, xtick={1,2}, ytick={4}, samples=400, restrict y to domain=-15:15, unbounded coords=jump]
+          \addplot[curva, domain=-4:5] {x^2/(x-1)};
+          \addplot[curva2, dashed, domain=-4:5] {x+1};
+          \draw[gray, dashed] (axis cs:1,-8) -- (axis cs:1,10);
+          \addplot[only marks, mark=*, uniGranate] coordinates {(0,0) (2,4)};
+        \end{axis}
+      \end{tikzpicture}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\section{Ejercicios}
+
+\begin{frame}{Ejercicios propuestos}
+  \small
+  \begin{ejercicio}
+    \begin{enumerate}
+      \item Una partícula se mueve según $s(t)=t^4-4t^3$. Halle cuándo se detiene, cuándo avanza y su aceleración en esos instantes.
+      \item El radio de un círculo crece a $3$ cm/s. ¿A qué rapidez crece el área cuando $r=10$ cm? ¿Y el perímetro?
+      \item Un globo esférico se infla a $100$ cm$^3$/s. ¿A qué rapidez crece el radio cuando el diámetro es $50$ cm?
+      \item Dos autos parten del mismo punto: uno hacia el norte a $60$ km/h y otro hacia el este a $80$ km/h. ¿A qué rapidez se alejan al cabo de 2 h?
+      \item En un proceso adiabático $PV^{1.4}=C$. Si $V=400$ cm$^3$, $P=80$ kPa y $\frac{dP}{dt}=-10$ kPa/min, halle $\frac{dV}{dt}$.
+      \item Un avión vuela horizontalmente a $2$ km de altura, a $800$ km/h, y pasa sobre un radar. ¿A qué rapidez crece la distancia al radar cuando está a $4$ km de él?
+      \item Esboce (dominio, cortes, asíntotas, monotonía, extremos): (a) $f(x)=x^4-2x^2$, \ (b) $g(x)=\dfrac{x}{x^2+1}$, \ (c) $h(x)=xe^{-x}$,
+        \ (d) $k(x)=\dfrac{x^2-4}{x^2-1}$.
+    \end{enumerate}
+  \end{ejercicio}
+\end{frame}
+
+\begin{frame}{Resumen}
+  \begin{itemize}
+    \item $\frac{dy}{dx}$: tasa de cambio instantánea (velocidad, corriente, velocidad de reacción, marginal).
+    \item \resaltar{Razones relacionadas}: relacionar cantidades, derivar respecto de $t$, \textbf{luego} sustituir.
+    \item \resaltar{Esbozo}: dominio, cortes, simetrías, asíntotas, signo de $f'$ (monotonía) y extremos.
+  \end{itemize}
+  \vspace{3mm}
+  \textbf{Próxima sesión:} concavidad y puntos de inflexión.
+\end{frame}
+
+\end{document}

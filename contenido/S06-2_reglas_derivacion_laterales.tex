@@ -1,0 +1,287 @@
+\documentclass[10pt,aspectratio=169]{beamer}
+\usepackage{bma01}
+
+\title[Reglas de derivación]{Aritmética de funciones derivables}
+\subtitle{Derivadas laterales. Interpretación geométrica\\[2pt]\small Semana 6 -- Sesión 2}
+
+\begin{document}
+
+\begin{frame}
+  \titlepage
+\end{frame}
+
+\begin{frame}{Objetivos de la sesión}
+  \begin{enumerate}
+    \item Probar que \resaltar{derivable implica continua} (y que el recíproco es falso).
+    \item Deducir y aplicar las reglas de la \resaltar{suma}, \resaltar{producto} y \resaltar{cociente}; la regla de la potencia.
+    \item Construir la tabla de derivadas de funciones elementales.
+    \item Calcular \resaltar{derivadas laterales} e interpretar geométricamente picos, esquinas y cúspides.
+  \end{enumerate}
+  \begin{block}{Plan (2 horas)}
+    \begin{tabular}{ll}
+      0:00 -- 0:15 & Derivable $\Rightarrow$ continua\\
+      0:15 -- 0:55 & Reglas de derivación y tabla de derivadas\\
+      0:55 -- 1:30 & Derivadas laterales; puntos angulosos; funciones por partes\\
+      1:30 -- 1:45 & Derivadas de orden superior\\
+      1:45 -- 2:00 & Ejercicios y resumen
+    \end{tabular}
+  \end{block}
+\end{frame}
+
+\section{Derivabilidad y continuidad}
+
+\begin{frame}{Derivable implica continua}
+  \begin{teorema}
+    Si $f$ es derivable en $a$, entonces $f$ es continua en $a$.
+  \end{teorema}
+  \textbf{Prueba.} Para $x\neq a$:
+  \[ f(x)-f(a)=\frac{f(x)-f(a)}{x-a}\cdot(x-a)\ \xrightarrow[x\to a]{}\ f'(a)\cdot0=0. \]
+  Luego $\lim_{x\to a}f(x)=f(a)$. \ $\blacksquare$
+  \begin{columns}
+    \begin{column}{0.55\textwidth}
+      \begin{observacion}[el recíproco es falso]
+        $f(x)=|x|$ es continua en $0$ pero \textbf{no} derivable:
+        \[ \frac{|h|}{h}\to\begin{cases}1,&h\to0^+\\-1,&h\to0^-\end{cases} \]
+        Contrapositiva útil: si $f$ no es continua en $a$, no es derivable en $a$.
+      \end{observacion}
+    \end{column}
+    \begin{column}{0.45\textwidth}
+      \centering
+      \begin{tikzpicture}
+        \begin{axis}[bma, xmin=-2, xmax=2, ymin=-0.3, ymax=2, width=5.8cm, height=4cm, xtick={-1,1}, ytick={1}]
+          \addplot[curva, domain=-2:2] {abs(x)};
+        \end{axis}
+      \end{tikzpicture}
+
+      \small Esquina en el origen: no hay una única tangente.
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\section{Reglas de derivación}
+
+\begin{frame}{Reglas de derivación}
+  \begin{teorema}
+    Si $f$ y $g$ son derivables en $x$ y $c\in\R$:
+    \begin{enumerate}
+      \item $(c)'=0$, \quad $(cf)'=cf'$, \quad $(f\pm g)'=f'\pm g'$.
+      \item \resaltar{Producto}: \ $(fg)'=f'g+fg'$.
+      \item \resaltar{Cociente}: \ $\left(\dfrac fg\right)'=\dfrac{f'g-fg'}{g^2}$ \ si $g(x)\neq0$.
+    \end{enumerate}
+  \end{teorema}
+  \textbf{Prueba del producto.} Sumando y restando $f(x+h)g(x)$:
+  \[ \frac{f(x+h)g(x+h)-f(x)g(x)}{h}=f(x+h)\frac{g(x+h)-g(x)}{h}+g(x)\frac{f(x+h)-f(x)}{h}\ \to\ fg'+gf', \]
+  usando que $f(x+h)\to f(x)$ (derivable $\Rightarrow$ continua). \ $\blacksquare$
+\end{frame}
+
+\begin{frame}{Interpretación geométrica de la regla del producto}
+  \begin{columns}
+    \begin{column}{0.5\textwidth}
+      \centering
+      \begin{tikzpicture}[scale=0.9]
+        \fill[uniAzul!20] (0,0) rectangle (4,2.5);
+        \fill[uniGranate!35] (4,0) rectangle (4.6,2.5);
+        \fill[uniVerde!35] (0,2.5) rectangle (4,2.9);
+        \fill[gray!40] (4,2.5) rectangle (4.6,2.9);
+        \draw (0,0) rectangle (4.6,2.9);
+        \draw (4,0) -- (4,2.9); \draw (0,2.5) -- (4.6,2.5);
+        \node at (2,1.25) {$fg$};
+        \node at (4.3,1.25) {\scriptsize $g\,\Delta f$};
+        \node at (2,2.7) {\scriptsize $f\,\Delta g$};
+        \node[below] at (2,0) {$f$}; \node[below] at (4.3,0) {\scriptsize $\Delta f$};
+        \node[left] at (0,1.25) {$g$}; \node[left] at (0,2.7) {\scriptsize $\Delta g$};
+      \end{tikzpicture}
+    \end{column}
+    \begin{column}{0.5\textwidth}
+      Si $f$ y $g$ son las longitudes de los lados de un rectángulo, el cambio de área es
+      \[ \Delta(fg)=g\,\Delta f+f\,\Delta g+\Delta f\,\Delta g. \]
+      Dividiendo por $h$ y con $h\to0$, el término gris ($\Delta f\Delta g/h$) desaparece:
+      \[ (fg)'=f'g+fg'. \]
+      \alert{Ojo:} $(fg)'\neq f'g'$.
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\begin{frame}{Regla de la potencia y tabla de derivadas}
+  \begin{teorema}[potencia]
+    $(x^n)'=nx^{n-1}$ para $n\in\N$ (binomio de Newton o inducción con el producto); por el cociente, también para $n\in\Z$.
+    \ (Para $n\in\R$ se probará con la regla de la cadena.)
+  \end{teorema}
+  \begin{columns}[t]
+    \begin{column}{0.5\textwidth}
+      \renewcommand{\arraystretch}{1.5}
+      \begin{tabular}{|l|l|}
+        \hline
+        $f(x)$ & $f'(x)$\\ \hline
+        $x^r$ & $rx^{r-1}$\\
+        $e^x$ & $e^x$ \ \small(pues $\frac{e^h-1}{h}\to1$)\\
+        $\ln x$ & $\frac1x$\\
+        $a^x$ & $a^x\ln a$\\ \hline
+      \end{tabular}
+    \end{column}
+    \begin{column}{0.5\textwidth}
+      \renewcommand{\arraystretch}{1.5}
+      \begin{tabular}{|l|l|}
+        \hline
+        $f(x)$ & $f'(x)$\\ \hline
+        $\sen x$ & $\cos x$\\
+        $\cos x$ & $-\sen x$\\
+        $\tan x$ & $\sec^2x$\\
+        $\sec x$ & $\sec x\tan x$\\ \hline
+      \end{tabular}
+    \end{column}
+  \end{columns}
+  \vspace{2mm}
+  \begin{ejemplo}[$\tan x$ por el cociente]
+    $\displaystyle\left(\frac{\sen x}{\cos x}\right)'=\frac{\cos x\cos x-\sen x(-\sen x)}{\cos^2x}=\frac{1}{\cos^2x}=\sec^2x$.
+  \end{ejemplo}
+\end{frame}
+
+\begin{frame}{Ejemplos}
+  \begin{ejemplo}[1]
+    $\left(5x^4-3x^2+\dfrac2x-\sqrt x\right)'=20x^3-6x-\dfrac{2}{x^2}-\dfrac{1}{2\sqrt x}$.
+  \end{ejemplo}
+  \begin{ejemplo}[2: producto]
+    $(x^2e^x)'=2xe^x+x^2e^x=xe^x(x+2)$. \qquad $(x\ln x)'=\ln x+1$.
+  \end{ejemplo}
+  \begin{ejemplo}[3: cociente]
+    $\left(\dfrac{x^2+1}{x-3}\right)'=\dfrac{2x(x-3)-(x^2+1)}{(x-3)^2}=\dfrac{x^2-6x-1}{(x-3)^2}$.
+  \end{ejemplo}
+  \begin{ejemplo}[4: tangente]
+    Recta tangente a $y=\dfrac{e^x}{1+x}$ en $x=0$: \ $y'=\dfrac{e^x(1+x)-e^x}{(1+x)^2}=\dfrac{xe^x}{(1+x)^2}$, \ $y'(0)=0$.
+    Tangente horizontal: $y=1$.
+  \end{ejemplo}
+\end{frame}
+
+\section{Derivadas laterales}
+
+\begin{frame}{Derivadas laterales}
+  \begin{definicion}
+    \[ f'_+(a)=\lim_{h\to0^+}\frac{f(a+h)-f(a)}{h},\qquad f'_-(a)=\lim_{h\to0^-}\frac{f(a+h)-f(a)}{h}. \]
+    $f$ es derivable en $a$ $\iff$ $f'_+(a)$ y $f'_-(a)$ existen y son iguales.
+  \end{definicion}
+  \begin{columns}
+    \begin{column}{0.33\textwidth}
+      \centering
+      \begin{tikzpicture}
+        \begin{axis}[bma, xmin=-2, xmax=2, ymin=-0.5, ymax=2.5, width=4.8cm, height=4cm, xtick=\empty, ytick=\empty]
+          \addplot[curva, domain=-2:0] {-0.5*x+1};
+          \addplot[curva, domain=0:2] {x+1};
+        \end{axis}
+      \end{tikzpicture}\\
+      \small \textbf{Punto anguloso}: laterales finitos y distintos.
+    \end{column}
+    \begin{column}{0.33\textwidth}
+      \centering
+      \begin{tikzpicture}
+        \begin{axis}[bma, xmin=-2, xmax=2, ymin=-0.3, ymax=2, width=4.8cm, height=4cm, xtick=\empty, ytick=\empty, samples=201, domain=-2:2]
+          \addplot[curva] {abs(x)^(2/3)};
+        \end{axis}
+      \end{tikzpicture}\\
+      \small \textbf{Cúspide}: $f'_\pm=\pm\infty$ ($y=x^{2/3}$).
+    \end{column}
+    \begin{column}{0.33\textwidth}
+      \centering
+      \begin{tikzpicture}
+        \begin{axis}[bma, xmin=-2, xmax=2, ymin=-1.5, ymax=1.5, width=4.8cm, height=4cm, xtick=\empty, ytick=\empty, samples=201, domain=-2:2]
+          \addplot[curva] {(x<0 ? -1 : 1)*abs(x)^(1/3)};
+        \end{axis}
+      \end{tikzpicture}\\
+      \small \textbf{Tangente vertical}: $f'_\pm=+\infty$ ($y=\sqrt[3]x$).
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\begin{frame}{Funciones por partes: derivabilidad}
+  \begin{ejemplo}[5]
+    Halle $a,b$ para que $f(x)=\begin{cases}x^2,&x\le1\\ ax+b,&x>1\end{cases}$ sea derivable en $x=1$.
+    \begin{enumerate}
+      \item \textbf{Continuidad} (necesaria): $1=a+b$.
+      \item \textbf{Derivadas laterales}: $f'_-(1)=2\cdot1=2$, \ $f'_+(1)=a$ \ $\Rightarrow$ \ $a=2$, $b=-1$.
+    \end{enumerate}
+    La recta $y=2x-1$ es la tangente a $y=x^2$ en $(1,1)$: las piezas empalman \emph{suavemente}.
+  \end{ejemplo}
+  \begin{ejemplo}[6]
+    $g(x)=\begin{cases}x^2\sen\frac1x,&x\neq0\\0,&x=0\end{cases}$: \
+    $\dfrac{g(h)-g(0)}{h}=h\sen\frac1h\to0$. \ $g'(0)=0$ (aunque oscile mucho cerca de $0$).
+  \end{ejemplo}
+  \begin{observacion}
+    Al derivar por partes, en los puntos de empalme hay que usar la \textbf{definición} (o verificar continuidad y derivadas laterales).
+  \end{observacion}
+\end{frame}
+
+\begin{frame}{Valor absoluto y máximo entero}
+  \begin{ejemplo}[7]
+    $f(x)=|x^2-4|$: es derivable salvo donde $x^2-4=0$ con cambio de signo: en $x=\pm2$.
+    \ En $x=2$: $f'_-(2)=-4$, $f'_+(2)=4$ (punto anguloso).
+  \end{ejemplo}
+  \begin{ejemplo}[8]
+    $f(x)=x|x|$ \textbf{sí} es derivable en $0$: $\dfrac{h|h|}{h}=|h|\to0$. Así $f'(x)=2|x|$.
+  \end{ejemplo}
+  \begin{ejemplo}[9]
+    $\ent{x}$ no es derivable en los enteros (no es continua). En los no enteros, $\ent{x}'=0$.
+  \end{ejemplo}
+  \begin{center}
+    \begin{tikzpicture}
+      \begin{axis}[bma, xmin=-3, xmax=3, ymin=-0.5, ymax=5.5, width=6cm, height=3cm, xtick={-2,2}, ytick={4}, samples=200, domain=-3:3]
+        \addplot[curva] {abs(x^2-4)};
+      \end{axis}
+    \end{tikzpicture}
+    \quad
+    \begin{tikzpicture}
+      \begin{axis}[bma, xmin=-2, xmax=2, ymin=-3, ymax=3, width=6cm, height=3cm, xtick={-1,1}, ytick=\empty, samples=200, domain=-1.7:1.7]
+        \addplot[curva2] {x*abs(x)};
+      \end{axis}
+    \end{tikzpicture}
+  \end{center}
+\end{frame}
+
+\section{Derivadas de orden superior}
+
+\begin{frame}{Derivadas de orden superior}
+  \begin{definicion}
+    $f''=(f')'$, \ $f'''=(f'')'$, \ $f^{(n)}=\left(f^{(n-1)}\right)'$. \ Notación de Leibniz: $\dfrac{d^2y}{dx^2}$, $\dfrac{d^ny}{dx^n}$.
+  \end{definicion}
+  \begin{ejemplo}[10: física]
+    $s(t)=t^3-6t^2$: \ velocidad $v=s'=3t^2-12t$, \ aceleración $a=s''=6t-12$, \ ``sobreaceleración'' (jerk) $s'''=6$.
+  \end{ejemplo}
+  \begin{ejemplo}[11: patrones]
+    \begin{itemize}
+      \item $(\sen x)^{(n)}$: $\cos x,\ -\sen x,\ -\cos x,\ \sen x,\dots$ (periodo 4): \ $(\sen x)^{(n)}=\sen\left(x+\frac{n\pi}2\right)$.
+      \item $\left(\frac1x\right)^{(n)}=\dfrac{(-1)^nn!}{x^{n+1}}$.
+      \item $(x^m)^{(n)}=0$ si $n>m$.
+    \end{itemize}
+  \end{ejemplo}
+\end{frame}
+
+\section{Ejercicios}
+
+\begin{frame}{Ejercicios propuestos}
+  \small
+  \begin{ejercicio}
+    \begin{enumerate}
+      \item Derive: (a) $(x^3-2x)(x^2+5)$, \ (b) $\dfrac{3x-1}{x^2+x+1}$, \ (c) $\dfrac{\sen x}{1+\cos x}$, \ (d) $e^x(\sen x-\cos x)$,
+        \ (e) $\dfrac{x\ln x}{1+x^2}$, \ (f) $\sec x\tan x$.
+      \item Pruebe la regla del cociente a partir de la del producto, escribiendo $f=\frac fg\cdot g$.
+      \item ¿En qué puntos es derivable $f(x)=|x^3-x|$? Halle $f'_\pm$ en los demás.
+      \item Halle $a,b,c$ para que $f(x)=\begin{cases}ax^2+bx+c,&x<1\\ \ln x,&x\ge1\end{cases}$ sea derivable en $1$ y $f''_-(1)=-1$.
+      \item Estudie la derivabilidad en $0$ de $f(x)=x^n\sen\frac1x$ ($f(0)=0$) para $n=1,2,3$.
+      \item Halle $f^{(n)}(x)$ para $f(x)=xe^x$ y para $g(x)=\dfrac{1}{1-x}$.
+      \item Halle un polinomio cuadrático $P$ con $P(1)=3$, $P'(1)=1$ y $P''(1)=4$.
+    \end{enumerate}
+  \end{ejercicio}
+\end{frame}
+
+\begin{frame}{Resumen}
+  \begin{itemize}
+    \item Derivable $\Rightarrow$ continua; no al revés ($|x|$).
+    \item $(f\pm g)'=f'\pm g'$, \ $(fg)'=f'g+fg'$, \ $\left(\frac fg\right)'=\frac{f'g-fg'}{g^2}$.
+    \item $(x^r)'=rx^{r-1}$, $(e^x)'=e^x$, $(\ln x)'=\frac1x$, $(\sen x)'=\cos x$, $(\cos x)'=-\sen x$, $(\tan x)'=\sec^2x$.
+    \item Derivable en $a$ $\iff$ $f'_-(a)=f'_+(a)$. Esquinas, cúspides y tangentes verticales.
+    \item Por partes: continuidad + igualdad de laterales en los empalmes.
+  \end{itemize}
+  \vspace{3mm}
+  \textbf{Próxima sesión:} teoremas de Rolle y del valor medio.
+\end{frame}
+
+\end{document}

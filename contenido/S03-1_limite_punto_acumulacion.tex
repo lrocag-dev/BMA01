@@ -1,0 +1,317 @@
+\documentclass[10pt,aspectratio=169]{beamer}
+\usepackage{bma01}
+
+\title[Límite de una función]{Límite de una función}
+\subtitle{Punto de acumulación de un conjunto. Definición $\varepsilon$--$\delta$\\[2pt]\small Semana 3 -- Sesión 1}
+
+\begin{document}
+
+\begin{frame}
+  \titlepage
+\end{frame}
+
+\begin{frame}{Objetivos de la sesión}
+  \begin{enumerate}
+    \item Comprender intuitivamente el límite mediante tablas y gráficas.
+    \item Definir \resaltar{vecindad} y \resaltar{punto de acumulación} de un conjunto.
+    \item Enunciar la definición \resaltar{$\varepsilon$--$\delta$} de límite y usarla en demostraciones.
+    \item Probar la \resaltar{unicidad} del límite y reconocer límites que no existen.
+  \end{enumerate}
+  \begin{block}{Plan (2 horas)}
+    \begin{tabular}{ll}
+      0:00 -- 0:20 & Idea intuitiva: tablas y gráficas\\
+      0:20 -- 0:40 & Vecindades y puntos de acumulación\\
+      0:40 -- 1:30 & Definición $\varepsilon$--$\delta$: interpretación y demostraciones\\
+      1:30 -- 1:45 & Unicidad. Límites que no existen\\
+      1:45 -- 2:00 & Ejercicios y resumen
+    \end{tabular}
+  \end{block}
+\end{frame}
+
+\section{Idea intuitiva}
+
+\begin{frame}{¿Qué valor ``se acerca'' $f(x)$?}
+  \begin{columns}
+    \begin{column}{0.52\textwidth}
+      $f(x)=\dfrac{\sen x}{x}$ \textbf{no} está definida en $x=0$. ¿Qué ocurre cerca?
+      \begin{center}
+        \small
+        \begin{tabular}{c|c}
+          $x$ & $\frac{\sen x}{x}$\\ \hline
+          $\pm1$ & $0.841471$\\
+          $\pm0.5$ & $0.958851$\\
+          $\pm0.1$ & $0.998334$\\
+          $\pm0.01$ & $0.999983$\\
+          $\pm0.001$ & $0.9999998$
+        \end{tabular}
+      \end{center}
+      Cuando $x$ se acerca a $0$, $f(x)$ se acerca a $1$:
+      \[ \lim_{x\to0}\frac{\sen x}{x}=1. \]
+    \end{column}
+    \begin{column}{0.48\textwidth}
+      \centering
+      \begin{tikzpicture}
+        \begin{axis}[bma, xmin=-7.5, xmax=7.5, ymin=-0.4, ymax=1.3, width=7cm, height=5cm, xtick={-6.2832,-3.1416,3.1416,6.2832}, xticklabels={$-2\pi$,$-\pi$,$\pi$,$2\pi$}, ytick={1}, samples=200]
+          \addplot[curva, domain=-7.5:-0.01] {sin(deg(x))/x};
+          \addplot[curva, domain=0.01:7.5] {sin(deg(x))/x};
+          \addplot[only marks, mark=o, uniAzul, fill=white, mark size=2.5pt] coordinates {(0,1)};
+        \end{axis}
+      \end{tikzpicture}
+
+      \small El ``hueco'' en $(0,1)$: el límite existe aunque $f(0)$ no.
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\begin{frame}{El límite no depende del valor en el punto}
+  \begin{columns}
+    \begin{column}{0.33\textwidth}
+      \centering
+      \begin{tikzpicture}
+        \begin{axis}[bma, xmin=-0.5, xmax=2.6, ymin=-0.5, ymax=3.6, width=4.8cm, height=4.4cm, xtick={1}, ytick={2}]
+          \addplot[curva, domain=-0.3:2.4] {x+1};
+          \addplot[only marks, mark=*, uniAzul] coordinates {(1,2)};
+        \end{axis}
+      \end{tikzpicture}\\
+      \small $f(x)=x+1$; \ $f(1)=2$.
+    \end{column}
+    \begin{column}{0.33\textwidth}
+      \centering
+      \begin{tikzpicture}
+        \begin{axis}[bma, xmin=-0.5, xmax=2.6, ymin=-0.5, ymax=3.6, width=4.8cm, height=4.4cm, xtick={1}, ytick={2}]
+          \addplot[curva, domain=-0.3:2.4] {x+1};
+          \addplot[only marks, mark=o, uniAzul, fill=white, mark size=2.5pt] coordinates {(1,2)};
+        \end{axis}
+      \end{tikzpicture}\\
+      \small $g(x)=\frac{x^2-1}{x-1}$; \ $g(1)$ no existe.
+    \end{column}
+    \begin{column}{0.33\textwidth}
+      \centering
+      \begin{tikzpicture}
+        \begin{axis}[bma, xmin=-0.5, xmax=2.6, ymin=-0.5, ymax=3.6, width=4.8cm, height=4.4cm, xtick={1}, ytick={2,3}]
+          \addplot[curva, domain=-0.3:2.4] {x+1};
+          \addplot[only marks, mark=o, uniAzul, fill=white, mark size=2.5pt] coordinates {(1,2)};
+          \addplot[only marks, mark=*, uniGranate] coordinates {(1,3)};
+        \end{axis}
+      \end{tikzpicture}\\
+      \small $h(x)=x+1$ si $x\ne1$, $h(1)=3$.
+    \end{column}
+  \end{columns}
+  \begin{idea}
+    En los tres casos $\displaystyle\lim_{x\to1}=2$. El límite describe el comportamiento \textbf{cerca} de $a$, no \textbf{en} $a$.
+    Por eso solo necesitamos que haya puntos del dominio arbitrariamente cerca de $a$: puntos de acumulación.
+  \end{idea}
+\end{frame}
+
+\section{Punto de acumulación}
+
+\begin{frame}{Vecindades y puntos de acumulación}
+  \begin{definicion}[vecindad]
+    Para $\delta>0$, la \resaltar{vecindad} de centro $a$ y radio $\delta$ es $V_\delta(a)=(a-\delta,a+\delta)=\{x:|x-a|<\delta\}$.
+    La \resaltar{vecindad reducida} es $V^*_\delta(a)=V_\delta(a)\setminus\{a\}=\{x:0<|x-a|<\delta\}$.
+  \end{definicion}
+  \begin{definicion}[punto de acumulación]
+    $a\in\R$ es \resaltar{punto de acumulación} de $A\subseteq\R$ si toda vecindad reducida de $a$ contiene puntos de $A$:
+    \[ \forall\delta>0:\quad V^*_\delta(a)\cap A\neq\emptyset. \]
+    El conjunto de puntos de acumulación se denota $A'$.
+  \end{definicion}
+  \begin{center}
+    \begin{tikzpicture}[scale=1.1]
+      \draw[->] (-0.5,0) -- (8,0);
+      \draw[uniAzul, line width=3pt] (1,0) -- (4,0);
+      \node[above, uniAzul] at (2.5,0.1) {\scriptsize $A=(1,4]$};
+      \draw[uniGranate, thick] (1,0) circle (3pt); \node[below] at (1,-0.15) {\scriptsize $1\in A'$, $1\notin A$};
+      \fill[uniAzul] (4,0) circle (2pt);
+      \fill[uniVerde] (6.5,0) circle (2.5pt); \node[below] at (6.5,-0.15) {\scriptsize punto aislado de $A\cup\{6.5\}$};
+    \end{tikzpicture}
+  \end{center}
+\end{frame}
+
+\begin{frame}{Ejemplos de puntos de acumulación}
+  \begin{ejemplo}
+    \begin{enumerate}
+      \item $A=(1,4]$: \ $A'=[1,4]$. Un punto de acumulación puede no pertenecer a $A$.
+      \item $A=\N$: \ $A'=\emptyset$. Todos sus puntos son \resaltar{aislados}.
+      \item $A=\left\{\frac1n:n\in\N\right\}$: \ $A'=\{0\}$, y $0\notin A$.
+      \item $A=\Q$: \ $A'=\R$ (todo intervalo contiene racionales).
+      \item $A=[0,1]\cup\{2\}$: \ $A'=[0,1]$; \ $2$ es punto aislado.
+    \end{enumerate}
+  \end{ejemplo}
+  \begin{center}
+    \begin{tikzpicture}[scale=1]
+      \draw[->] (-0.5,0) -- (9,0);
+      \foreach \n in {1,...,30} \fill[uniAzul] ({8/\n},0) circle (1.3pt);
+      \draw[uniGranate, thick] (0,0) circle (2.5pt) node[below=3pt] {\scriptsize $0$};
+      \node[below] at (8,-0.1) {\scriptsize $1$}; \node[below] at (4,-0.1) {\scriptsize $\frac12$};
+      \node[below] at (2.667,-0.1) {\scriptsize $\frac13$};
+      \node[above, uniAzul] at (4,0.15) {\scriptsize $\{1/n\}$ se acumula en $0$};
+    \end{tikzpicture}
+  \end{center}
+  \begin{observacion}
+    Solo tiene sentido hablar de $\lim_{x\to a}f(x)$ si $a$ es punto de acumulación de $\Dom f$.
+  \end{observacion}
+\end{frame}
+
+\section{Definición de límite}
+
+\begin{frame}{Definición $\varepsilon$--$\delta$}
+  \begin{columns}
+    \begin{column}{0.52\textwidth}
+      \begin{definicion}[Cauchy--Weierstrass]
+        Sea $a\in(\Dom f)'$. Decimos que $\displaystyle\lim_{x\to a}f(x)=L$ si
+        \begin{align*}
+          &\forall\varepsilon>0\ \exists\delta>0:\\
+          &x\in\Dom f,\ 0<|x-a|<\delta\ \Rightarrow\ |f(x)-L|<\varepsilon.
+        \end{align*}
+      \end{definicion}
+      \textbf{Lectura:} podemos hacer $f(x)$ tan cercano a $L$ como queramos (error $\varepsilon$), tomando $x$ suficientemente
+      cercano a $a$ (distancia menor que $\delta$), pero $x\neq a$.
+      \begin{idea}
+        Es un ``juego'': el adversario elige $\varepsilon$; nosotros debemos responder con un $\delta$ que funcione.
+      \end{idea}
+    \end{column}
+    \begin{column}{0.48\textwidth}
+      \centering
+      \begin{tikzpicture}
+        \begin{axis}[bma, xmin=0, xmax=4, ymin=0, ymax=4, width=7cm, height=6.5cm, xtick={1.62,2,2.33}, xticklabels={$a-\delta$,$a$,$a+\delta$}, ytick={1.6,2,2.4}, yticklabels={$L-\varepsilon$,$L$,$L+\varepsilon$}, samples=100]
+          \fill[uniVerde!20] (axis cs:0,1.6) rectangle (axis cs:4,2.4);
+          \fill[uniAzul!20] (axis cs:1.62,0) rectangle (axis cs:2.33,4);
+          \addplot[curva, domain=0.3:3.8] {0.25*x^2+0.15*x+0.7};
+          \draw[dashed] (axis cs:0,2) -- (axis cs:2,2) -- (axis cs:2,0);
+          \fill[uniGranate] (axis cs:2,2) circle (2pt);
+        \end{axis}
+      \end{tikzpicture}
+
+      \small Si $x$ está en la franja azul (salvo $a$), $f(x)$ cae en la franja verde.
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\begin{frame}{Ejemplo 1: una función afín}
+  \begin{ejemplo}
+    Probar que $\displaystyle\lim_{x\to2}(3x-1)=5$.
+
+    \textbf{Análisis (borrador).} Queremos $|(3x-1)-5|<\varepsilon$. \ Pero $|(3x-1)-5|=|3x-6|=3|x-2|$.
+    \ Basta $|x-2|<\frac\varepsilon3$.
+    \smallskip
+
+    \textbf{Demostración.} Dado $\varepsilon>0$, sea $\delta=\frac\varepsilon3$. Si $0<|x-2|<\delta$:
+    \[ |(3x-1)-5|=3|x-2|<3\cdot\frac\varepsilon3=\varepsilon.\qquad\blacksquare \]
+  \end{ejemplo}
+  \begin{observacion}
+    \begin{itemize}
+      \item Si $\varepsilon=0.03$, basta $\delta=0.01$: para $x\in(1.99,2.01)$, $3x-1\in(4.97,5.03)$.
+      \item Para una recta de pendiente $m\neq0$: $\delta=\frac{\varepsilon}{|m|}$ (más empinada $\Rightarrow$ $\delta$ más pequeño).
+    \end{itemize}
+  \end{observacion}
+\end{frame}
+
+\begin{frame}{Ejemplo 2: una cuadrática (acotar un factor)}
+  \begin{ejemplo}
+    Probar que $\displaystyle\lim_{x\to2}x^2=4$.
+
+    \textbf{Análisis.} $|x^2-4|=|x-2|\,|x+2|$. El factor $|x+2|$ no es constante: lo \textbf{acotamos}.
+    Si exigimos $|x-2|<1$, entonces $1<x<3$ y $|x+2|<5$. Así $|x^2-4|<5|x-2|$.
+    \smallskip
+
+    \textbf{Demostración.} Dado $\varepsilon>0$, sea $\delta=\min\left\{1,\frac\varepsilon5\right\}$. Si $0<|x-2|<\delta$:
+    \begin{itemize}
+      \item como $\delta\le1$, $|x+2|<5$;
+      \item como $\delta\le\frac\varepsilon5$, $|x^2-4|=|x-2||x+2|<\frac\varepsilon5\cdot5=\varepsilon$. \quad $\blacksquare$
+    \end{itemize}
+  \end{ejemplo}
+  \begin{block}{Técnica general}
+    Factorizar $|f(x)-L|=|x-a|\cdot|g(x)|$; acotar $|g(x)|\le M$ en una vecindad de radio fijo (p.\,ej.\ $1$); tomar
+    $\delta=\min\{1,\varepsilon/M\}$.
+  \end{block}
+\end{frame}
+
+\begin{frame}{Ejemplos 3 y 4}
+  \begin{ejemplo}[3: raíz cuadrada (racionalizar)]
+    $\displaystyle\lim_{x\to4}\sqrt x=2$. \ Para $x\ge0$:
+    \[ |\sqrt x-2|=\frac{|x-4|}{\sqrt x+2}\le\frac{|x-4|}{2}. \]
+    Dado $\varepsilon>0$, sea $\delta=\min\{4,2\varepsilon\}$ (así $x>0$). Si $0<|x-4|<\delta$: \ $|\sqrt x-2|<\varepsilon$. \ $\blacksquare$
+  \end{ejemplo}
+  \begin{ejemplo}[4: racional]
+    $\displaystyle\lim_{x\to3}\frac1x=\frac13$. \ $\left|\frac1x-\frac13\right|=\frac{|x-3|}{3|x|}$.
+    Si $|x-3|<1$, entonces $x>2$ y $\frac1{3|x|}<\frac16$. \ Tome $\delta=\min\{1,6\varepsilon\}$.
+  \end{ejemplo}
+  \begin{observacion}
+    El $\delta$ no es único: cualquier $\delta$ más pequeño también funciona. Solo hay que exhibir \emph{uno}.
+  \end{observacion}
+\end{frame}
+
+\section{Unicidad y no existencia}
+
+\begin{frame}{Unicidad del límite}
+  \begin{teorema}
+    Si $\lim_{x\to a}f(x)=L_1$ y $\lim_{x\to a}f(x)=L_2$, entonces $L_1=L_2$.
+  \end{teorema}
+  \textbf{Prueba.} Supongamos $L_1\neq L_2$ y sea $\varepsilon=\frac{|L_1-L_2|}{2}>0$. Existen $\delta_1,\delta_2$ tales que
+  $|f(x)-L_1|<\varepsilon$ y $|f(x)-L_2|<\varepsilon$ cuando $0<|x-a|<\delta=\min\{\delta_1,\delta_2\}$. Como $a$ es punto de acumulación,
+  existe tal $x$ en el dominio, y
+  \[ |L_1-L_2|\le|L_1-f(x)|+|f(x)-L_2|<2\varepsilon=|L_1-L_2|, \]
+  contradicción. $\blacksquare$
+  \begin{observacion}
+    Aquí se usa que $a$ es punto de acumulación: si no hubiera $x$ del dominio cerca de $a$, cualquier $L$ ``serviría''.
+  \end{observacion}
+\end{frame}
+
+\begin{frame}{Límites que no existen}
+  \begin{columns}
+    \begin{column}{0.5\textwidth}
+      \begin{ejemplo}[5: salto]
+        $\lim_{x\to0}\sgn(x)$ no existe: cerca de $0$ hay puntos con $f=1$ y con $f=-1$; ningún $L$ está a distancia $<\frac12$ de ambos.
+      \end{ejemplo}
+      \begin{ejemplo}[6: oscilación]
+        $\lim_{x\to0}\sen\frac1x$ no existe: en $x_n=\frac{1}{\frac\pi2+2n\pi}\to0$ vale $1$, y en $y_n=\frac1{\frac{3\pi}2+2n\pi}\to0$ vale $-1$.
+      \end{ejemplo}
+      \begin{ejemplo}[7: no acotada]
+        $\lim_{x\to0}\frac1{x^2}$ no existe (como número real); escribiremos $=+\infty$ (Semana 4).
+      \end{ejemplo}
+    \end{column}
+    \begin{column}{0.5\textwidth}
+      \centering
+      \begin{tikzpicture}
+        \begin{axis}[bma, xmin=-0.42, xmax=0.42, ymin=-1.4, ymax=1.4, width=7cm, height=5.5cm, xtick={-0.3,0.3}, ytick={-1,1}, samples=1500]
+          \addplot[curva, domain=-0.42:-0.004, thin] {sin(deg(1/x))};
+          \addplot[curva, domain=0.004:0.42, thin] {sin(deg(1/x))};
+        \end{axis}
+      \end{tikzpicture}
+
+      \small $y=\sen\frac1x$ oscila infinitas veces entre $-1$ y $1$ cerca de $0$.
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\section{Ejercicios}
+
+\begin{frame}{Ejercicios propuestos}
+  \small
+  \begin{ejercicio}
+    \begin{enumerate}
+      \item Halle $A'$: (a) $A=(0,1)\cup\{3\}$, \ (b) $A=\left\{\frac{n}{n+1}:n\in\N\right\}$, \ (c) $A=\Z$, \ (d) $A=\left\{\frac1n+\frac1m:n,m\in\N\right\}$.
+      \item Estime con una tabla: $\displaystyle\lim_{x\to0}\frac{e^x-1}{x}$, \ $\displaystyle\lim_{x\to0}\frac{1-\cos x}{x^2}$, \ $\displaystyle\lim_{x\to1}\frac{\sqrt x-1}{x-1}$.
+      \item Para $\lim_{x\to3}(2x+1)=7$, halle el mayor $\delta$ que sirve con $\varepsilon=0.01$.
+      \item Pruebe usando la definición: (a) $\lim_{x\to-1}(5-4x)=9$, \ (b) $\lim_{x\to3}(x^2-2x)=3$, \ (c) $\lim_{x\to2}\dfrac{x+1}{x}=\dfrac32$,
+        \ (d) $\lim_{x\to9}\sqrt x=3$, \ (e) $\lim_{x\to2}x^3=8$.
+      \item Pruebe que $\lim_{x\to0}x\sen\frac1x=0$ \ (use $|\sen|\le1$).
+      \item Pruebe que $\lim_{x\to0}\ent{x}$ no existe.
+      \item Pruebe: si $\lim_{x\to a}f(x)=L>0$, existe $\delta>0$ tal que $f(x)>\frac L2$ para $0<|x-a|<\delta$ (\emph{conservación del signo}).
+    \end{enumerate}
+  \end{ejercicio}
+\end{frame}
+
+\begin{frame}{Resumen}
+  \begin{itemize}
+    \item El límite describe el comportamiento \textbf{cerca} de $a$, no en $a$.
+    \item $a$ es punto de acumulación de $A$ si toda vecindad reducida de $a$ corta a $A$.
+    \item $\lim_{x\to a}f(x)=L\iff\forall\varepsilon>0\ \exists\delta>0:\ 0<|x-a|<\delta\Rightarrow|f(x)-L|<\varepsilon$.
+    \item Técnica: factorizar $|x-a|$, acotar el otro factor, $\delta=\min\{1,\varepsilon/M\}$.
+    \item El límite es único; no existe con saltos, oscilaciones o crecimiento no acotado.
+  \end{itemize}
+  \vspace{3mm}
+  \textbf{Próxima sesión:} aritmética de límites y límites laterales.
+\end{frame}
+
+\end{document}

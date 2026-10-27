@@ -1,0 +1,236 @@
+\documentclass[10pt,aspectratio=169]{beamer}
+\usepackage{bma01}
+
+\title[Formas indeterminadas]{La regla de L'Hospital: ejemplos de uso}
+\subtitle{Formas indeterminadas $0\cdot\infty$, $\infty-\infty$, $1^\infty$, $0^0$ e $\infty^0$\\[2pt]\small Semana 12 -- Sesión 1}
+
+\begin{document}
+
+\begin{frame}
+  \titlepage
+\end{frame}
+
+\begin{frame}{Objetivos de la sesión}
+  \begin{enumerate}
+    \item Transformar las formas $0\cdot\infty$ e $\infty-\infty$ en cocientes $\frac00$ ó $\frac\infty\infty$.
+    \item Resolver las formas \resaltar{exponenciales} $1^\infty$, $0^0$, $\infty^0$ usando logaritmos.
+    \item Aplicar L'Hospital a límites de \resaltar{sucesiones} y a modelos de física, química y finanzas.
+  \end{enumerate}
+  \begin{block}{Plan (2 horas)}
+    \begin{tabular}{ll}
+      0:00 -- 0:10 & Repaso: L'Hospital para $\frac00$ y $\frac\infty\infty$\\
+      0:10 -- 0:35 & Forma $0\cdot\infty$\\
+      0:35 -- 0:55 & Forma $\infty-\infty$\\
+      0:55 -- 1:35 & Formas exponenciales $1^\infty$, $0^0$, $\infty^0$\\
+      1:35 -- 1:45 & Sucesiones y aplicaciones\\
+      1:45 -- 2:00 & Ejercicios y resumen
+    \end{tabular}
+  \end{block}
+\end{frame}
+
+\begin{frame}{Panorama de las formas indeterminadas}
+  \renewcommand{\arraystretch}{1.5}
+  \begin{center}
+    \begin{tabular}{c|l|l}
+      \textbf{Forma} & \textbf{Transformación} & \textbf{Resultado}\\ \hline
+      $\frac00$, $\frac\infty\infty$ & L'Hospital directo & $\frac{f'}{g'}$\\
+      $0\cdot\infty$ & $fg=\dfrac{f}{1/g}$ ó $\dfrac{g}{1/f}$ & $\frac00$ ó $\frac\infty\infty$\\
+      $\infty-\infty$ & común denominador, factorizar, racionalizar & $\frac00$ ó $\frac\infty\infty$\\
+      $1^\infty$, $0^0$, $\infty^0$ & $f^g=e^{g\ln f}$ & exponente $0\cdot\infty$
+    \end{tabular}
+  \end{center}
+  \begin{observacion}
+    \textbf{No} son indeterminadas: $0^\infty=0$, \ $\infty\cdot\infty=\infty$, \ $\infty+\infty=\infty$, \ $\frac{0}{\infty}=0$, \ $\infty^\infty=\infty$.
+  \end{observacion}
+\end{frame}
+
+\section{Forma $0\cdot\infty$}
+
+\begin{frame}{Forma $0\cdot\infty$}
+  \begin{columns}
+    \begin{column}{0.55\textwidth}
+      \begin{ejemplo}[1]
+        $\displaystyle\lim_{x\to0^+}x\ln x=\lim_{x\to0^+}\frac{\ln x}{1/x}\overset{\infty/\infty}{=}\lim_{x\to0^+}\frac{1/x}{-1/x^2}=\lim_{x\to0^+}(-x)=0$.
+      \end{ejemplo}
+      \begin{observacion}
+        Elegir bien el cociente: $\frac{x}{1/\ln x}$ lleva a derivadas más complicadas. Conviene dejar en el denominador lo que es fácil de derivar.
+      \end{observacion}
+      \begin{ejemplo}[2]
+        $\displaystyle\lim_{x\to\infty}x\sen\frac1x=\lim_{x\to\infty}\frac{\sen(1/x)}{1/x}\overset{t=1/x}{=}\lim_{t\to0^+}\frac{\sen t}{t}=1$.
+      \end{ejemplo}
+    \end{column}
+    \begin{column}{0.45\textwidth}
+      \centering
+      \begin{tikzpicture}
+        \begin{axis}[bma, xmin=0, xmax=1.6, ymin=-0.5, ymax=0.8, width=6.3cm, height=5cm, xtick={0.3679,1}, xticklabels={$\frac1e$,$1$}, ytick={-0.3679}, yticklabels={$-\frac1e$}, samples=200, domain=0.001:1.55]
+          \addplot[curva] {x*ln(x)};
+          \addplot[only marks, mark=o, uniAzul, fill=white] coordinates {(0,0)};
+        \end{axis}
+      \end{tikzpicture}
+
+      \small $y=x\ln x$ tiende a $0$ cuando $x\to0^+$: el factor $x$ ``gana''.
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\begin{frame}{Más ejemplos $0\cdot\infty$}
+  \begin{ejemplo}[3]
+    $\displaystyle\lim_{x\to\infty}x^2e^{-x}=\lim_{x\to\infty}\frac{x^2}{e^x}=0$ \ (jerarquía de crecimiento).
+  \end{ejemplo}
+  \begin{ejemplo}[4]
+    $\displaystyle\lim_{x\to(\pi/2)^-}\left(\frac\pi2-x\right)\tan x=\lim\frac{\frac\pi2-x}{\ctg x}\overset{0/0}{=}\lim\frac{-1}{-\csc^2x}=1$.
+  \end{ejemplo}
+  \begin{ejemplo}[5: química, ley de Arrhenius]
+    La constante de velocidad es $k(T)=Ae^{-E_a/(RT)}$. Cuando $T\to0^+$, $k\to0$ muy rápido; además
+    $\displaystyle\lim_{T\to0^+}\frac{k(T)}{T^n}=0$ para todo $n$: \ ninguna potencia de $T$ compite con $e^{-c/T}$.
+  \end{ejemplo}
+\end{frame}
+
+\section{Forma $\infty-\infty$}
+
+\begin{frame}{Forma $\infty-\infty$}
+  \begin{ejemplo}[6: común denominador]
+    \[ \lim_{x\to0}\left(\frac1x-\frac1{\sen x}\right)=\lim_{x\to0}\frac{\sen x-x}{x\sen x}\overset{0/0}{=}\lim\frac{\cos x-1}{\sen x+x\cos x}\overset{0/0}{=}\lim\frac{-\sen x}{2\cos x-x\sen x}=0. \]
+  \end{ejemplo}
+  \begin{ejemplo}[7]
+    \[ \lim_{x\to1}\left(\frac{1}{\ln x}-\frac{1}{x-1}\right)=\lim_{x\to1}\frac{x-1-\ln x}{(x-1)\ln x}\overset{0/0}{=}\lim\frac{1-\frac1x}{\ln x+\frac{x-1}{x}}=\lim\frac{x-1}{x\ln x+x-1}\overset{0/0}{=}\lim\frac{1}{\ln x+2}=\frac12. \]
+  \end{ejemplo}
+  \begin{ejemplo}[8: factorizar]
+    $\displaystyle\lim_{x\to\infty}\left(e^x-x^3\right)=\lim_{x\to\infty}e^x\left(1-\frac{x^3}{e^x}\right)=\infty\cdot1=\infty$.
+  \end{ejemplo}
+\end{frame}
+
+\section{Formas exponenciales}
+
+\begin{frame}{Formas $1^\infty$, $0^0$, $\infty^0$: usar logaritmos}
+  \begin{block}{Método}
+    Si $y=f(x)^{g(x)}$, entonces $\ln y=g(x)\ln f(x)$ (forma $0\cdot\infty$). Si $\ln y\to L$, por continuidad de $e^x$:
+    \[ \lim y=e^{L}. \]
+  \end{block}
+  \begin{ejemplo}[9: el número $e$]
+    $\displaystyle\lim_{x\to\infty}\left(1+\frac ax\right)^{bx}$: \ $\ln y=bx\ln\left(1+\frac ax\right)=\frac{b\ln(1+a/x)}{1/x}\overset{0/0}{\to}\frac{b\cdot\frac{-a/x^2}{1+a/x}}{-1/x^2}\to ab$.
+    \[ \lim_{x\to\infty}\left(1+\frac ax\right)^{bx}=e^{ab}. \]
+  \end{ejemplo}
+  \begin{ejemplo}[10: interés compuesto]
+    Un capital $C$ al $r$ anual, capitalizado $n$ veces al año durante $t$ años: $C\left(1+\frac rn\right)^{nt}\xrightarrow[n\to\infty]{}Ce^{rt}$
+    (capitalización continua).
+  \end{ejemplo}
+\end{frame}
+
+\begin{frame}{Más formas $1^\infty$}
+  \begin{columns}
+    \begin{column}{0.55\textwidth}
+      \begin{ejemplo}[11]
+        $\displaystyle\lim_{x\to0}(\cos x)^{1/x^2}$: \ $\ln y=\dfrac{\ln\cos x}{x^2}\overset{0/0}{=}\dfrac{-\tan x}{2x}\to-\dfrac12$.
+        \[ \lim_{x\to0}(\cos x)^{1/x^2}=e^{-1/2}\approx0.6065. \]
+      \end{ejemplo}
+      \begin{ejemplo}[12]
+        $\displaystyle\lim_{x\to0}(1+\sen x)^{\ctg x}$: \ $\ln y=\dfrac{\ln(1+\sen x)}{\tan x}\to\dfrac{\frac{\cos x}{1+\sen x}}{\sec^2x}\to1$. \ Límite: $e$.
+      \end{ejemplo}
+    \end{column}
+    \begin{column}{0.45\textwidth}
+      \centering
+      \begin{tikzpicture}
+        \begin{axis}[bma, xmin=0, xmax=40, ymin=1.8, ymax=3, width=6.3cm, height=5cm, xtick={10,20,30}, ytick={2,2.718}, yticklabels={$2$,$e$}, samples=200, domain=0.3:40]
+          \addplot[curva] {(1+1/x)^x};
+          \draw[dashed, uniGranate] (axis cs:0,2.718) -- (axis cs:40,2.718);
+        \end{axis}
+      \end{tikzpicture}
+
+      \small $\left(1+\frac1x\right)^x\to e$ (crece lentamente).
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\begin{frame}{Formas $0^0$ e $\infty^0$}
+  \begin{columns}
+    \begin{column}{0.55\textwidth}
+      \begin{ejemplo}[13: $0^0$]
+        $\displaystyle\lim_{x\to0^+}x^x$: \ $\ln y=x\ln x\to0$ (Ej.\,1). \ $\lim x^x=e^0=1$.
+      \end{ejemplo}
+      \begin{ejemplo}[14: $0^0$]
+        $\displaystyle\lim_{x\to0^+}x^{\sen x}$: \ $\ln y=\sen x\ln x=\frac{\sen x}{x}\cdot x\ln x\to1\cdot0=0$. \ Límite: $1$.
+      \end{ejemplo}
+      \begin{ejemplo}[15: $\infty^0$]
+        $\displaystyle\lim_{x\to\infty}x^{1/x}$: \ $\ln y=\dfrac{\ln x}{x}\to0$. \ Límite: $1$.
+        \\ Para sucesiones: $\sqrt[n]n\to1$.
+      \end{ejemplo}
+      \begin{ejemplo}[16: $\infty^0$]
+        $\displaystyle\lim_{x\to\infty}(e^x+x)^{1/x}$: \ $\ln y=\dfrac{\ln(e^x+x)}{x}\to\dfrac{e^x+1}{e^x+x}\to1$. \ Límite: $e$.
+      \end{ejemplo}
+    \end{column}
+    \begin{column}{0.45\textwidth}
+      \centering
+      \begin{tikzpicture}
+        \begin{axis}[bma, xmin=0, xmax=1.6, ymin=0, ymax=1.4, width=6.3cm, height=5cm, xtick={0.3679,1}, xticklabels={$\frac1e$,$1$}, ytick={0.6922,1}, yticklabels={$e^{-1/e}$,$1$}, samples=200, domain=0.001:1.55]
+          \addplot[curva] {x^x};
+          \addplot[only marks, mark=o, uniAzul, fill=white] coordinates {(0,1)};
+          \addplot[only marks, mark=*, uniGranate] coordinates {(0.3679,0.6922)};
+        \end{axis}
+      \end{tikzpicture}
+
+      \small $y=x^x$: tiende a $1$ en $0^+$; mínimo en $x=\frac1e$.
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\section{Sucesiones y aplicaciones}
+
+\begin{frame}{Límites de sucesiones}
+  \begin{teorema}
+    Si $\lim_{x\to\infty}f(x)=L$, entonces $\lim_{n\to\infty}f(n)=L$.
+  \end{teorema}
+  \small (L'Hospital no se aplica a sucesiones directamente, pues $n\mapsto a_n$ no es derivable; se aplica a la función $f(x)$.)
+  \normalsize
+  \begin{ejemplo}[17]
+    $\displaystyle\lim_{n\to\infty}\frac{n^2}{2^n}=0$, \quad $\displaystyle\lim_{n\to\infty}n\left(\sqrt[n]{2}-1\right)=\lim_{x\to\infty}\frac{2^{1/x}-1}{1/x}=\ln2$.
+  \end{ejemplo}
+  \begin{ejemplo}[18: física, de Planck a Rayleigh--Jeans]
+    La densidad de energía de radiación de cuerpo negro es proporcional a $\dfrac{\nu^3}{e^{h\nu/kT}-1}$. Para bajas frecuencias ($u=\frac{h\nu}{kT}\to0$):
+    \[ \frac{\nu^3}{e^{u}-1}=\nu^3\cdot\frac{1}{u}\cdot\frac{u}{e^u-1}\approx\nu^3\cdot\frac{kT}{h\nu}=\frac{kT}{h}\,\nu^2\qquad(\text{ley clásica}). \]
+  \end{ejemplo}
+\end{frame}
+
+\section{Ejercicios}
+
+\begin{frame}{Ejercicios propuestos}
+  \small
+  \begin{ejercicio}
+    \begin{multicols}{2}
+    \begin{enumerate}
+      \item $\displaystyle\lim_{x\to0^+}\sqrt x\ln x$
+      \item $\displaystyle\lim_{x\to-\infty}xe^x$
+      \item $\displaystyle\lim_{x\to0^+}\sen x\ln x$
+      \item $\displaystyle\lim_{x\to0}\left(\frac1{x^2}-\ctg^2x\right)$
+      \item $\displaystyle\lim_{x\to\infty}\left(x-\ln x\right)$
+      \item $\displaystyle\lim_{x\to0}\left(\frac1x-\frac1{e^x-1}\right)$
+      \item $\displaystyle\lim_{x\to0}(1+2x)^{1/x}$
+      \item $\displaystyle\lim_{x\to0^+}(\tan x)^{x}$
+      \item $\displaystyle\lim_{x\to\infty}\left(\frac{x+2}{x-1}\right)^{x}$
+      \item $\displaystyle\lim_{x\to0^+}\left(\frac1x\right)^{\tan x}$
+      \item $\displaystyle\lim_{x\to0}\left(\frac{\sen x}{x}\right)^{1/x^2}$
+      \item $\displaystyle\lim_{n\to\infty}\left(\cos\frac1n\right)^{n^2}$
+    \end{enumerate}
+    \end{multicols}
+  \end{ejercicio}
+  \begin{ejercicio}[: aplicación]
+    \begin{enumerate}
+      \setcounter{enumi}{12}
+      \item Un depósito de S/ 1000 al 6 por ciento anual: compare el monto tras 10 años con capitalización anual, mensual, diaria y continua.
+    \end{enumerate}
+  \end{ejercicio}
+\end{frame}
+
+\begin{frame}{Resumen}
+  \begin{itemize}
+    \item $0\cdot\infty$: escribir como $\frac{f}{1/g}$ y aplicar L'Hospital.
+    \item $\infty-\infty$: común denominador, factorizar o racionalizar.
+    \item $1^\infty$, $0^0$, $\infty^0$: $\lim f^g=e^{\lim g\ln f}$.
+    \item Resultados útiles: $x\ln x\to0$, \ $x^x\to1$ ($x\to0^+$), \ $(1+\frac ax)^{bx}\to e^{ab}$, \ $\sqrt[n]n\to1$.
+    \item Para sucesiones, trabajar con la función de variable real.
+  \end{itemize}
+  \vspace{3mm}
+  \textbf{Próxima sesión:} polinomio de Taylor y aproximación polinomial.
+\end{frame}
+
+\end{document}

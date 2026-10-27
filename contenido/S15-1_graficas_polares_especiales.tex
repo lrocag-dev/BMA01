@@ -1,0 +1,297 @@
+\documentclass[10pt,aspectratio=169]{beamer}
+\usepackage{bma01}
+
+\title[Gráficas polares especiales]{Gráficas en coordenadas polares especiales}
+\subtitle{Caracoles, rosas, lemniscatas, espirales y cónicas. Ejemplos\\[2pt]\small Semana 15 -- Sesión 1}
+
+\begin{document}
+
+\begin{frame}
+  \titlepage
+\end{frame}
+
+\begin{frame}{Objetivos de la sesión}
+  \begin{enumerate}
+    \item Reconocer y graficar las familias clásicas: \resaltar{caracoles}, \resaltar{rosas}, \resaltar{lemniscatas} y \resaltar{espirales}.
+    \item Escribir las \resaltar{cónicas} en forma polar y relacionarlas con las órbitas planetarias.
+    \item Hallar \resaltar{intersecciones} de curvas polares (incluido el polo).
+  \end{enumerate}
+  \begin{block}{Plan (2 horas)}
+    \begin{tabular}{ll}
+      0:00 -- 0:25 & Caracoles (limaçons) y cardioides\\
+      0:25 -- 0:45 & Rosas y lemniscatas\\
+      0:45 -- 1:05 & Espirales\\
+      1:05 -- 1:30 & Cónicas en polares y órbitas\\
+      1:30 -- 1:45 & Intersecciones de curvas polares\\
+      1:45 -- 2:00 & Ejercicios y resumen del curso
+    \end{tabular}
+  \end{block}
+\end{frame}
+
+\section{Caracoles}
+
+\begin{frame}{Caracoles: $r=a+b\cos\theta$ \ (ó $a+b\sen\theta$), \ $a,b>0$}
+  \centering
+  \begin{tikzpicture}
+    \begin{axis}[bma, name=c1, xmin=-1.5, xmax=3.5, ymin=-2.2, ymax=2.2, axis equal image, width=4.6cm, height=4.6cm, xtick=\empty, ytick=\empty, xlabel={}, ylabel={}, samples=200, title={\scriptsize $a<b$: lazo interior}]
+      \addplot[curva, domain=0:360] ({(1+2*cos(x))*cos(x)},{(1+2*cos(x))*sin(x)});
+    \end{axis}
+    \begin{axis}[bma, at={(c1.east)}, anchor=west, xshift=0.3cm, name=c2, xmin=-1, xmax=3, ymin=-2, ymax=2, axis equal image, width=4.6cm, height=4.6cm, xtick=\empty, ytick=\empty, xlabel={}, ylabel={}, samples=200, title={\scriptsize $a=b$: cardioide}]
+      \addplot[curva2, domain=0:360] ({(1+cos(x))*cos(x)},{(1+cos(x))*sin(x)});
+    \end{axis}
+    \begin{axis}[bma, at={(c2.east)}, anchor=west, xshift=0.3cm, name=c3, xmin=-1, xmax=3, ymin=-2, ymax=2, axis equal image, width=4.6cm, height=4.6cm, xtick=\empty, ytick=\empty, xlabel={}, ylabel={}, samples=200, title={\scriptsize $b<a<2b$: con hendidura}]
+      \addplot[uniVerde, very thick, domain=0:360] ({(1.5+cos(x))*cos(x)/1.3},{(1.5+cos(x))*sin(x)/1.3});
+    \end{axis}
+    \begin{axis}[bma, at={(c3.east)}, anchor=west, xshift=0.3cm, xmin=-1, xmax=3, ymin=-2, ymax=2, axis equal image, width=4.6cm, height=4.6cm, xtick=\empty, ytick=\empty, xlabel={}, ylabel={}, samples=200, title={\scriptsize $a\ge2b$: convexo}]
+      \addplot[uniMorado, very thick, domain=0:360] ({(2+cos(x))*cos(x)/1.5},{(2+cos(x))*sin(x)/1.5});
+    \end{axis}
+  \end{tikzpicture}
+
+  \vspace{2mm}
+  \begin{ejemplo}[1: $r=1+2\cos\theta$]
+    \begin{itemize}
+      \item Simétrico respecto del eje polar. $r=0$ cuando $\cos\theta=-\frac12$: $\theta=\pm\frac{2\pi}3$ (tangentes en el polo).
+      \item Para $\frac{2\pi}3<\theta<\frac{4\pi}3$, $r<0$: se dibuja el \textbf{lazo interior} (en el lado de $x>0$).
+      \item $r_{\max}=3$ en $\theta=0$; el lazo interior cruza el eje en $r=-1$ ($\theta=\pi$), es decir en el punto $(1,0)$.
+    \end{itemize}
+  \end{ejemplo}
+\end{frame}
+
+\section{Rosas y lemniscatas}
+
+\begin{frame}{Rosas: $r=a\cos n\theta$ \ ó \ $r=a\sen n\theta$}
+  \begin{columns}
+    \begin{column}{0.4\textwidth}
+      \begin{proposicion}
+        \begin{itemize}
+          \item $n$ \textbf{impar}: $n$ pétalos (se recorren en $[0,\pi]$).
+          \item $n$ \textbf{par}: $2n$ pétalos (en $[0,2\pi]$).
+          \item Cada pétalo mide $|a|$; pétalos consecutivos separados por $\frac{2\pi}{n}$ ($n$ impar) ó $\frac\pi n$ ($n$ par).
+        \end{itemize}
+      \end{proposicion}
+      \begin{ejemplo}[2]
+        $r=\sen3\theta$: 3 pétalos; $r=0$ en $\theta=0,\frac\pi3,\frac{2\pi}3$ (tangentes en el polo); puntas en $\theta=\frac\pi6,\frac\pi2,\frac{5\pi}6$.
+      \end{ejemplo}
+    \end{column}
+    \begin{column}{0.6\textwidth}
+      \centering
+      \begin{tikzpicture}
+        \begin{axis}[bma, name=r1, xmin=-1.2, xmax=1.2, ymin=-1.2, ymax=1.2, axis equal image, width=4.6cm, height=4.6cm, xtick=\empty, ytick=\empty, xlabel={}, ylabel={}, samples=300, title={\scriptsize $r=\sen3\theta$}]
+          \addplot[curva2, domain=0:180] ({sin(3*x)*cos(x)},{sin(3*x)*sin(x)});
+        \end{axis}
+        \begin{axis}[bma, at={(r1.east)}, anchor=west, xshift=0.3cm, xmin=-1.2, xmax=1.2, ymin=-1.2, ymax=1.2, axis equal image, width=4.6cm, height=4.6cm, xtick=\empty, ytick=\empty, xlabel={}, ylabel={}, samples=400, title={\scriptsize $r=\cos4\theta$}]
+          \addplot[curva, domain=0:360] ({cos(4*x)*cos(x)},{cos(4*x)*sin(x)});
+        \end{axis}
+      \end{tikzpicture}
+      \begin{tikzpicture}
+        \begin{axis}[bma, name=r3, xmin=-1.2, xmax=1.2, ymin=-1.2, ymax=1.2, axis equal image, width=4.6cm, height=4.6cm, xtick=\empty, ytick=\empty, xlabel={}, ylabel={}, samples=400, title={\scriptsize $r=\cos5\theta$}]
+          \addplot[uniVerde, very thick, domain=0:180] ({cos(5*x)*cos(x)},{cos(5*x)*sin(x)});
+        \end{axis}
+        \begin{axis}[bma, at={(r3.east)}, anchor=west, xshift=0.3cm, xmin=-1.2, xmax=1.2, ymin=-1.2, ymax=1.2, axis equal image, width=4.6cm, height=4.6cm, xtick=\empty, ytick=\empty, xlabel={}, ylabel={}, samples=400, title={\scriptsize $r=\sen2\theta$}]
+          \addplot[uniMorado, very thick, domain=0:360] ({sin(2*x)*cos(x)},{sin(2*x)*sin(x)});
+        \end{axis}
+      \end{tikzpicture}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\begin{frame}{Lemniscatas: $r^2=a^2\cos2\theta$ \ ó \ $r^2=a^2\sen2\theta$}
+  \begin{columns}
+    \begin{column}{0.55\textwidth}
+      \begin{ejemplo}[3: lemniscata de Bernoulli]
+        $r^2=4\cos2\theta$.
+        \begin{itemize}
+          \item Solo hay puntos donde $\cos2\theta\ge0$: $\theta\in\left[-\frac\pi4,\frac\pi4\right]\cup\left[\frac{3\pi}4,\frac{5\pi}4\right]$.
+          \item Simétrica respecto del eje polar, del eje $y$ y del polo ($r\to-r$ no cambia $r^2$).
+          \item Tangentes en el polo: $\theta=\pm\frac\pi4$.
+          \item Cartesiana: $(x^2+y^2)^2=4(x^2-y^2)$.
+        \end{itemize}
+      \end{ejemplo}
+      \small Es el lugar de los puntos cuyo \emph{producto} de distancias a dos focos $(\pm\sqrt2,0)$ es $2$.
+    \end{column}
+    \begin{column}{0.45\textwidth}
+      \centering
+      \begin{tikzpicture}
+        \begin{axis}[bma, xmin=-2.4, xmax=2.4, ymin=-1.3, ymax=1.3, axis equal image, width=6.5cm, height=4.4cm, xtick={-2,2}, ytick=\empty, samples=200]
+          \addplot[curva, domain=-45:45] ({2*sqrt(max(cos(2*x),0))*cos(x)},{2*sqrt(max(cos(2*x),0))*sin(x)});
+          \addplot[curva, domain=135:225] ({2*sqrt(max(cos(2*x),0))*cos(x)},{2*sqrt(max(cos(2*x),0))*sin(x)});
+          \addplot[gray, dashed, domain=-1.3:1.3] {x};
+          \addplot[gray, dashed, domain=-1.3:1.3] {-x};
+          \addplot[only marks, mark=*, uniGranate] coordinates {(1.414,0) (-1.414,0)};
+        \end{axis}
+      \end{tikzpicture}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\section{Espirales}
+
+\begin{frame}{Espirales}
+  \begin{columns}
+    \begin{column}{0.33\textwidth}
+      \centering
+      \begin{tikzpicture}
+        \begin{axis}[bma, xmin=-14, xmax=14, ymin=-14, ymax=14, axis equal image, width=4.8cm, height=4.8cm, xtick=\empty, ytick=\empty, samples=300]
+          \addplot[curva, domain=0:720] ({rad(x)*cos(x)},{rad(x)*sin(x)});
+        \end{axis}
+      \end{tikzpicture}\\
+      \small \textbf{Arquímedes} $r=\theta$: espiras equidistantes ($2\pi$). Discos de vinilo, resortes de reloj.
+    \end{column}
+    \begin{column}{0.33\textwidth}
+      \centering
+      \begin{tikzpicture}
+        \begin{axis}[bma, xmin=-9, xmax=13.5, ymin=-10, ymax=7, axis equal image, width=4.8cm, height=4.8cm, xtick=\empty, ytick=\empty, samples=300]
+          \addplot[curva2, domain=0:720] ({exp(rad(x)/5)*cos(x)},{exp(rad(x)/5)*sin(x)});
+        \end{axis}
+      \end{tikzpicture}\\
+      \small \textbf{Logarítmica} $r=e^{b\theta}$: corta a los radios con ángulo constante. Nautilo, galaxias, halcones.
+    \end{column}
+    \begin{column}{0.33\textwidth}
+      \centering
+      \begin{tikzpicture}
+        \begin{axis}[bma, xmin=-0.6, xmax=1.5, ymin=-0.6, ymax=1.3, axis equal image, width=4.8cm, height=4.8cm, xtick=\empty, ytick={1}, samples=300]
+          \addplot[uniVerde, very thick, domain=30:900] ({cos(x)/rad(x)},{sin(x)/rad(x)});
+          \addplot[gray, dashed, domain=-0.6:1.5] {1};
+        \end{axis}
+      \end{tikzpicture}\\
+      \small \textbf{Hiperbólica} $r=\frac1\theta$: asíntota $y=1$ (pues $y=\frac{\sen\theta}{\theta}\to1$ si $\theta\to0^+$).
+    \end{column}
+  \end{columns}
+  \begin{ejemplo}[4: ángulo constante de la espiral logarítmica]
+    Para $r=e^{b\theta}$, el ángulo $\psi$ entre el radio y la tangente cumple $\tan\psi=\dfrac{r}{dr/d\theta}=\dfrac1b$: constante.
+  \end{ejemplo}
+\end{frame}
+
+\section{Cónicas en polares}
+
+\begin{frame}{Cónicas en coordenadas polares}
+  \begin{columns}
+    \begin{column}{0.55\textwidth}
+      \begin{teorema}
+        Con un foco en el polo y directriz $x=d$, la cónica de excentricidad $e>0$ es
+        \[ r=\frac{ed}{1+e\cos\theta}. \]
+        \begin{itemize}
+          \item $0<e<1$: \textbf{elipse}; \ $e=1$: \textbf{parábola}; \ $e>1$: \textbf{hipérbola}.
+        \end{itemize}
+      \end{teorema}
+      \textbf{Prueba.} Cónica: $\frac{|PF|}{|Pl|}=e$, con $|PF|=r$ y $|Pl|=d-r\cos\theta$. Así $r=e(d-r\cos\theta)$. \ $\blacksquare$
+      \begin{ejemplo}[5: órbitas de Kepler]
+        Los planetas describen elipses con el Sol en un foco: $r=\frac{a(1-e^2)}{1+e\cos\theta}$. Para la Tierra $e\approx0.017$ (casi circular);
+        para el cometa Halley $e\approx0.967$.
+      \end{ejemplo}
+    \end{column}
+    \begin{column}{0.45\textwidth}
+      \centering
+      \begin{tikzpicture}
+        \begin{axis}[bma, xmin=-4.5, xmax=2.5, ymin=-3.3, ymax=3.3, axis equal image, width=6.5cm, height=6.5cm, xtick=\empty, ytick=\empty, samples=300, restrict y to domain=-6:6, restrict x to domain=-8:8, unbounded coords=jump]
+          \addplot[curva, domain=0:360] ({1/(1+0.5*cos(x))*cos(x)},{1/(1+0.5*cos(x))*sin(x)});
+          \addplot[curva2, domain=-150:150] ({1/(1+cos(x))*cos(x)},{1/(1+cos(x))*sin(x)});
+          \addplot[uniVerde, very thick, domain=-110:110] ({1/(1+2*cos(x))*cos(x)},{1/(1+2*cos(x))*sin(x)});
+          \addplot[only marks, mark=*, black] coordinates {(0,0)};
+          \node[uniAzul] at (axis cs:-1.4,1.3) {\scriptsize $e=\frac12$};
+          \node[uniGranate] at (axis cs:-3.3,2.7) {\scriptsize $e=1$};
+          \node[uniVerde] at (axis cs:1.3,2.6) {\scriptsize $e=2$};
+        \end{axis}
+      \end{tikzpicture}
+
+      \small Foco en el polo; $ed=1$.
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\section{Intersecciones}
+
+\begin{frame}{Intersecciones de curvas polares}
+  \begin{columns}
+    \begin{column}{0.55\textwidth}
+      \begin{block}{Cuidado}
+        Resolver $f(\theta)=g(\theta)$ \textbf{no basta}: un punto puede estar en ambas curvas con \emph{distintas} representaciones
+        (en particular, el \textbf{polo}).
+      \end{block}
+      \begin{ejemplo}[6]
+        $r=1+\cos\theta$ y $r=3\cos\theta$.
+        \begin{itemize}
+          \item $1+\cos\theta=3\cos\theta\Rightarrow\cos\theta=\frac12$: \ $\theta=\pm\frac\pi3$, $r=\frac32$.
+          \item Además ambas pasan por el \textbf{polo}: la cardioide en $\theta=\pi$ y la circunferencia en $\theta=\frac\pi2$.
+        \end{itemize}
+        Intersecciones: $\left(\frac32,\pm\frac\pi3\right)$ y el polo.
+      \end{ejemplo}
+      \small Recomendación: siempre graficar ambas curvas.
+    \end{column}
+    \begin{column}{0.45\textwidth}
+      \centering
+      \begin{tikzpicture}
+        \begin{axis}[bma, xmin=-0.6, xmax=3.3, ymin=-1.7, ymax=1.7, axis equal image, width=6.4cm, height=5.8cm, xtick={1.5,3}, ytick=\empty, samples=200]
+          \addplot[curva2, domain=0:360] ({(1+cos(x))*cos(x)},{(1+cos(x))*sin(x)});
+          \addplot[curva, domain=0:180] ({3*cos(x)*cos(x)},{3*cos(x)*sin(x)});
+          \addplot[only marks, mark=*, black] coordinates {(0.75,1.299) (0.75,-1.299) (0,0)};
+        \end{axis}
+      \end{tikzpicture}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\section{Ejercicios}
+
+\begin{frame}{Ejercicios propuestos}
+  \small
+  \begin{ejercicio}
+    \begin{enumerate}
+      \item Identifique y grafique (simetrías, tangentes en el polo, valores extremos de $r$):
+        (a) $r=2-3\sen\theta$, \ (b) $r=3+2\cos\theta$, \ (c) $r=2\cos3\theta$, \ (d) $r^2=9\sen2\theta$, \ (e) $r=e^{-\theta/4}$, $\theta\ge0$.
+      \item Halle todas las intersecciones de: (a) $r=\sen\theta$ y $r=\cos\theta$; \ (b) $r=1-\cos\theta$ y $r=\cos\theta$; \ (c) $r^2=\cos2\theta$ y $r=\frac{1}{\sqrt2}$.
+      \item Identifique la cónica y halle sus vértices: (a) $r=\dfrac{6}{2+\cos\theta}$, \ (b) $r=\dfrac{4}{1-\sen\theta}$, \ (c) $r=\dfrac{3}{1+2\cos\theta}$.
+      \item La órbita de Mercurio tiene $a\approx0.387$ UA y $e\approx0.206$. Halle su distancia mínima (perihelio) y máxima (afelio) al Sol.
+      \item Pruebe que en la rosa $r=\cos n\theta$ con $n$ par hay $2n$ pétalos.
+      \item Halle la pendiente de la tangente a la espiral $r=\theta$ en $\theta=\pi$ y en $\theta=2\pi$.
+    \end{enumerate}
+  \end{ejercicio}
+\end{frame}
+
+\begin{frame}{Resumen de la sesión}
+  \renewcommand{\arraystretch}{1.4}
+  \begin{center}
+    \begin{tabular}{l|l|l}
+      \textbf{Familia} & \textbf{Ecuación} & \textbf{Rasgo}\\ \hline
+      Caracol & $r=a+b\cos\theta$ & lazo ($a<b$), cardioide ($a=b$)\\
+      Rosa & $r=a\cos n\theta$ & $n$ ó $2n$ pétalos\\
+      Lemniscata & $r^2=a^2\cos2\theta$ & figura en ocho\\
+      Espirales & $r=a\theta$, $r=e^{b\theta}$, $r=\frac1\theta$ & equidistante, equiangular, asintótica\\
+      Cónicas & $r=\frac{ed}{1+e\cos\theta}$ & elipse, parábola, hipérbola
+    \end{tabular}
+  \end{center}
+  \begin{itemize}
+    \item Intersecciones: resolver $f=g$ \textbf{y} revisar el polo y otras representaciones.
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Cierre del curso}
+  \begin{columns}[t]
+    \begin{column}{0.5\textwidth}
+      \textbf{Lo que construimos:}
+      \begin{itemize}
+        \item Funciones y modelos.
+        \item Límites y continuidad (Bolzano, Weierstrass).
+        \item La derivada: reglas, TVM, cadena, implícita, inversas.
+        \item Aplicaciones: optimización, linealización, razones relacionadas, gráficas, L'Hospital, Taylor.
+        \item Curvas paramétricas y polares.
+      \end{itemize}
+    \end{column}
+    \begin{column}{0.5\textwidth}
+      \textbf{Lo que viene (Cálculo Integral):}
+      \begin{itemize}
+        \item Antiderivadas: ``deshacer'' la derivada.
+        \item La integral definida: áreas, volúmenes, longitudes (también de curvas paramétricas y polares).
+        \item Series de Taylor: polinomios ``infinitos''.
+        \item Ecuaciones diferenciales.
+      \end{itemize}
+    \end{column}
+  \end{columns}
+  \vspace{3mm}
+  \begin{idea}
+    La derivada mide el \textbf{cambio instantáneo}; la integral \textbf{acumula} cambios. Juntas son el lenguaje de las ciencias.
+  \end{idea}
+  \textbf{Siguiente:} Examen Final (semanas 9 a 14).
+\end{frame}
+
+\end{document}

@@ -1,0 +1,262 @@
+\documentclass[10pt,aspectratio=169]{beamer}
+\usepackage{bma01}
+
+\title[Aritmética de límites]{Aritmética de límites}
+\subtitle{Límites laterales\\[2pt]\small Semana 3 -- Sesión 2}
+
+\begin{document}
+
+\begin{frame}
+  \titlepage
+\end{frame}
+
+\begin{frame}{Objetivos de la sesión}
+  \begin{enumerate}
+    \item Enunciar y aplicar las \resaltar{propiedades algebraicas} de los límites.
+    \item Resolver indeterminaciones $\frac00$ por factorización y racionalización.
+    \item Aplicar el \resaltar{teorema del sándwich} y el límite fundamental $\lim_{x\to0}\frac{\sen x}{x}=1$.
+    \item Calcular \resaltar{límites laterales} y usarlos para decidir la existencia de un límite.
+  \end{enumerate}
+  \begin{block}{Plan (2 horas)}
+    \begin{tabular}{ll}
+      0:00 -- 0:25 & Álgebra de límites (con una demostración)\\
+      0:25 -- 0:55 & Indeterminaciones $\frac00$: factorizar y racionalizar\\
+      0:55 -- 1:20 & Teorema del sándwich. Límites trigonométricos\\
+      1:20 -- 1:45 & Límites laterales\\
+      1:45 -- 2:00 & Ejercicios y resumen
+    \end{tabular}
+  \end{block}
+\end{frame}
+
+\section{Álgebra de límites}
+
+\begin{frame}{Propiedades de los límites}
+  \begin{teorema}
+    Si $\lim_{x\to a}f(x)=L$ y $\lim_{x\to a}g(x)=M$, entonces:
+    \begin{multicols}{2}
+    \begin{enumerate}
+      \item $\lim(f\pm g)=L\pm M$
+      \item $\lim(cf)=cL$
+      \item $\lim(fg)=LM$
+      \item $\lim\dfrac fg=\dfrac LM$, \ si $M\neq0$
+      \item $\lim f^n=L^n$, \ $n\in\N$
+      \item $\lim\sqrt[n]{f}=\sqrt[n]{L}$ \ ($L>0$ si $n$ par)
+    \end{enumerate}
+    \end{multicols}
+  \end{teorema}
+  \textbf{Prueba de 1.} Dado $\varepsilon>0$, existen $\delta_1,\delta_2$ con $|f(x)-L|<\frac\varepsilon2$ y $|g(x)-M|<\frac\varepsilon2$.
+  Con $\delta=\min\{\delta_1,\delta_2\}$:
+  \[ |(f+g)(x)-(L+M)|\le|f(x)-L|+|g(x)-M|<\tfrac\varepsilon2+\tfrac\varepsilon2=\varepsilon.\qquad\blacksquare \]
+  \begin{proposicion}[consecuencia]
+    Si $P$ es un polinomio, $\lim_{x\to a}P(x)=P(a)$. Si $R=\frac PQ$ con $Q(a)\neq0$, $\lim_{x\to a}R(x)=R(a)$.
+  \end{proposicion}
+\end{frame}
+
+\begin{frame}{Ejemplos directos}
+  \begin{ejemplo}[1]
+    $\displaystyle\lim_{x\to2}\frac{x^3+2x-1}{x^2+1}=\frac{8+4-1}{5}=\frac{11}{5}$.
+  \end{ejemplo}
+  \begin{ejemplo}[2]
+    $\displaystyle\lim_{x\to3}\sqrt{\frac{x^2+7}{x-1}}=\sqrt{\frac{16}{2}}=2\sqrt2$.
+  \end{ejemplo}
+  \begin{observacion}[¡cuidado!]
+    \begin{itemize}
+      \item Las propiedades requieren que \textbf{ambos} límites existan: $\lim_{x\to0}\left(x\cdot\frac1x\right)=1$, pero no podemos
+        escribirlo como $\lim x\cdot\lim\frac1x$.
+      \item Si $\lim g=0$ y $\lim f\ne0$, el cociente $\frac fg$ \textbf{no} tiene límite finito.
+      \item Si $\lim f=\lim g=0$: forma \resaltar{indeterminada} $\frac00$; hay que transformar la expresión.
+    \end{itemize}
+  \end{observacion}
+\end{frame}
+
+\section{Indeterminaciones}
+
+\begin{frame}{Indeterminación $\frac00$: factorizar}
+  \begin{idea}
+    Si $P(a)=Q(a)=0$, entonces $(x-a)$ divide a ambos. Simplificamos el factor común (válido porque $x\neq a$ en el límite).
+  \end{idea}
+  \begin{ejemplo}[3]
+    $\displaystyle\lim_{x\to3}\frac{x^2-9}{x^2-5x+6}=\lim_{x\to3}\frac{(x-3)(x+3)}{(x-3)(x-2)}=\lim_{x\to3}\frac{x+3}{x-2}=6$.
+  \end{ejemplo}
+  \begin{ejemplo}[4]
+    $\displaystyle\lim_{x\to1}\frac{x^3-1}{x^4-1}=\lim_{x\to1}\frac{(x-1)(x^2+x+1)}{(x-1)(x+1)(x^2+1)}=\frac{3}{4}$.
+  \end{ejemplo}
+  \begin{ejemplo}[5: definición de derivada (adelanto)]
+    $\displaystyle\lim_{h\to0}\frac{(2+h)^3-8}{h}=\lim_{h\to0}\frac{12h+6h^2+h^3}{h}=\lim_{h\to0}(12+6h+h^2)=12$.
+  \end{ejemplo}
+\end{frame}
+
+\begin{frame}{Indeterminación $\frac00$: racionalizar}
+  \begin{ejemplo}[6]
+    $\displaystyle\lim_{x\to4}\frac{\sqrt x-2}{x-4}=\lim_{x\to4}\frac{(\sqrt x-2)(\sqrt x+2)}{(x-4)(\sqrt x+2)}=\lim_{x\to4}\frac{1}{\sqrt x+2}=\frac14$.
+  \end{ejemplo}
+  \begin{ejemplo}[7]
+    $\displaystyle\lim_{x\to0}\frac{\sqrt{1+x}-\sqrt{1-x}}{x}=\lim_{x\to0}\frac{2x}{x\left(\sqrt{1+x}+\sqrt{1-x}\right)}=1$.
+  \end{ejemplo}
+  \begin{ejemplo}[8: raíz cúbica]
+    Con $a^3-b^3=(a-b)(a^2+ab+b^2)$:
+    \[ \lim_{x\to8}\frac{\sqrt[3]x-2}{x-8}=\lim_{x\to8}\frac{1}{\sqrt[3]{x^2}+2\sqrt[3]x+4}=\frac1{12}. \]
+  \end{ejemplo}
+  \small \textbf{Alternativa (cambio de variable):} con $t=\sqrt[3]x\to2$, \
+  $\lim_{t\to2}\frac{t-2}{t^3-8}=\lim_{t\to2}\frac{1}{t^2+2t+4}=\frac1{12}$.
+\end{frame}
+
+\section{Teorema del sándwich}
+
+\begin{frame}{Teorema del sándwich (de la compresión)}
+  \begin{columns}
+    \begin{column}{0.55\textwidth}
+      \begin{teorema}
+        Si $g(x)\le f(x)\le h(x)$ cerca de $a$ (salvo quizá en $a$) y
+        \[ \lim_{x\to a}g(x)=\lim_{x\to a}h(x)=L, \]
+        entonces $\lim_{x\to a}f(x)=L$.
+      \end{teorema}
+      \begin{ejemplo}[10]
+        $\displaystyle\lim_{x\to0}x^2\sen\frac1x=0$: \ como $-1\le\sen\frac1x\le1$,
+        \[ -x^2\le x^2\sen\frac1x\le x^2, \]
+        y $\pm x^2\to0$.
+      \end{ejemplo}
+    \end{column}
+    \begin{column}{0.45\textwidth}
+      \centering
+      \begin{tikzpicture}
+        \begin{axis}[bma, xmin=-0.42, xmax=0.42, ymin=-0.18, ymax=0.18, width=6.6cm, height=5.6cm, xtick={-0.3,0.3}, ytick=\empty, samples=1200, scaled ticks=false]
+          \addplot[curva2, domain=-0.42:0.42] {x^2};
+          \addplot[curva2, domain=-0.42:0.42] {-x^2};
+          \addplot[curva, thin, domain=-0.42:-0.003] {x^2*sin(deg(1/x))};
+          \addplot[curva, thin, domain=0.003:0.42] {x^2*sin(deg(1/x))};
+          \node[uniGranate] at (axis cs:0.33,0.15) {\scriptsize $x^2$};
+          \node[uniGranate] at (axis cs:0.33,-0.15) {\scriptsize $-x^2$};
+        \end{axis}
+      \end{tikzpicture}
+
+      \small La función queda ``atrapada'' entre $-x^2$ y $x^2$.
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\begin{frame}{El límite trigonométrico fundamental}
+  \begin{columns}
+    \begin{column}{0.55\textwidth}
+      \begin{teorema}
+        $\displaystyle\lim_{x\to0}\frac{\sen x}{x}=1$.
+      \end{teorema}
+      \textbf{Prueba.} Para $0<x<\frac\pi2$, comparando áreas en el círculo unitario:
+      \[ \underbrace{\tfrac12\sen x}_{\triangle OAP}\ \le\ \underbrace{\tfrac12x}_{\text{sector}}\ \le\ \underbrace{\tfrac12\tan x}_{\triangle OAT}. \]
+      Dividiendo entre $\frac12\sen x>0$ e invirtiendo: \ $\cos x\le\dfrac{\sen x}{x}\le1$.
+      Como $\cos x\to1$, por sándwich el límite lateral derecho es $1$; por paridad, también el izquierdo. $\blacksquare$
+    \end{column}
+    \begin{column}{0.45\textwidth}
+      \centering
+      \begin{tikzpicture}[scale=2.6]
+        \fill[uniAzul!15] (0,0) -- (1,0) arc (0:40:1) -- cycle;
+        \draw[thick] (0,0) -- (1,0) node[below] {\scriptsize $A$};
+        \draw[thick] (0,0) -- (40:1) node[above left] {\scriptsize $P$};
+        \draw[thick] (1,0) arc (0:60:1);
+        \draw[uniGranate, thick] (1,0) -- (1,{tan(40)}) node[right] {\scriptsize $T$};
+        \draw[uniGranate, thick] (0,0) -- (1,{tan(40)});
+        \draw[uniVerde, thick] (40:1) -- ({cos(40)},0);
+        \node[uniVerde] at ({cos(40)-0.1},0.3) {\tiny $\sen x$};
+        \node[uniGranate, right] at (1,0.4) {\tiny $\tan x$};
+        \draw (0.2,0) arc (0:40:0.2); \node at (0.27,0.09) {\tiny $x$};
+        \node[below left] at (0,0) {\scriptsize $O$};
+      \end{tikzpicture}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\begin{frame}{Consecuencias}
+  \begin{ejemplo}[11]
+    $\displaystyle\lim_{x\to0}\frac{\sen5x}{x}=\lim_{x\to0}5\cdot\frac{\sen5x}{5x}=5$. \qquad
+    $\displaystyle\lim_{x\to0}\frac{\tan x}{x}=\lim_{x\to0}\frac{\sen x}{x}\cdot\frac{1}{\cos x}=1$.
+  \end{ejemplo}
+  \begin{ejemplo}[12]
+    \[ \lim_{x\to0}\frac{1-\cos x}{x^2}=\lim_{x\to0}\frac{1-\cos^2x}{x^2(1+\cos x)}=\lim_{x\to0}\left(\frac{\sen x}{x}\right)^2\frac{1}{1+\cos x}=\frac12. \]
+  \end{ejemplo}
+  \begin{ejemplo}[13]
+    $\displaystyle\lim_{x\to\pi}\frac{\sen x}{x-\pi}$: \ con $t=x-\pi\to0$, \ $\sen x=\sen(t+\pi)=-\sen t$: \ el límite es $-1$.
+  \end{ejemplo}
+  \begin{observacion}
+    En física, $\sen\theta\approx\theta$ para ángulos pequeños (en radianes) es justamente este límite: aproximación del péndulo y de la óptica paraxial.
+  \end{observacion}
+\end{frame}
+
+\section{Límites laterales}
+
+\begin{frame}{Límites laterales}
+  \begin{columns}
+    \begin{column}{0.55\textwidth}
+      \begin{definicion}
+        \begin{itemize}
+          \item $\displaystyle\lim_{x\to a^+}f(x)=L$ si $\forall\varepsilon>0\ \exists\delta>0$: \ $a<x<a+\delta\Rightarrow|f(x)-L|<\varepsilon$.
+          \item $\displaystyle\lim_{x\to a^-}f(x)=L$ si $\forall\varepsilon>0\ \exists\delta>0$: \ $a-\delta<x<a\Rightarrow|f(x)-L|<\varepsilon$.
+        \end{itemize}
+      \end{definicion}
+      \begin{teorema}
+        $\displaystyle\lim_{x\to a}f(x)=L\iff\lim_{x\to a^-}f(x)=\lim_{x\to a^+}f(x)=L$.
+      \end{teorema}
+      \small (Cuando $a$ es acumulación por ambos lados.)
+    \end{column}
+    \begin{column}{0.45\textwidth}
+      \centering
+      \begin{tikzpicture}
+        \begin{axis}[bma, xmin=-2.5, xmax=2.5, ymin=-1.6, ymax=1.6, width=6.3cm, height=4.8cm, xtick={-2,-1,1,2}, ytick={-1,1}]
+          \addplot[curva, domain=-2.5:0] {-1};
+          \addplot[curva, domain=0:2.5] {1};
+          \addplot[only marks, mark=o, uniAzul, fill=white] coordinates {(0,-1) (0,1)};
+        \end{axis}
+      \end{tikzpicture}
+
+      \small $f(x)=\dfrac{|x|}{x}$: \ $\lim_{0^-}=-1\neq1=\lim_{0^+}$. \ $\lim_{x\to0}f$ no existe.
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\begin{frame}{Ejemplos de límites laterales}
+  \begin{ejemplo}[14: máximo entero]
+    Para $n\in\Z$: \ $\lim_{x\to n^-}\ent{x}=n-1$, \ $\lim_{x\to n^+}\ent{x}=n$. \ No existe $\lim_{x\to n}\ent{x}$.\\
+    Pero $\lim_{x\to2.5}\ent{x}=2$.
+  \end{ejemplo}
+  \begin{ejemplo}[15: dominio de un solo lado]
+    $\lim_{x\to0^+}\sqrt x=0$. Como $\Dom\sqrt{\ }=[0,\infty)$, solo tiene sentido el límite por la derecha; y $\lim_{x\to0}\sqrt x=0$.
+  \end{ejemplo}
+  \begin{ejemplo}[16: hallar un parámetro]
+    $f(x)=\begin{cases}x^2+k,&x<1\\ 3x-1,&x\ge1\end{cases}$. \ ¿Para qué $k$ existe $\lim_{x\to1}f(x)$?\\
+    $\lim_{1^-}f=1+k$, \ $\lim_{1^+}f=2$. \ Existe si y solo si $k=1$.
+  \end{ejemplo}
+  \begin{ejemplo}[17]
+    $\displaystyle\lim_{x\to2^-}\frac{x-2}{|x-2|}=-1$, \quad $\displaystyle\lim_{x\to2^+}\frac{x^2-4}{|x-2|}=\lim_{x\to2^+}(x+2)=4$.
+  \end{ejemplo}
+\end{frame}
+
+\section{Ejercicios}
+
+\begin{frame}{Ejercicios propuestos}
+  \small
+  \begin{ejercicio}
+    \begin{enumerate}
+      \item Calcule: (a) $\displaystyle\lim_{x\to-2}\frac{x^3+8}{x+2}$, \ (b) $\displaystyle\lim_{x\to1}\frac{x^n-1}{x-1}$, \ (c) $\displaystyle\lim_{h\to0}\frac{\frac1{x+h}-\frac1x}{h}$,
+        \ (d) $\displaystyle\lim_{x\to2}\frac{\sqrt{x+2}-2}{\sqrt{x+7}-3}$.
+      \item Calcule: (a) $\displaystyle\lim_{x\to0}\frac{\sen3x}{\sen7x}$, \ (b) $\displaystyle\lim_{x\to0}\frac{\tan x-\sen x}{x^3}$, \ (c) $\displaystyle\lim_{x\to0}x\ctg x$,
+        \ (d) $\displaystyle\lim_{x\to\pi/4}\frac{\sen x-\cos x}{x-\pi/4}$.
+      \item Use el sándwich: (a) $\displaystyle\lim_{x\to0}\sqrt{|x|}\cos\frac1{x^2}$, \ (b) $\displaystyle\lim_{x\to0}x\ent{\frac1x}$.
+      \item Calcule los límites laterales en $x=3$: $f(x)=\dfrac{\ent{x}-3}{x-3}$, \ $g(x)=\dfrac{|x^2-9|}{x-3}$.
+      \item Halle $a$ y $b$ para que existan $\lim_{x\to-1}f$ y $\lim_{x\to2}f$, si $f(x)=\begin{cases}ax+1,&x<-1\\ x^2+b,&-1\le x<2\\ 3x,&x\ge2\end{cases}$.
+      \item Pruebe que si $\lim_{x\to a}f(x)=0$ y $g$ es acotada cerca de $a$, entonces $\lim_{x\to a}f(x)g(x)=0$.
+    \end{enumerate}
+  \end{ejercicio}
+\end{frame}
+
+\begin{frame}{Resumen}
+  \begin{itemize}
+    \item Si los límites existen: el límite de sumas, productos y cocientes (denominador $\neq0$) es la suma, producto y cociente de los límites.
+    \item Polinomios y racionales (sin anular el denominador): evaluar directamente.
+    \item $\frac00$: factorizar, racionalizar o cambiar de variable.
+    \item Sándwich; \ $\lim_{x\to0}\frac{\sen x}{x}=1$, \ $\lim_{x\to0}\frac{1-\cos x}{x^2}=\frac12$.
+    \item $\lim_{x\to a}f$ existe $\iff$ los laterales existen y coinciden.
+  \end{itemize}
+  \vspace{3mm}
+  \textbf{Próxima sesión:} límites infinitos y asíntotas verticales.
+\end{frame}
+
+\end{document}

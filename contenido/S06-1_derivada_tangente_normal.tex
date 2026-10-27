@@ -1,0 +1,286 @@
+\documentclass[10pt,aspectratio=169]{beamer}
+\usepackage{bma01}
+
+\title[La derivada]{Derivada de una función}
+\subtitle{Recta tangente y recta normal a la gráfica de una función\\[2pt]\small Semana 6 -- Sesión 1}
+
+\begin{document}
+
+\begin{frame}
+  \titlepage
+\end{frame}
+
+\begin{frame}{Objetivos de la sesión}
+  \begin{enumerate}
+    \item Motivar la derivada con el problema de la \resaltar{tangente} y el de la \resaltar{velocidad instantánea}.
+    \item Definir la \resaltar{derivada} en un punto y la función derivada; calcular derivadas por definición.
+    \item Hallar las ecuaciones de las \resaltar{rectas tangente y normal}.
+    \item Reconocer tangentes horizontales y verticales.
+  \end{enumerate}
+  \begin{block}{Plan (2 horas)}
+    \begin{tabular}{ll}
+      0:00 -- 0:20 & Dos problemas: tangente y velocidad\\
+      0:20 -- 1:00 & Definición de derivada; cálculo por definición\\
+      1:00 -- 1:40 & Rectas tangente y normal. Tangentes desde un punto exterior\\
+      1:40 -- 2:00 & Ejercicios y resumen
+    \end{tabular}
+  \end{block}
+\end{frame}
+
+\section{Motivación}
+
+\begin{frame}{El problema de la recta tangente}
+  \begin{columns}
+    \begin{column}{0.5\textwidth}
+      Para la curva $y=f(x)$ y el punto $P=(a,f(a))$, la recta \resaltar{secante} por $P$ y $Q=(a+h,f(a+h))$ tiene pendiente
+      \[ m_{PQ}=\frac{f(a+h)-f(a)}{h}. \]
+      Cuando $Q\to P$ ($h\to0$), las secantes tienden a la \resaltar{recta tangente}:
+      \[ m_{\tan}=\lim_{h\to0}\frac{f(a+h)-f(a)}{h}. \]
+      \begin{ejemplo}
+        $f(x)=x^2$, $a=1$: \ $\dfrac{(1+h)^2-1}{h}=2+h\to2$.
+      \end{ejemplo}
+    \end{column}
+    \begin{column}{0.5\textwidth}
+      \centering
+      \begin{tikzpicture}
+        \begin{axis}[bma, xmin=-0.2, xmax=3.3, ymin=-1, ymax=8, width=7cm, height=6.3cm, xtick={1}, ytick={1}, samples=100]
+          \addplot[curva, domain=0:2.8] {x^2};
+          \addplot[uniVerde!70!black, thin, domain=0:3.2] {1+4*(x-1)};
+          \addplot[uniVerde!70!black, thin, domain=0:3.2] {1+3*(x-1)};
+          \addplot[uniVerde!70!black, thin, domain=0:3.2] {1+2.5*(x-1)};
+          \addplot[curva2, domain=0:3.2] {1+2*(x-1)};
+          \addplot[only marks, mark=*, uniVerde!70!black] coordinates {(3,9) (2,4) (1.5,2.25)};
+          \addplot[only marks, mark=*, black] coordinates {(1,1)};
+          \node at (axis cs:0.75,1.4) {\scriptsize $P$};
+          \node[uniVerde!70!black] at (axis cs:2.25,3.6) {\scriptsize $Q$};
+          \node[uniGranate] at (axis cs:2.9,3.2) {\scriptsize tangente};
+        \end{axis}
+      \end{tikzpicture}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\begin{frame}{El problema de la velocidad instantánea}
+  \begin{columns}
+    \begin{column}{0.55\textwidth}
+      Una piedra cae: $s(t)=4.9t^2$ (m). La velocidad \textbf{media} en $[2,2+h]$ es
+      \[ \bar v=\frac{s(2+h)-s(2)}{h}=\frac{4.9(4h+h^2)}{h}=19.6+4.9h. \]
+      \begin{center}
+        \small
+        \begin{tabular}{c|c}
+          $h$ (s) & $\bar v$ (m/s)\\ \hline
+          $1$ & $24.5$\\
+          $0.1$ & $20.09$\\
+          $0.01$ & $19.649$\\
+          $0.001$ & $19.6049$
+        \end{tabular}
+      \end{center}
+      Velocidad \textbf{instantánea}: $v(2)=\lim_{h\to0}\bar v=19.6$ m/s.
+    \end{column}
+    \begin{column}{0.45\textwidth}
+      \begin{idea}
+        El mismo límite aparece en geometría (pendiente) y en física (velocidad): es la \textbf{razón de cambio instantánea}.
+      \end{idea}
+      \begin{block}{En ciencias}
+        \begin{itemize}
+          \item Velocidad: $v=\frac{ds}{dt}$; aceleración $a=\frac{dv}{dt}$.
+          \item Corriente eléctrica: $i=\frac{dq}{dt}$.
+          \item Velocidad de reacción: $-\frac{d[A]}{dt}$.
+          \item Costo marginal: $\frac{dC}{dq}$.
+        \end{itemize}
+      \end{block}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\section{Definición de derivada}
+
+\begin{frame}{La derivada}
+  \begin{definicion}
+    Sea $a$ un punto interior de $\Dom f$. La \resaltar{derivada de $f$ en $a$} es
+    \[ f'(a)=\lim_{h\to0}\frac{f(a+h)-f(a)}{h}=\lim_{x\to a}\frac{f(x)-f(a)}{x-a}, \]
+    si el límite existe (finito). En tal caso $f$ es \resaltar{derivable} en $a$.
+  \end{definicion}
+  \begin{definicion}[función derivada]
+    $f':x\mapsto f'(x)$, definida donde $f$ es derivable. Notaciones:
+    \[ f'(x)=\frac{dy}{dx}=\frac{d}{dx}f(x)=Df(x)=\dot y\ \text{(si la variable es el tiempo)}. \]
+  \end{definicion}
+  \small Leibniz: $\frac{dy}{dx}$ recuerda el cociente $\frac{\Delta y}{\Delta x}$ del que proviene.
+\end{frame}
+
+\begin{frame}{Derivadas por definición}
+  \small
+  \begin{ejemplo}[1: $x^2$]
+    $\displaystyle\frac{(x+h)^2-x^2}{h}=\frac{2xh+h^2}{h}=2x+h\to2x$. \quad $\boxed{(x^2)'=2x}$
+  \end{ejemplo}
+  \begin{ejemplo}[2: $\sqrt x$, $x>0$]
+    $\displaystyle\frac{\sqrt{x+h}-\sqrt x}{h}=\frac{h}{h\left(\sqrt{x+h}+\sqrt x\right)}\to\frac{1}{2\sqrt x}$. \quad $\boxed{(\sqrt x)'=\frac{1}{2\sqrt x}}$
+  \end{ejemplo}
+  \begin{ejemplo}[3: $\frac1x$]
+    $\displaystyle\frac{\frac1{x+h}-\frac1x}{h}=\frac{-h}{hx(x+h)}\to-\frac1{x^2}$. \quad $\boxed{\left(\frac1x\right)'=-\frac{1}{x^2}}$
+  \end{ejemplo}
+  \begin{ejemplo}[4: $\sen x$]
+    $\displaystyle\frac{\sen(x+h)-\sen x}{h}=\sen x\,\frac{\cos h-1}{h}+\cos x\,\frac{\sen h}{h}\to\sen x\cdot0+\cos x\cdot1$. \quad $\boxed{(\sen x)'=\cos x}$
+  \end{ejemplo}
+\end{frame}
+
+\begin{frame}{Gráfica de $f$ y de $f'$}
+  \begin{columns}
+    \begin{column}{0.5\textwidth}
+      \centering
+      \begin{tikzpicture}
+        \begin{axis}[bma, xmin=-2.5, xmax=2.5, ymin=-2.5, ymax=2.5, width=6.5cm, height=4.4cm, xtick={-1,1}, ytick=\empty, samples=100, domain=-2.2:2.2, title={\scriptsize $f(x)=\frac{x^3}{3}-x$}]
+          \addplot[curva] {x^3/3-x};
+          \addplot[curva2, domain=-1.6:-0.4] {2/3};
+          \addplot[curva2, domain=0.4:1.6] {-2/3};
+          \addplot[curva2, domain=1.6:2.2] {(2^3/3-2)+3*(x-2)};
+        \end{axis}
+      \end{tikzpicture}
+      \begin{tikzpicture}
+        \begin{axis}[bma, xmin=-2.5, xmax=2.5, ymin=-1.5, ymax=3.5, width=6.5cm, height=4.4cm, xtick={-1,1}, ytick={-1,3}, samples=100, domain=-2.2:2.2, title={\scriptsize $f'(x)=x^2-1$}]
+          \addplot[uniVerde, very thick] {x^2-1};
+          \addplot[only marks, mark=*, uniGranate] coordinates {(-1,0) (1,0) (2,3)};
+        \end{axis}
+      \end{tikzpicture}
+    \end{column}
+    \begin{column}{0.5\textwidth}
+      \begin{itemize}
+        \item Donde la tangente es horizontal, $f'=0$ ($x=\pm1$).
+        \item Donde $f$ sube, $f'>0$; donde baja, $f'<0$.
+        \item En $x=2$ la tangente tiene pendiente $3=f'(2)$.
+      \end{itemize}
+      \begin{idea}
+        $f'(x)$ es la \textbf{pendiente} de la gráfica de $f$ en cada punto. Leer la gráfica de $f'$ a partir de la de $f$ es una
+        habilidad clave.
+      \end{idea}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\section{Rectas tangente y normal}
+
+\begin{frame}{Rectas tangente y normal}
+  \begin{columns}
+    \begin{column}{0.55\textwidth}
+      \begin{definicion}
+        Si $f$ es derivable en $a$:
+        \begin{itemize}
+          \item \resaltar{Recta tangente}: \quad $y-f(a)=f'(a)(x-a)$.
+          \item \resaltar{Recta normal} (perpendicular a la tangente), si $f'(a)\neq0$:
+            \[ y-f(a)=-\frac{1}{f'(a)}(x-a). \]
+            Si $f'(a)=0$, la normal es la recta vertical $x=a$.
+        \end{itemize}
+      \end{definicion}
+      \begin{ejemplo}[5]
+        $y=\sqrt x$ en $(4,2)$: $f'(4)=\frac14$.
+        \begin{itemize}
+          \item Tangente: $y-2=\frac14(x-4)$, \ es decir $y=\frac x4+1$.
+          \item Normal: $y-2=-4(x-4)$, \ es decir $y=-4x+18$.
+        \end{itemize}
+      \end{ejemplo}
+    \end{column}
+    \begin{column}{0.45\textwidth}
+      \centering
+      \begin{tikzpicture}
+        \begin{axis}[bma, xmin=-0.5, xmax=8, ymin=-0.5, ymax=4, width=6.5cm, height=5.6cm, xtick={4}, ytick={2}, samples=100, axis equal image]
+          \addplot[curva, domain=0:8] {sqrt(x)};
+          \addplot[curva2, domain=-0.5:8] {x/4+1};
+          \addplot[uniVerde, very thick, domain=3.5:4.6] {-4*x+18};
+          \addplot[only marks, mark=*, black] coordinates {(4,2)};
+          \node[uniGranate] at (axis cs:6.6,3.1) {\scriptsize tangente};
+          \node[uniVerde] at (axis cs:5.3,0.3) {\scriptsize normal};
+        \end{axis}
+      \end{tikzpicture}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\begin{frame}{Tangentes horizontales y verticales}
+  \begin{columns}
+    \begin{column}{0.55\textwidth}
+      \begin{itemize}
+        \item \textbf{Horizontal:} $f'(a)=0$.
+        \item \textbf{Vertical:} $f$ continua en $a$ y $\displaystyle\lim_{h\to0}\frac{f(a+h)-f(a)}{h}=\pm\infty$ (no es derivable en $a$).
+      \end{itemize}
+      \begin{ejemplo}[6]
+        $f(x)=\sqrt[3]x$ en $0$: \ $\dfrac{\sqrt[3]h}{h}=\dfrac1{h^{2/3}}\to+\infty$. \ Tangente vertical $x=0$.
+      \end{ejemplo}
+      \begin{ejemplo}[7]
+        ¿Dónde tiene $y=x^3-3x^2+1$ tangente horizontal? \ Por definición, $f'(x)=3x^2-6x=0$ en $x=0$ y $x=2$: puntos $(0,1)$ y $(2,-3)$.
+      \end{ejemplo}
+    \end{column}
+    \begin{column}{0.45\textwidth}
+      \centering
+      \begin{tikzpicture}
+        \begin{axis}[bma, xmin=-3, xmax=3, ymin=-1.8, ymax=1.8, width=6.3cm, height=4.6cm, xtick={-1,1}, ytick={-1,1}, samples=201, domain=-3:3]
+          \addplot[curva] {(x<0 ? -1 : 1)*abs(x)^(1/3)};
+          \draw[uniGranate, thick, dashed] (axis cs:0,-1.8) -- (axis cs:0,1.8);
+        \end{axis}
+      \end{tikzpicture}
+
+      \small $y=\sqrt[3]x$: tangente vertical en el origen.
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\begin{frame}{Tangentes desde un punto exterior}
+  \begin{columns}
+    \begin{column}{0.55\textwidth}
+      \begin{ejemplo}[8]
+        Halle las rectas que pasan por $(0,-1)$ y son tangentes a $y=x^2$.
+        \begin{enumerate}
+          \item Tangente en $(t,t^2)$: \ $y-t^2=2t(x-t)$.
+          \item Debe pasar por $(0,-1)$: \ $-1-t^2=-2t^2$ \ $\Rightarrow$ \ $t^2=1$, \ $t=\pm1$.
+          \item Rectas: \ $y=2x-1$ \ y \ $y=-2x-1$.
+        \end{enumerate}
+      \end{ejemplo}
+      \begin{observacion}
+        El punto $(0,-1)$ \textbf{no} está en la curva: no se puede usar $f'(0)$. Se parametriza el punto de tangencia.
+      \end{observacion}
+    \end{column}
+    \begin{column}{0.45\textwidth}
+      \centering
+      \begin{tikzpicture}
+        \begin{axis}[bma, xmin=-2.5, xmax=2.5, ymin=-1.8, ymax=4.5, width=6.3cm, height=5.6cm, xtick={-1,1}, ytick={-1,1}, samples=100]
+          \addplot[curva, domain=-2.1:2.1] {x^2};
+          \addplot[curva2, domain=-0.5:2.5] {2*x-1};
+          \addplot[curva2, domain=-2.5:0.5] {-2*x-1};
+          \addplot[only marks, mark=*, black] coordinates {(0,-1)};
+          \addplot[only marks, mark=*, uniGranate] coordinates {(1,1) (-1,1)};
+        \end{axis}
+      \end{tikzpicture}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\section{Ejercicios}
+
+\begin{frame}{Ejercicios propuestos}
+  \small
+  \begin{ejercicio}
+    \begin{enumerate}
+      \item Calcule por definición: (a) $f(x)=3x^2-5x+1$, \ (b) $g(x)=\dfrac{1}{\sqrt x}$, \ (c) $h(x)=\dfrac{x}{x+1}$, \ (d) $k(x)=\cos x$, \ (e) $p(x)=x^3$.
+      \item Halle las rectas tangente y normal a: (a) $y=x^3$ en $x=-1$, \ (b) $y=\frac{1}{x}$ en $\left(2,\frac12\right)$, \ (c) $y=\sen x$ en $x=\frac\pi3$.
+      \item ¿En qué punto de $y=x^2-4x$ la tangente es paralela a $y=2x+5$? ¿Y perpendicular a ella?
+      \item Halle las tangentes a $y=x^2$ que pasan por $(2,3)$.
+      \item Halle $a$ y $b$ si la recta $y=3x-2$ es tangente a $y=ax^2+b$ en $x=1$.
+      \item La posición de una partícula es $s(t)=t^3-6t^2+9t$ (m). Halle la velocidad en $t=1$ y $t=4$ y los instantes en que se detiene.
+      \item El volumen de un cubo es $V=x^3$. Halle la razón de cambio de $V$ respecto de $x$ cuando $x=2$ cm. Interprete geométricamente.
+      \item Esboce la gráfica de $f'$ a partir de la de $f(x)=|x^2-1|$.
+    \end{enumerate}
+  \end{ejercicio}
+\end{frame}
+
+\begin{frame}{Resumen}
+  \begin{itemize}
+    \item $f'(a)=\lim_{h\to0}\frac{f(a+h)-f(a)}{h}$: pendiente de la tangente y razón de cambio instantánea.
+    \item Por definición: $(x^2)'=2x$, \ $(\sqrt x)'=\frac1{2\sqrt x}$, \ $(\frac1x)'=-\frac1{x^2}$, \ $(\sen x)'=\cos x$.
+    \item Tangente: $y-f(a)=f'(a)(x-a)$. \ Normal: pendiente $-\frac1{f'(a)}$.
+    \item Tangente horizontal: $f'(a)=0$; vertical: cociente incremental $\to\pm\infty$.
+    \item Desde un punto exterior: parametrizar el punto de tangencia.
+  \end{itemize}
+  \vspace{3mm}
+  \textbf{Próxima sesión:} reglas de derivación, derivadas laterales e interpretación geométrica.
+\end{frame}
+
+\end{document}

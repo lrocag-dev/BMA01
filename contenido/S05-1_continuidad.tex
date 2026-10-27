@@ -1,0 +1,283 @@
+\documentclass[10pt,aspectratio=169]{beamer}
+\usepackage{bma01}
+
+\title[Continuidad]{Continuidad}
+\subtitle{Funciones discontinuas. Tipos de discontinuidad\\[2pt]\small Semana 5 -- Sesión 1}
+
+\begin{document}
+
+\begin{frame}
+  \titlepage
+\end{frame}
+
+\begin{frame}{Objetivos de la sesión}
+  \begin{enumerate}
+    \item Definir \resaltar{continuidad} en un punto, lateral y en un intervalo.
+    \item Usar el álgebra de funciones continuas y la continuidad de la \resaltar{composición}.
+    \item Clasificar discontinuidades: \resaltar{evitable}, \resaltar{de salto}, \resaltar{infinita} y \resaltar{oscilante}.
+    \item Determinar parámetros para que una función por partes sea continua.
+  \end{enumerate}
+  \begin{block}{Plan (2 horas)}
+    \begin{tabular}{ll}
+      0:00 -- 0:25 & Definición de continuidad. Interpretación\\
+      0:25 -- 0:50 & Álgebra de continuas. Composición. Funciones elementales\\
+      0:50 -- 1:25 & Tipos de discontinuidad. Extensión continua\\
+      1:25 -- 1:45 & Funciones por partes y parámetros. Ejemplo físico\\
+      1:45 -- 2:00 & Ejercicios y resumen
+    \end{tabular}
+  \end{block}
+\end{frame}
+
+\section{Definición}
+
+\begin{frame}{Continuidad en un punto}
+  \begin{columns}
+    \begin{column}{0.55\textwidth}
+      \begin{definicion}
+        $f$ es \resaltar{continua en $a$} si
+        \begin{enumerate}
+          \item $f(a)$ está definida ($a\in\Dom f$),
+          \item $\lim_{x\to a}f(x)$ existe, y
+          \item $\lim_{x\to a}f(x)=f(a)$.
+        \end{enumerate}
+      \end{definicion}
+      \textbf{Versión $\varepsilon$--$\delta$:} \ $\forall\varepsilon>0\ \exists\delta>0$: $|x-a|<\delta\Rightarrow|f(x)-f(a)|<\varepsilon$.
+      \begin{idea}
+        Pequeños cambios en la entrada producen pequeños cambios en la salida. La gráfica se dibuja ``sin levantar el lápiz''
+        alrededor de $a$.
+      \end{idea}
+    \end{column}
+    \begin{column}{0.45\textwidth}
+      \centering
+      \begin{tikzpicture}
+        \begin{axis}[bma, xmin=0, xmax=4, ymin=0, ymax=3.3, width=6.3cm, height=5.3cm, xtick={2}, xticklabels={$a$}, ytick={1.753}, yticklabels={$f(a)$}, samples=100, domain=0.3:3.8]
+          \addplot[curva] {1.4+0.5*sin(deg(1.5*x))+0.1*x^1.5};
+          \addplot[only marks, mark=*, uniGranate] coordinates {(2,1.753)};
+          \draw[dashed] (axis cs:0,1.753) -- (axis cs:2,1.753) -- (axis cs:2,0);
+        \end{axis}
+      \end{tikzpicture}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\begin{frame}{Continuidad lateral y en intervalos}
+  \begin{definicion}
+    \begin{itemize}
+      \item $f$ es continua \resaltar{por la derecha} en $a$ si $\lim_{x\to a^+}f(x)=f(a)$; \ \resaltar{por la izquierda} si $\lim_{x\to a^-}f(x)=f(a)$.
+      \item $f$ es continua en $(a,b)$ si lo es en cada punto; en $[a,b]$ si además es continua por la derecha en $a$ y por la izquierda en $b$.
+    \end{itemize}
+  \end{definicion}
+  \begin{ejemplo}
+    \begin{itemize}
+      \item $\sqrt x$ es continua en $[0,\infty)$ (en $0$, por la derecha).
+      \item $\ent{x}$ es continua por la derecha en cada entero, pero no por la izquierda.
+      \item $\frac1x$ es continua en su dominio $\R\setminus\{0\}$ (¡$0$ no está en el dominio!).
+    \end{itemize}
+  \end{ejemplo}
+  \begin{observacion}
+    ``Continua'' sin más indicación significa continua en todo su dominio.
+  \end{observacion}
+\end{frame}
+
+\section{Propiedades}
+
+\begin{frame}{Álgebra de funciones continuas}
+  \begin{teorema}
+    Si $f$ y $g$ son continuas en $a$, también lo son $f\pm g$, $cf$, $fg$ y $\frac fg$ (si $g(a)\neq0$).
+  \end{teorema}
+  \begin{teorema}[funciones elementales]
+    Son continuas en su dominio: polinomios, racionales, raíces, $\sen$, $\cos$, $\tan$, $a^x$, $\log_a$, $|x|$,
+    hiperbólicas y sus inversas.
+  \end{teorema}
+  \begin{teorema}[composición]
+    Si $\lim_{x\to a}g(x)=b$ y $f$ es continua en $b$, entonces $\displaystyle\lim_{x\to a}f\big(g(x)\big)=f\Big(\lim_{x\to a}g(x)\Big)=f(b)$.
+    En particular, la composición de continuas es continua.
+  \end{teorema}
+  \begin{ejemplo}
+    $\displaystyle\lim_{x\to0}\sqrt{\frac{\sen x}{x}+3}=\sqrt{1+3}=2$, \qquad $\displaystyle\lim_{x\to\infty}e^{-1/x}=e^0=1$.
+  \end{ejemplo}
+\end{frame}
+
+\section{Tipos de discontinuidad}
+
+\begin{frame}{Tipos de discontinuidad}
+  \begin{columns}
+    \begin{column}{0.25\textwidth}
+      \centering
+      \begin{tikzpicture}
+        \begin{axis}[bma, xmin=0, xmax=3, ymin=0, ymax=3, width=4.3cm, height=4cm, xtick={1.5}, xticklabels={$a$}, ytick=\empty]
+          \addplot[curva, domain=0.2:2.8] {0.5+0.6*x};
+          \addplot[only marks, mark=o, uniAzul, fill=white] coordinates {(1.5,1.4)};
+          \addplot[only marks, mark=*, uniGranate] coordinates {(1.5,2.5)};
+        \end{axis}
+      \end{tikzpicture}\\
+      \small \textbf{Evitable}: $\lim$ existe, pero $\neq f(a)$ o $f(a)$ no definido.
+    \end{column}
+    \begin{column}{0.25\textwidth}
+      \centering
+      \begin{tikzpicture}
+        \begin{axis}[bma, xmin=0, xmax=3, ymin=0, ymax=3, width=4.3cm, height=4cm, xtick={1.5}, xticklabels={$a$}, ytick=\empty]
+          \addplot[curva, domain=0.2:1.5] {0.6+0.3*x};
+          \addplot[curva, domain=1.5:2.8] {1.9+0.3*x};
+          \addplot[only marks, mark=o, uniAzul, fill=white] coordinates {(1.5,1.05)};
+          \addplot[only marks, mark=*, uniAzul] coordinates {(1.5,2.35)};
+        \end{axis}
+      \end{tikzpicture}\\
+      \small \textbf{De salto}: laterales finitos y distintos.
+    \end{column}
+    \begin{column}{0.25\textwidth}
+      \centering
+      \begin{tikzpicture}
+        \begin{axis}[bma, xmin=0, xmax=3, ymin=0, ymax=3, width=4.3cm, height=4cm, xtick={1.5}, xticklabels={$a$}, ytick=\empty, samples=100]
+          \addplot[curva, domain=0.2:1.32] {0.3/(1.5-x)};
+          \addplot[curva, domain=1.6:2.8] {0.3+0.2/(x-1.5)};
+          \draw[gray, dashed] (axis cs:1.5,0) -- (axis cs:1.5,3);
+        \end{axis}
+      \end{tikzpicture}\\
+      \small \textbf{Infinita}: algún lateral es $\pm\infty$.
+    \end{column}
+    \begin{column}{0.25\textwidth}
+      \centering
+      \begin{tikzpicture}
+        \begin{axis}[bma, xmin=-0.4, xmax=0.4, ymin=-1.3, ymax=1.3, width=4.3cm, height=4cm, xtick=\empty, ytick=\empty, samples=1000]
+          \addplot[curva, thin, domain=-0.4:-0.005] {sin(deg(1/x))};
+          \addplot[curva, thin, domain=0.005:0.4] {sin(deg(1/x))};
+        \end{axis}
+      \end{tikzpicture}\\
+      \small \textbf{Oscilante}: algún lateral no existe.
+    \end{column}
+  \end{columns}
+  \vspace{2mm}
+  \begin{definicion}
+    \begin{itemize}
+      \item \resaltar{Evitable}: existe $\lim_{x\to a}f(x)=L$ finito pero $f(a)\neq L$ o no está definida.
+      \item \resaltar{Esencial de primera especie (salto)}: existen los laterales, finitos y distintos.
+      \item \resaltar{Esencial de segunda especie}: algún lateral es infinito o no existe.
+    \end{itemize}
+  \end{definicion}
+\end{frame}
+
+\begin{frame}{Discontinuidades evitables: extensión continua}
+  \small
+  \begin{ejemplo}[1]
+    $f(x)=\dfrac{x^2-4}{x-2}$ no está definida en $2$, pero $\lim_{x\to2}f(x)=4$. La función
+    \[ F(x)=\begin{cases}\dfrac{x^2-4}{x-2},&x\neq2\\4,&x=2\end{cases}\ =x+2 \]
+    es continua: \resaltar{extensión continua} de $f$.
+  \end{ejemplo}
+  \begin{ejemplo}[2]
+    $g(x)=\dfrac{\sen x}{x}$ se extiende continuamente con $g(0)=1$. \quad $h(x)=x\sen\frac1x$ con $h(0)=0$.
+  \end{ejemplo}
+  \begin{ejemplo}[3: no evitables]
+    $\dfrac{|x|}{x}$ en $0$: salto ($-1$ y $1$). \quad $\dfrac{1}{x-1}$ en $1$: infinita. \quad $\sen\frac1x$ en $0$: oscilante.
+    \ $\ent{x}$ en cada entero: salto de altura $1$.
+  \end{ejemplo}
+\end{frame}
+
+\begin{frame}{Funciones discontinuas en muchos puntos}
+  \begin{ejemplo}[4: Dirichlet]
+    $D(x)=1$ si $x\in\Q$, $D(x)=0$ si $x\notin\Q$, es discontinua en \textbf{todo} punto: toda vecindad contiene racionales e irracionales.
+  \end{ejemplo}
+  \begin{ejemplo}[5: continua en un solo punto]
+    $f(x)=x\,D(x)$ es continua \textbf{solo} en $x=0$: \ $|f(x)-0|\le|x|$, así que basta $\delta=\varepsilon$. En $a\neq0$ hay puntos cercanos
+    con $f\approx a$ y con $f=0$.
+  \end{ejemplo}
+  \begin{ejemplo}[6: máximo entero compuesto]
+    $g(x)=\ent{x^2}$ en $[0,2]$ es discontinua donde $x^2\in\Z$: \ $x=1,\sqrt2,\sqrt3,2$.
+  \end{ejemplo}
+  \begin{observacion}
+    La continuidad es una propiedad \textbf{local}: depende solo del comportamiento cerca de cada punto.
+  \end{observacion}
+\end{frame}
+
+\section{Continuidad de funciones por partes}
+
+\begin{frame}{Hallar parámetros para la continuidad}
+  \begin{columns}
+    \begin{column}{0.55\textwidth}
+      \begin{ejemplo}[7]
+        Halle $a$ y $b$ para que $f$ sea continua en $\R$:
+        \[ f(x)=\begin{cases}x+1,&x<1\\ ax^2+b,&1\le x\le2\\ 3x,&x>2\end{cases} \]
+        \begin{itemize}
+          \item Cada pieza es continua en su intervalo abierto.
+          \item En $x=1$: $\lim_{1^-}f=2$, \ $f(1)=a+b$ $\Rightarrow$ $a+b=2$.
+          \item En $x=2$: $f(2)=4a+b$, \ $\lim_{2^+}f=6$ $\Rightarrow$ $4a+b=6$.
+        \end{itemize}
+        Solución: $a=\frac43$, $b=\frac23$.
+      \end{ejemplo}
+    \end{column}
+    \begin{column}{0.45\textwidth}
+      \centering
+      \begin{tikzpicture}
+        \begin{axis}[bma, xmin=-1.5, xmax=3.5, ymin=-0.5, ymax=10, width=6.3cm, height=5.5cm, xtick={1,2}, ytick={2,6}, samples=100]
+          \addplot[curva, domain=-1.5:1] {x+1};
+          \addplot[curva2, domain=1:2] {4/3*x^2+2/3};
+          \addplot[uniVerde, very thick, domain=2:3.3] {3*x};
+          \addplot[only marks, mark=*, black] coordinates {(1,2) (2,6)};
+        \end{axis}
+      \end{tikzpicture}
+
+      \small Las tres piezas empalman.
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\begin{frame}{Un ejemplo físico: campo eléctrico de una esfera}
+  \begin{columns}
+    \begin{column}{0.55\textwidth}
+      \begin{ejemplo}[8]
+        Una esfera de radio $R$ con carga $Q$ distribuida uniformemente produce un campo
+        \[ E(r)=\begin{cases}\dfrac{kQ\,r}{R^3},&0\le r<R\\[2mm] \dfrac{kQ}{r^2},&r\ge R\end{cases} \]
+        En $r=R$: $\lim_{R^-}E=\frac{kQ}{R^2}=E(R)$. \ $E$ es \textbf{continua}.
+      \end{ejemplo}
+      \begin{observacion}
+        Para una carga en la \emph{superficie} (cascarón), $E=0$ dentro y $\frac{kQ}{r^2}$ fuera: discontinuidad de salto en $r=R$.
+      \end{observacion}
+    \end{column}
+    \begin{column}{0.45\textwidth}
+      \centering
+      \begin{tikzpicture}
+        \begin{axis}[bma, xlabel={$r$}, ylabel={$E$}, xmin=0, xmax=4.2, ymin=0, ymax=1.25, width=6.3cm, height=5cm, xtick={1}, xticklabels={$R$}, ytick={1}, yticklabels={$\frac{kQ}{R^2}$}, samples=100]
+          \addplot[curva, domain=0:1] {x};
+          \addplot[curva, domain=1:4] {1/x^2};
+          \addplot[curva2, dashed, domain=0:0.98] {0};
+          \addplot[only marks, mark=o, uniGranate, fill=white] coordinates {(1,0)};
+        \end{axis}
+      \end{tikzpicture}
+
+      \small Azul: esfera maciza. Granate (dentro): cascarón.
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\section{Ejercicios}
+
+\begin{frame}{Ejercicios propuestos}
+  \small
+  \begin{ejercicio}
+    \begin{enumerate}
+      \item Estudie la continuidad y clasifique las discontinuidades: (a) $f(x)=\dfrac{x^2-x-2}{x^2-4}$, \ (b) $g(x)=\dfrac{1}{1+e^{1/x}}$,
+        \ (c) $h(x)=\dfrac{\sen x}{|x|}$, \ (d) $k(x)=x-\ent{x}$, \ (e) $p(x)=\cos\dfrac{1}{x-1}$.
+      \item Halle $c$ para que $f$ sea continua: (a) $f(x)=\begin{cases}cx^2+2x,&x<2\\ x^3-cx,&x\ge2\end{cases}$,
+        \ (b) $f(x)=\begin{cases}\dfrac{\sqrt{x}-2}{x-4},&x\neq4\\ c,&x=4\end{cases}$.
+      \item ¿Existe una extensión continua de $f(x)=\dfrac{1-\cos x}{x^2}$ en $x=0$? ¿Y de $g(x)=\dfrac{x}{|x|}$?
+      \item Sea $f(x)=\ent{x}+\ent{-x}$. ¿Dónde es discontinua? ¿Qué tipo de discontinuidad tiene?
+      \item Pruebe con $\varepsilon$--$\delta$ que $f(x)=3x^2+1$ es continua en $a=1$.
+      \item Dé un ejemplo de $f$ y $g$ discontinuas en $0$ tales que $f+g$ y $fg$ sean continuas en $0$.
+      \item La temperatura de un cubo de hielo calentado: ¿es continua como función del tiempo? ¿Y la energía interna como función de la temperatura en el punto de fusión? Discuta.
+    \end{enumerate}
+  \end{ejercicio}
+\end{frame}
+
+\begin{frame}{Resumen}
+  \begin{itemize}
+    \item $f$ continua en $a$: $f(a)$ existe, $\lim_{x\to a}f$ existe y son iguales.
+    \item Sumas, productos, cocientes (denominador $\ne0$) y composiciones de continuas son continuas.
+    \item Las funciones elementales son continuas en su dominio.
+    \item Discontinuidades: evitable (se ``repara''), salto, infinita, oscilante.
+    \item Por partes: igualar límites laterales y valor en los puntos de empalme.
+  \end{itemize}
+  \vspace{3mm}
+  \textbf{Próxima sesión:} supremo e ínfimo; teoremas de Bolzano y de Weierstrass.
+\end{frame}
+
+\end{document}

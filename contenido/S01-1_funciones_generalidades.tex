@@ -1,0 +1,421 @@
+\documentclass[10pt,aspectratio=169]{beamer}
+\usepackage{bma01}
+
+\title[Funciones: generalidades]{Funciones: generalidades}
+\subtitle{Ejemplos: afín, cuadrática, raíz, polinomial, racional, trigonométrica, exponencial y logarítmica\\[2pt]\small Semana 1 -- Sesión 1}
+
+\begin{document}
+
+\begin{frame}
+  \titlepage
+\end{frame}
+
+\begin{frame}{Objetivos de la sesión}
+  \begin{enumerate}
+    \item Definir \resaltar{función real de variable real}, dominio, rango y gráfica.
+    \item Determinar dominios y rangos de funciones dadas por fórmulas.
+    \item Operar con funciones: álgebra de funciones y \resaltar{composición}.
+    \item Reconocer las gráficas de las \resaltar{funciones elementales} y obtener nuevas gráficas mediante \resaltar{transformaciones}.
+  \end{enumerate}
+  \begin{block}{Plan (2 horas)}
+    \begin{tabular}{ll}
+      0:00 -- 0:25 & Definición, dominio, rango, gráfica. Prueba de la recta vertical\\
+      0:25 -- 0:45 & Operaciones y composición\\
+      0:45 -- 1:35 & Catálogo de funciones elementales. Transformaciones de gráficas\\
+      1:35 -- 2:00 & Ejercicios y resumen
+    \end{tabular}
+  \end{block}
+\end{frame}
+
+\section{Concepto de función}
+
+\begin{frame}{¿Qué es una función?}
+  \begin{columns}
+    \begin{column}{0.55\textwidth}
+      \begin{definicion}
+        Una \resaltar{función} $f:A\to B$ es una regla que asigna a \textbf{cada} $x\in A$ \textbf{un único} $y=f(x)\in B$.
+        \begin{itemize}
+          \item $\Dom f=A$: dominio. \quad $x$: variable independiente.
+          \item $\Ran f=\{f(x):x\in A\}\subseteq B$: rango (o imagen).
+          \item Gráfica: $G_f=\{(x,f(x)):x\in\Dom f\}\subset\R^2$.
+        \end{itemize}
+      \end{definicion}
+      \begin{ejemplo}[en ciencias]
+        \begin{itemize}
+          \item Posición de una partícula: $x=s(t)$.
+          \item Presión de un gas ideal: $P(V)=\frac{nRT}{V}$.
+          \item Concentración de un reactivo: $[A](t)$.
+        \end{itemize}
+      \end{ejemplo}
+    \end{column}
+    \begin{column}{0.45\textwidth}
+      \centering
+      \begin{tikzpicture}[scale=0.9]
+        \draw[thick, uniAzul] (0,0) ellipse (0.9 and 1.6); \node[uniAzul] at (0,1.9) {$A$};
+        \draw[thick, uniGranate] (3.4,0) ellipse (0.9 and 1.6); \node[uniGranate] at (3.4,1.9) {$B$};
+        \foreach \y/\l in {0.9/x_1,0.1/x_2,-0.8/x_3} \fill (0,\y) circle (1.5pt) node[left] {\scriptsize $\l$};
+        \foreach \y in {1,0.2,-0.5,-1.1} \fill (3.4,\y) circle (1.5pt);
+        \draw[->] (0.1,0.9) -- (3.3,1);
+        \draw[->] (0.1,0.1) -- (3.3,0.2);
+        \draw[->] (0.1,-0.8) -- (3.3,0.2);
+        \node at (1.7,-2.1) {\scriptsize Sí es función};
+      \end{tikzpicture}
+      \vspace{2mm}
+
+      \begin{tikzpicture}[scale=0.9]
+        \draw[thick, uniAzul] (0,0) ellipse (0.9 and 1.2);
+        \draw[thick, uniGranate] (3.4,0) ellipse (0.9 and 1.2);
+        \fill (0,0.4) circle (1.5pt); \fill (0,-0.4) circle (1.5pt);
+        \fill (3.4,0.6) circle (1.5pt); \fill (3.4,-0.2) circle (1.5pt);
+        \draw[->] (0.1,0.4) -- (3.3,0.6);
+        \draw[->] (0.1,0.4) -- (3.3,-0.2);
+        \node at (1.7,-1.6) {\scriptsize No: $x$ con dos imágenes y otro $x$ sin imagen};
+      \end{tikzpicture}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\begin{frame}{Prueba de la recta vertical}
+  \begin{columns}
+    \begin{column}{0.5\textwidth}
+      \begin{teorema}[criterio geométrico]
+        Un subconjunto del plano es la gráfica de una función de $x$ si y solo si toda recta vertical lo corta \textbf{a lo sumo una vez}.
+      \end{teorema}
+      \begin{ejemplo}
+        \begin{itemize}
+          \item $y=x^2$: sí es función.
+          \item $x^2+y^2=4$: \alert{no} es función de $x$ (la recta $x=1$ la corta en $(1,\pm\sqrt3)$).
+          \item Pero $y=\sqrt{4-x^2}$ (semicircunferencia superior) sí lo es.
+        \end{itemize}
+      \end{ejemplo}
+    \end{column}
+    \begin{column}{0.5\textwidth}
+      \centering
+      \begin{tikzpicture}
+        \begin{axis}[bma, xmin=-2.6, xmax=2.6, ymin=-2.6, ymax=2.6, axis equal image, width=6.5cm, height=6.5cm, xtick={-2,1,2}, ytick={-2,2}]
+          \addplot[curva, domain=0:360, samples=100] ({2*cos(x)},{2*sin(x)});
+          \addplot[uniGranate, thick, dashed] coordinates {(1,-2.5) (1,2.5)};
+          \addplot[only marks, mark=*, uniGranate] coordinates {(1,1.732) (1,-1.732)};
+        \end{axis}
+      \end{tikzpicture}
+
+      \small La recta $x=1$ corta dos veces: no es gráfica de función.
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\begin{frame}{Cálculo de dominios}
+  Si solo se da la fórmula, el dominio es el \resaltar{mayor conjunto} de reales donde la fórmula tiene sentido.
+  \begin{block}{Restricciones típicas}
+    \begin{itemize}
+      \item Denominadores: $\neq0$. \quad Raíces de índice par: radicando $\ge0$. \quad Logaritmos: argumento $>0$.
+    \end{itemize}
+  \end{block}
+  \begin{ejemplo}[1]
+    $f(x)=\dfrac{\sqrt{x+3}}{x^2-4}$: \ $x+3\ge0$ y $x\neq\pm2$ \ $\Rightarrow$ \ $\Dom f=[-3,-2)\cup(-2,2)\cup(2,\infty)$.
+  \end{ejemplo}
+  \begin{ejemplo}[2]
+    $g(x)=\ln(9-x^2)$: \ $9-x^2>0\iff-3<x<3$. \ $\Dom g=(-3,3)$.
+  \end{ejemplo}
+  \begin{ejemplo}[3]
+    $h(x)=\sqrt{\dfrac{x-1}{x+2}}$: \ tabla de signos: $\dfrac{x-1}{x+2}\ge0\iff x<-2$ ó $x\ge1$. \ $\Dom h=(-\infty,-2)\cup[1,\infty)$.
+  \end{ejemplo}
+\end{frame}
+
+\begin{frame}{Cálculo de rangos}
+  Para hallar el rango, se despeja $x$ en $y=f(x)$ y se ve para qué $y$ existe $x\in\Dom f$ (o se acota $f$).
+  \begin{ejemplo}[4]
+    $f(x)=\dfrac{2x+1}{x-3}$, $x\neq3$. \ $y(x-3)=2x+1\Rightarrow x(y-2)=3y+1\Rightarrow x=\dfrac{3y+1}{y-2}$.\\
+    Existe $x$ si y solo si $y\neq2$ (y entonces $x\ne3$). \ $\Ran f=\R\setminus\{2\}$.
+  \end{ejemplo}
+  \begin{ejemplo}[5: completar cuadrados]
+    $g(x)=x^2-6x+11=(x-3)^2+2\ge2$, \ y toma todo valor $\ge2$. \ $\Ran g=[2,\infty)$.
+  \end{ejemplo}
+  \begin{ejemplo}[6: acotando]
+    $h(x)=\dfrac{1}{1+x^2}$: \ $1+x^2\ge1\Rightarrow0<h(x)\le1$. \ Despejando, todo $y\in(0,1]$ se alcanza: \ $\Ran h=(0,1]$.
+  \end{ejemplo}
+\end{frame}
+
+\section{Operaciones con funciones}
+
+\begin{frame}{Álgebra de funciones y composición}
+  \begin{definicion}
+    Para $x\in\Dom f\cap\Dom g$: \ $(f\pm g)(x)=f(x)\pm g(x)$, \ $(fg)(x)=f(x)g(x)$, \
+    $\left(\frac fg\right)(x)=\frac{f(x)}{g(x)}$ si $g(x)\neq0$.
+  \end{definicion}
+  \begin{definicion}[composición]
+    $(f\circ g)(x)=f\big(g(x)\big)$, \quad $\Dom(f\circ g)=\{x\in\Dom g:\ g(x)\in\Dom f\}$.
+  \end{definicion}
+  \begin{columns}
+    \begin{column}{0.58\textwidth}
+      \begin{ejemplo}[7]
+        $f(x)=\sqrt x$, $g(x)=2-x$.
+        \begin{itemize}
+          \item $(f\circ g)(x)=\sqrt{2-x}$, \ dominio $(-\infty,2]$.
+          \item $(g\circ f)(x)=2-\sqrt x$, \ dominio $[0,\infty)$.
+          \item $(f\circ f)(x)=\sqrt[4]x$.
+        \end{itemize}
+        En general, $f\circ g\neq g\circ f$.
+      \end{ejemplo}
+    \end{column}
+    \begin{column}{0.42\textwidth}
+      \centering
+      \begin{tikzpicture}[scale=0.85, every node/.style={font=\small}]
+        \node[draw, circle, fill=uniAzul!10] (x) at (0,0) {$x$};
+        \node[draw, rounded corners, fill=uniVerde!15] (g) at (1.7,0) {$g$};
+        \node[draw, circle, fill=uniAzul!10] (gx) at (3.4,0) {$g(x)$};
+        \node[draw, rounded corners, fill=uniVerde!15] (f) at (5,0) {$f$};
+        \node[draw, circle, fill=uniAzul!10, inner sep=1pt] (fgx) at (5,-1.6) {$f(g(x))$};
+        \draw[->] (x) -- (g); \draw[->] (g) -- (gx); \draw[->] (gx) -- (f); \draw[->] (f) -- (fgx);
+        \draw[->, uniGranate, thick, bend right=30] (x) to node[below] {$f\circ g$} (fgx);
+      \end{tikzpicture}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\section{Funciones elementales}
+
+\begin{frame}{Funciones afines y cuadráticas}
+  \begin{columns}
+    \begin{column}{0.5\textwidth}
+      \textbf{Afín:} $f(x)=mx+b$. Gráfica: recta de pendiente $m$.
+      \[ m=\frac{\Delta y}{\Delta x}=\frac{f(x_2)-f(x_1)}{x_2-x_1}. \]
+      \textbf{Ejemplo (física):} MRU, $x(t)=x_0+vt$; \ conversión $F=\frac95C+32$.
+      \medskip
+
+      \textbf{Cuadrática:} $f(x)=ax^2+bx+c$, $a\neq0$. Completando cuadrados:
+      \[ f(x)=a\left(x+\frac b{2a}\right)^2+c-\frac{b^2}{4a}. \]
+      Vértice $\left(-\frac b{2a},\ f(-\frac b{2a})\right)$; abre hacia arriba si $a>0$.
+    \end{column}
+    \begin{column}{0.5\textwidth}
+      \centering
+      \begin{tikzpicture}
+        \begin{axis}[bma, xmin=-3.2, xmax=4, ymin=-3, ymax=5, width=7cm, height=6cm, xtick={-2,2}, ytick={-2,2,4}, domain=-3:4]
+          \addplot[curva] {0.5*x+1};
+          \addplot[curva2, domain=-1.3:3.8] {x^2-2*x-1};
+          \addplot[only marks, mark=*, uniGranate] coordinates {(1,-2)};
+          \node[uniAzul] at (axis cs:-2,1.2) {\scriptsize $y=\frac12x+1$};
+          \node[uniGranate] at (axis cs:3.2,4.4) {\scriptsize $y=x^2-2x-1$};
+          \node[uniGranate, below] at (axis cs:1,-2) {\scriptsize vértice $(1,-2)$};
+        \end{axis}
+      \end{tikzpicture}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\begin{frame}{Funciones raíz y polinomiales}
+  \begin{columns}
+    \begin{column}{0.5\textwidth}
+      \centering
+      \begin{tikzpicture}
+        \begin{axis}[bma, xmin=-4.2, xmax=4.2, ymin=-2.2, ymax=2.4, width=6.8cm, height=5cm, xtick={-4,1,4}, ytick={-1,1,2}, samples=200]
+          \addplot[curva, domain=0:4.2] {sqrt(x)};
+          \addplot[curva2, domain=-4.2:4.2] {(x<0 ? -1 : 1)*abs(x)^(1/3)};
+          \node[uniAzul] at (axis cs:3,2.1) {\scriptsize $\sqrt x$};
+          \node[uniGranate] at (axis cs:-3,-1.0) {\scriptsize $\sqrt[3]x$};
+        \end{axis}
+      \end{tikzpicture}\\
+      \small $\sqrt[n]x$: $n$ par, dominio $[0,\infty)$; $n$ impar, dominio $\R$.
+    \end{column}
+    \begin{column}{0.5\textwidth}
+      \centering
+      \begin{tikzpicture}
+        \begin{axis}[bma, xmin=-2.6, xmax=2.6, ymin=-4, ymax=4, width=6.8cm, height=5cm, xtick={-2,-1,1,2}, ytick=\empty, domain=-2.5:2.5, samples=150]
+          \addplot[curva] {x^3-3*x};
+          \addplot[curva2, domain=-2.3:2.3] {(x^2-1)*(x^2-4)/2};
+          \node[uniAzul] at (axis cs:2.2,3.6) {\scriptsize grado 3};
+          \node[uniGranate] at (axis cs:-1.6,3.4) {\scriptsize grado 4};
+        \end{axis}
+      \end{tikzpicture}\\
+      \small Polinomio $P(x)=a_nx^n+\dots+a_0$: dominio $\R$; a lo más $n$ raíces y $n-1$ ``vueltas''.
+    \end{column}
+  \end{columns}
+  \begin{ejemplo}
+    $P(x)=x^3-3x=x(x-\sqrt3)(x+\sqrt3)$: raíces en $0,\pm\sqrt3$; \ $P(x)\to\pm\infty$ si $x\to\pm\infty$ (domina $x^3$).
+  \end{ejemplo}
+\end{frame}
+
+\begin{frame}{Funciones racionales}
+  \begin{columns}
+    \begin{column}{0.5\textwidth}
+      $R(x)=\dfrac{P(x)}{Q(x)}$, \ $\Dom R=\{x:Q(x)\neq0\}$.
+      \begin{ejemplo}
+        \begin{itemize}
+          \item $f(x)=\dfrac1x$: hipérbola; asíntotas $x=0$, $y=0$.
+          \item $g(x)=\dfrac{x+1}{x-2}=1+\dfrac{3}{x-2}$: traslación de $\frac3x$.
+          \item $h(x)=\dfrac{x^2-1}{x-1}=x+1$ \textbf{para} $x\neq1$: recta con un ``hueco''.
+        \end{itemize}
+      \end{ejemplo}
+      \small Ley de Boyle: $P=\frac kV$ es racional; las asíntotas se estudiarán en la Semana 4.
+    \end{column}
+    \begin{column}{0.5\textwidth}
+      \centering
+      \begin{tikzpicture}
+        \begin{axis}[bma, xmin=-4, xmax=6, ymin=-5, ymax=6, width=7cm, height=6cm, xtick={2}, ytick={1}, samples=200, restrict y to domain=-8:8, unbounded coords=jump]
+          \addplot[curva, domain=-4:6] {(x+1)/(x-2)};
+          \draw[dashed, gray] (axis cs:2,-5) -- (axis cs:2,6);
+          \draw[dashed, gray] (axis cs:-4,1) -- (axis cs:6,1);
+          \node[uniAzul] at (axis cs:4.5,4) {\scriptsize $y=\frac{x+1}{x-2}$};
+        \end{axis}
+      \end{tikzpicture}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\begin{frame}{Funciones trigonométricas}
+  \begin{columns}
+    \begin{column}{0.55\textwidth}
+      \centering
+      \begin{tikzpicture}
+        \begin{axis}[bma, xmin=-6.6, xmax=6.6, ymin=-3, ymax=3, width=8cm, height=5cm, xtick={-6.2832,-3.1416,3.1416,6.2832}, xticklabels={$-2\pi$,$-\pi$,$\pi$,$2\pi$}, ytick={-1,1}, samples=300, restrict y to domain=-4:4, unbounded coords=jump, domain=-6.5:6.5]
+          \addplot[curva] {sin(deg(x))};
+          \addplot[curva2] {cos(deg(x))};
+          \addplot[uniVerde, thick] {tan(deg(x))};
+          \node[uniAzul] at (axis cs:5.2,1.3) {\scriptsize $\sen$};
+          \node[uniGranate] at (axis cs:0.6,1.3) {\scriptsize $\cos$};
+          \node[uniVerde] at (axis cs:2.2,2.6) {\scriptsize $\tan$};
+        \end{axis}
+      \end{tikzpicture}
+    \end{column}
+    \begin{column}{0.45\textwidth}
+      \begin{itemize}
+        \item El ángulo se mide en \textbf{radianes}: $\pi$ rad $=180^\circ$.
+        \item $\sen,\cos$: dominio $\R$, rango $[-1,1]$, periodo $2\pi$.
+        \item $\tan x=\frac{\sen x}{\cos x}$: dominio $x\neq\frac\pi2+k\pi$, rango $\R$, periodo $\pi$.
+        \item $\sen^2x+\cos^2x=1$.
+      \end{itemize}
+      \begin{ejemplo}[física]
+        Oscilador armónico: $x(t)=A\cos(\omega t+\varphi)$; amplitud $A$, periodo $\frac{2\pi}{\omega}$.
+      \end{ejemplo}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\begin{frame}{Funciones exponencial y logarítmica}
+  \begin{columns}
+    \begin{column}{0.5\textwidth}
+      \centering
+      \begin{tikzpicture}
+        \begin{axis}[bma, xmin=-3, xmax=5, ymin=-3, ymax=5, axis equal image, width=6.5cm, height=6.5cm, xtick={1}, ytick={1}, samples=150]
+          \addplot[curva2, domain=-3:1.6] {exp(x)};
+          \addplot[curva, domain=0.05:5] {ln(x)};
+          \addplot[uniVerde, thick, domain=-3:2.3] {0.5^x};
+          \addplot[gray, dashed, domain=-3:5] {x};
+          \node[uniGranate] at (axis cs:0.9,4.3) {\scriptsize $e^x$};
+          \node[uniAzul] at (axis cs:4.2,1.9) {\scriptsize $\ln x$};
+          \node[uniVerde] at (axis cs:-2.5,4.3) {\scriptsize $(\frac12)^x$};
+        \end{axis}
+      \end{tikzpicture}
+    \end{column}
+    \begin{column}{0.5\textwidth}
+      \begin{itemize}
+        \item $a^x$ ($a>0$, $a\neq1$): dominio $\R$, rango $(0,\infty)$; creciente si $a>1$, decreciente si $0<a<1$.
+        \item $\log_ax$: inversa de $a^x$; dominio $(0,\infty)$, rango $\R$.
+        \item $e\approx2.71828$; \ $\ln x=\log_ex$.
+        \item $\ln(ab)=\ln a+\ln b$, \ $\ln a^r=r\ln a$.
+      \end{itemize}
+      \begin{ejemplo}[química]
+        $\mathrm{pH}=-\log_{10}[\mathrm{H^+}]$; \ decaimiento $N(t)=N_0e^{-\lambda t}$.
+      \end{ejemplo}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\section{Transformaciones de gráficas}
+
+\begin{frame}{Traslaciones, reflexiones y dilataciones}
+  \begin{columns}
+    \begin{column}{0.5\textwidth}
+      \renewcommand{\arraystretch}{1.3}
+      \small
+      \begin{tabular}{l|l}
+        \textbf{Fórmula} & \textbf{Efecto en la gráfica de $f$}\\ \hline
+        $f(x)+c$ & sube $c$ ($c>0$)\\
+        $f(x-c)$ & a la derecha $c$\\
+        $-f(x)$ & refleja en el eje $x$\\
+        $f(-x)$ & refleja en el eje $y$\\
+        $cf(x)$ & estira vertical ($c>1$)\\
+        $f(cx)$ & comprime horizontal ($c>1$)\\
+        $|f(x)|$ & refleja la parte negativa
+      \end{tabular}
+      \begin{ejemplo}
+        $y=-2(x-1)^2+3$: \ parábola $x^2$, a la derecha $1$, estirada $\times2$, reflejada y subida $3$.
+      \end{ejemplo}
+    \end{column}
+    \begin{column}{0.5\textwidth}
+      \centering
+      \begin{tikzpicture}
+        \begin{axis}[bma, xmin=-3, xmax=4, ymin=-3, ymax=5, width=7cm, height=6.3cm, xtick={1}, ytick={3}, samples=100]
+          \addplot[gray, thick, dashed, domain=-2.2:2.2] {x^2};
+          \addplot[curva, domain=-1.2:3.2] {(x-1)^2};
+          \addplot[curva2, domain=-0.5:2.5] {-2*(x-1)^2+3};
+          \node[gray] at (axis cs:-2.4,4.5) {\scriptsize $x^2$};
+          \node[uniAzul] at (axis cs:3.5,4.5) {\scriptsize $(x-1)^2$};
+          \node[uniGranate] at (axis cs:2.9,-1.5) {\scriptsize $-2(x-1)^2+3$};
+        \end{axis}
+      \end{tikzpicture}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\begin{frame}{Funciones pares e impares}
+  \begin{definicion}
+    $f$ es \resaltar{par} si $f(-x)=f(x)$ (simétrica respecto del eje $y$) e \resaltar{impar} si $f(-x)=-f(x)$
+    (simétrica respecto del origen), para todo $x\in\Dom f$ (dominio simétrico).
+  \end{definicion}
+  \begin{columns}
+    \begin{column}{0.5\textwidth}
+      \begin{ejemplo}
+        \begin{itemize}
+          \item Pares: $x^2$, $x^4$, $\cos x$, $|x|$, $e^{-x^2}$.
+          \item Impares: $x$, $x^3$, $\sen x$, $\tan x$, $\frac1x$.
+          \item Ni par ni impar: $x+1$, $e^x$.
+        \end{itemize}
+      \end{ejemplo}
+      \small Toda $f$ con dominio simétrico es suma de una par y una impar:
+      $f(x)=\frac{f(x)+f(-x)}2+\frac{f(x)-f(-x)}2$.
+    \end{column}
+    \begin{column}{0.5\textwidth}
+      \centering
+      \begin{tikzpicture}
+        \begin{axis}[bma, xmin=-2.4, xmax=2.4, ymin=-2.5, ymax=2.5, width=6.5cm, height=5.5cm, xtick=\empty, ytick=\empty, samples=100, domain=-2.2:2.2]
+          \addplot[curva] {2*exp(-x^2)};
+          \addplot[curva2, domain=-1.8:1.8] {x^3-1.5*x};
+          \node[uniAzul] at (axis cs:-1.4,1.2) {\scriptsize par};
+          \node[uniGranate] at (axis cs:1.6,2) {\scriptsize impar};
+        \end{axis}
+      \end{tikzpicture}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\section{Ejercicios}
+
+\begin{frame}{Ejercicios propuestos}
+  \small
+  \begin{ejercicio}
+    \begin{enumerate}
+      \item Halle el dominio: (a) $f(x)=\sqrt{x^2-5x+6}$, \ (b) $g(x)=\dfrac{\ln(x-1)}{\sqrt{4-x}}$, \ (c) $h(x)=\sqrt{\dfrac{x^2-1}{x^2-9}}$.
+      \item Halle el rango: (a) $f(x)=\dfrac{x}{x+1}$, \ (b) $g(x)=-x^2+4x$, $x\in[0,3]$, \ (c) $h(x)=\dfrac{x^2}{1+x^2}$, \ (d) $k(x)=3+2\sen x$.
+      \item Sean $f(x)=x^2-1$ y $g(x)=\sqrt{x+1}$. Halle $f\circ g$, $g\circ f$ y sus dominios.
+      \item Exprese $F(x)=\sqrt{\cos^2x+1}$ como composición de tres funciones.
+      \item Esboce, usando transformaciones: (a) $y=1-\sqrt{x+2}$, \ (b) $y=2^{x-1}-3$, \ (c) $y=|\ln x|$, \ (d) $y=2\sen\left(2x-\frac\pi2\right)$.
+      \item Determine si es par, impar o ninguna: $f(x)=x^3\cos x$, \ $g(x)=\ln\dfrac{1+x}{1-x}$, \ $h(x)=x^2+\sen x$.
+      \item Un depósito cilíndrico sin tapa tiene volumen $V=10$ m$^3$. Exprese el área total de su superficie como función del radio $r$ y halle su dominio.
+    \end{enumerate}
+  \end{ejercicio}
+\end{frame}
+
+\begin{frame}{Resumen}
+  \begin{itemize}
+    \item Función: a cada $x$ del dominio, un único $f(x)$. \ Prueba de la recta vertical.
+    \item Dominio: evitar división por cero, raíces pares de negativos y logaritmos de no positivos.
+    \item Rango: despejar $x$ o acotar. \ Composición: $f\circ g\neq g\circ f$.
+    \item Catálogo: afín, cuadrática, raíz, polinomial, racional, trigonométricas, exponencial y logaritmo.
+    \item Transformaciones: $f(x-c)+d$, $\pm f(\pm x)$, $cf(x)$, $f(cx)$. Simetrías: par e impar.
+  \end{itemize}
+  \vspace{3mm}
+  \textbf{Próxima sesión:} funciones definidas por partes: valor absoluto, signo, escalón unitario y máximo entero.
+\end{frame}
+
+\end{document}

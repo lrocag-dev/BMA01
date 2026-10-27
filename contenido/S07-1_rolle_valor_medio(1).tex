@@ -1,0 +1,251 @@
+\documentclass[10pt,aspectratio=169]{beamer}
+\usepackage{bma01}
+
+\title[Rolle y valor medio]{Teorema de Rolle y teorema del valor medio}
+\subtitle{Teorema del valor medio generalizado (Cauchy)\\[2pt]\small Semana 7 -- Sesión 1}
+
+\begin{document}
+
+\begin{frame}
+  \titlepage
+\end{frame}
+
+\begin{frame}{Objetivos de la sesión}
+  \begin{enumerate}
+    \item Probar el \resaltar{teorema de Fermat} sobre extremos locales.
+    \item Enunciar, demostrar e interpretar los teoremas de \resaltar{Rolle} y del \resaltar{valor medio} (TVM).
+    \item Usar el TVM para probar desigualdades, contar raíces y caracterizar funciones constantes y monótonas.
+    \item Enunciar y probar el \resaltar{TVM generalizado de Cauchy}.
+  \end{enumerate}
+  \begin{block}{Plan (2 horas)}
+    \begin{tabular}{ll}
+      0:00 -- 0:20 & Extremos locales y teorema de Fermat\\
+      0:20 -- 0:45 & Teorema de Rolle; número de raíces\\
+      0:45 -- 1:30 & TVM: prueba, interpretaciones, consecuencias, desigualdades\\
+      1:30 -- 1:45 & TVM generalizado de Cauchy\\
+      1:45 -- 2:00 & Ejercicios y resumen
+    \end{tabular}
+  \end{block}
+\end{frame}
+
+\section{Teorema de Fermat}
+
+\begin{frame}{Extremos locales y teorema de Fermat}
+  \begin{columns}
+    \begin{column}{0.55\textwidth}
+      \begin{definicion}
+        $f$ tiene un \resaltar{máximo local} en $c$ si $f(x)\le f(c)$ para todo $x$ en alguna vecindad de $c$
+        (\resaltar{mínimo local}: $f(x)\ge f(c)$).
+      \end{definicion}
+      \begin{teorema}[Fermat]
+        Si $f$ tiene un extremo local en un punto interior $c$ y $f'(c)$ existe, entonces $f'(c)=0$.
+      \end{teorema}
+      \textbf{Prueba} (máximo). Para $h>0$ pequeño, $\frac{f(c+h)-f(c)}{h}\le0$, luego $f'(c)\le0$. Para $h<0$, el cociente es $\ge0$, luego $f'(c)\ge0$.
+      Así $f'(c)=0$. $\blacksquare$
+    \end{column}
+    \begin{column}{0.45\textwidth}
+      \centering
+      \begin{tikzpicture}
+        \begin{axis}[bma, xmin=-2.5, xmax=2.5, ymin=-2.2, ymax=2.5, width=6.3cm, height=5.3cm, xtick={-1,1}, ytick=\empty, samples=100, domain=-2.2:2.2]
+          \addplot[curva] {x^3/3-x};
+          \addplot[curva2, domain=-1.7:-0.3] {2/3};
+          \addplot[curva2, domain=0.3:1.7] {-2/3};
+          \node[uniGranate] at (axis cs:-1,1.1) {\scriptsize máx. local};
+          \node[uniGranate] at (axis cs:1,-1.1) {\scriptsize mín. local};
+        \end{axis}
+      \end{tikzpicture}
+      \begin{observacion}
+        El recíproco es falso: $(x^3)'=0$ en $0$ sin extremo. Y $|x|$ tiene mínimo en $0$ sin derivada.
+      \end{observacion}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\section{Teorema de Rolle}
+
+\begin{frame}{Teorema de Rolle}
+  \begin{columns}
+    \begin{column}{0.55\textwidth}
+      \begin{teorema}[Rolle]
+        Si $f$ es continua en $[a,b]$, derivable en $(a,b)$ y $f(a)=f(b)$, entonces existe $c\in(a,b)$ con $f'(c)=0$.
+      \end{teorema}
+      \textbf{Prueba.} Por Weierstrass, $f$ alcanza máximo y mínimo en $[a,b]$. Si ambos se alcanzan en los extremos, $f$ es constante y
+      $f'\equiv0$. Si no, uno de ellos está en un punto interior $c$, y por Fermat $f'(c)=0$. $\blacksquare$
+      \begin{ejemplo}[1]
+        $f(x)=x^2-4x+3$ en $[1,3]$: $f(1)=f(3)=0$; \ $f'(c)=2c-4=0\Rightarrow c=2\in(1,3)$. \checkmark
+      \end{ejemplo}
+    \end{column}
+    \begin{column}{0.45\textwidth}
+      \centering
+      \begin{tikzpicture}
+        \begin{axis}[bma, xmin=0, xmax=4.3, ymin=0, ymax=3.2, width=6.3cm, height=5cm, xtick={0.5,1.45,3,3.8}, xticklabels={$a$,$c_1$,$c_2$,$b$}, ytick=\empty, samples=100, domain=0.5:3.8]
+          \addplot[curva] {1+0.4*(x-0.5)*(3.8-x)*(1+0.5*sin(deg(2.5*x)))};
+          \draw[dashed] (axis cs:0.5,1) -- (axis cs:3.8,1);
+        \end{axis}
+      \end{tikzpicture}
+
+      \small $f(a)=f(b)$: hay al menos un punto con tangente horizontal (aquí, dos o más).
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\begin{frame}{Rolle para contar raíces}
+  \begin{ejemplo}[2]
+    Probar que $x^3+x-1=0$ tiene \textbf{exactamente una} raíz real.
+    \begin{itemize}
+      \item \textbf{Existencia} (Bolzano): $f(0)=-1<0$, $f(1)=1>0$.
+      \item \textbf{Unicidad} (Rolle): si hubiera dos raíces $r_1<r_2$, $f(r_1)=f(r_2)=0$ y existiría $c$ con $f'(c)=0$. Pero
+        $f'(x)=3x^2+1>0$. Contradicción.
+    \end{itemize}
+  \end{ejemplo}
+  \begin{proposicion}[consecuencia]
+    Si $f'$ tiene $k$ raíces, entonces $f$ tiene a lo sumo $k+1$ raíces (entre dos raíces de $f$ hay una de $f'$).
+  \end{proposicion}
+  \begin{ejemplo}[3]
+    $x^4-4x+1=0$: $f'(x)=4x^3-4=0$ solo en $x=1$, así $f$ tiene a lo sumo $2$ raíces; como $f(0)=1$, $f(1)=-2$, $f(2)=9$, tiene exactamente $2$.
+  \end{ejemplo}
+  \begin{observacion}
+    Hipótesis necesarias: $f(x)=|x|$ en $[-1,1]$ cumple $f(-1)=f(1)$ pero nunca $f'=0$ (no es derivable en $0$).
+  \end{observacion}
+\end{frame}
+
+\section{Teorema del valor medio}
+
+\begin{frame}{Teorema del valor medio (Lagrange)}
+  \begin{columns}
+    \begin{column}{0.55\textwidth}
+      \begin{teorema}[TVM]
+        Si $f$ es continua en $[a,b]$ y derivable en $(a,b)$, existe $c\in(a,b)$ tal que
+        \[ f'(c)=\frac{f(b)-f(a)}{b-a}. \]
+      \end{teorema}
+      \textbf{Prueba.} Sea $\ell(x)$ la recta secante por $(a,f(a))$ y $(b,f(b))$ y $g(x)=f(x)-\ell(x)$. Entonces $g(a)=g(b)=0$ y por Rolle
+      existe $c$ con $g'(c)=f'(c)-\frac{f(b)-f(a)}{b-a}=0$. \ $\blacksquare$
+      \begin{idea}
+        En algún punto la \textbf{tangente es paralela a la secante}: la razón de cambio instantánea iguala a la media.
+      \end{idea}
+    \end{column}
+    \begin{column}{0.45\textwidth}
+      \centering
+      \begin{tikzpicture}
+        \begin{axis}[bma, xmin=0, xmax=4.3, ymin=0, ymax=3.5, width=6.3cm, height=5.5cm, xtick={0.5,1.091,3.8}, xticklabels={$a$,$c$,$b$}, ytick=\empty, samples=100, domain=0.5:3.8]
+          \addplot[curva] {0.5+0.6*x+0.6*sin(deg(1.6*x))};
+          \addplot[curva2] coordinates {(0.5,1.2304) (3.8,2.6589)};
+          \addplot[uniVerde, very thick, domain=0.29:1.89] {1.7455+0.4329*(x-1.0911)};
+          \addplot[only marks, mark=*, black] coordinates {(0.5,1.2304) (3.8,2.6589)};
+        \end{axis}
+      \end{tikzpicture}
+
+      \small Secante (granate) y tangente paralela (verde).
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\begin{frame}{Interpretación física}
+  \begin{ejemplo}[4: control de velocidad]
+    Un auto pasa por dos controles separados $30$ km, a las 10:00 y a las 10:15. Su velocidad media fue
+    $\frac{30}{0.25}=120$ km/h. Por el TVM, en algún instante su velocímetro marcó \textbf{exactamente} $120$ km/h.
+    Si el límite es $100$ km/h, puede ser multado aunque nadie lo haya visto.
+  \end{ejemplo}
+  \begin{ejemplo}[5: química]
+    Si la concentración de un reactivo pasa de $0.80$ a $0.20$ mol/L en $10$ min, en algún instante la velocidad de reacción
+    $-\frac{d[A]}{dt}$ fue exactamente $0.06$ mol/(L$\cdot$min).
+  \end{ejemplo}
+  \begin{ejemplo}[6: hallar $c$]
+    $f(x)=x^3$ en $[0,2]$: \ $\frac{8-0}{2}=4=3c^2\Rightarrow c=\frac{2}{\sqrt3}\approx1.155\in(0,2)$.
+  \end{ejemplo}
+\end{frame}
+
+\begin{frame}{Consecuencias del TVM}
+  \begin{teorema}
+    Sea $f$ continua en $[a,b]$ y derivable en $(a,b)$.
+    \begin{enumerate}
+      \item Si $f'(x)=0$ en $(a,b)$, entonces $f$ es \textbf{constante} en $[a,b]$.
+      \item Si $f'=g'$ en $(a,b)$, entonces $f=g+C$ (base de la integral indefinida).
+      \item Si $f'>0$ en $(a,b)$, $f$ es estrictamente \textbf{creciente}; si $f'<0$, estrictamente decreciente.
+    \end{enumerate}
+  \end{teorema}
+  \textbf{Prueba de 3.} Si $x_1<x_2$: $f(x_2)-f(x_1)=f'(c)(x_2-x_1)>0$. \ $\blacksquare$
+  \begin{ejemplo}[7]
+    $f(x)=\sec^2x-\tan^2x$ en $\left(-\frac\pi2,\frac\pi2\right)$: \ $f'(x)=2\sec^2x\tan x-2\tan x\sec^2x=0$, así $f$ es constante;
+    como $f(0)=1$, se obtiene la identidad $\sec^2x-\tan^2x=1$.
+  \end{ejemplo}
+  \begin{observacion}
+    El intervalo importa: $f(x)=\frac{|x|}{x}$ tiene $f'=0$ en $\R\setminus\{0\}$ y no es constante.
+  \end{observacion}
+\end{frame}
+
+\begin{frame}{Desigualdades con el TVM}
+  \begin{ejemplo}[8]
+    $|\sen a-\sen b|\le|a-b|$: \ por el TVM, $\sen a-\sen b=\cos c\,(a-b)$ y $|\cos c|\le1$.
+  \end{ejemplo}
+  \begin{ejemplo}[9]
+    $\dfrac{x}{1+x}<\ln(1+x)<x$ para $x>0$: \ $\ln(1+x)-\ln1=\dfrac{1}{1+c}\cdot x$ con $0<c<x$, y $\dfrac1{1+x}<\dfrac1{1+c}<1$.
+  \end{ejemplo}
+  \begin{ejemplo}[10: estimación numérica]
+    $\sqrt{101}\approx10+\frac{1}{2\sqrt c}$ con $100<c<101$: \ $10+\frac{1}{2\sqrt{101}}<\sqrt{101}<10+\frac1{20}$, \
+    es decir $10.0497<\sqrt{101}<10.05$.
+  \end{ejemplo}
+  \begin{idea}
+    Esquema: $f(b)-f(a)=f'(c)(b-a)$ y luego \textbf{acotar} $f'(c)$ en el intervalo.
+  \end{idea}
+\end{frame}
+
+\section{TVM generalizado}
+
+\begin{frame}{Teorema del valor medio de Cauchy}
+  \begin{columns}
+    \begin{column}{0.58\textwidth}
+      \begin{teorema}[Cauchy]
+        Si $f,g$ son continuas en $[a,b]$, derivables en $(a,b)$ y $g'(x)\ne0$ en $(a,b)$, existe $c\in(a,b)$ con
+        \[ \frac{f(b)-f(a)}{g(b)-g(a)}=\frac{f'(c)}{g'(c)}. \]
+      \end{teorema}
+      \textbf{Prueba.} $h(x)=\big[f(b)-f(a)\big]g(x)-\big[g(b)-g(a)\big]f(x)$ cumple $h(a)=h(b)$; por Rolle $h'(c)=0$. ($g(b)\ne g(a)$ por Rolle aplicado a $g$.) $\blacksquare$
+      \begin{observacion}
+        Con $g(x)=x$ se recupera el TVM. Este teorema es la base de la \textbf{regla de L'Hospital} (Semana 11).
+      \end{observacion}
+    \end{column}
+    \begin{column}{0.42\textwidth}
+      \centering
+      \begin{tikzpicture}
+        \begin{axis}[bma, xlabel={$g$}, ylabel={$f$}, xmin=0, xmax=3.5, ymin=0, ymax=3.2, width=6cm, height=5.3cm, xtick=\empty, ytick=\empty, samples=100, domain=0:1]
+          \addplot[curva] ({0.4+2.6*x+0.3*sin(deg(6*x))},{0.6+1.8*x^2+0.5*sin(deg(3*x))});
+          \addplot[curva2] coordinates {(0.4,0.6) (2.916,2.4706)};
+        \end{axis}
+      \end{tikzpicture}
+
+      \small Interpretación: la curva $(g(t),f(t))$ tiene una tangente paralela a la cuerda.
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\section{Ejercicios}
+
+\begin{frame}{Ejercicios propuestos}
+  \small
+  \begin{ejercicio}
+    \begin{enumerate}
+      \item Verifique Rolle y halle $c$: (a) $f(x)=x^3-3x$ en $[-\sqrt3,\sqrt3]$, \ (b) $f(x)=\sen x+\cos x$ en $\left[0,\frac\pi2\right]$.
+      \item ¿Se aplica Rolle a $f(x)=1-x^{2/3}$ en $[-1,1]$? Explique.
+      \item Pruebe que $x^5+10x+3=0$ tiene exactamente una raíz real; y que $2x-1-\sen x=0$ también.
+      \item Verifique el TVM y halle $c$: (a) $f(x)=\sqrt x$ en $[1,9]$, \ (b) $f(x)=\ln x$ en $[1,e]$.
+      \item Pruebe: (a) $|\tan a-\tan b|\ge|a-b|$ en $\left(-\frac\pi2,\frac\pi2\right)$, \ (b) $e^x\ge1+x$, \ (c) $\frac{b-a}{b}<\ln\frac ba<\frac{b-a}{a}$ ($0<a<b$).
+      \item Si $f(1)=10$ y $f'(x)\ge2$ en $[1,4]$, ¿qué tan pequeño puede ser $f(4)$?
+      \item Pruebe que si $f'(x)=m$ (constante) en $\R$, entonces $f(x)=mx+b$. ¿Y si $f''\equiv0$?
+      \item Halle $c$ del TVM de Cauchy para $f(x)=x^3$, $g(x)=x^2$ en $[1,2]$.
+    \end{enumerate}
+  \end{ejercicio}
+\end{frame}
+
+\begin{frame}{Resumen}
+  \begin{itemize}
+    \item \resaltar{Fermat}: extremo local interior y derivable $\Rightarrow$ $f'(c)=0$.
+    \item \resaltar{Rolle}: $f(a)=f(b)$ $\Rightarrow$ $f'(c)=0$ para algún $c\in(a,b)$. Útil para contar raíces.
+    \item \resaltar{TVM}: $f'(c)=\frac{f(b)-f(a)}{b-a}$: tangente paralela a la secante; velocidad instantánea = media.
+    \item Consecuencias: $f'=0\Rightarrow$ constante; $f'>0\Rightarrow$ creciente; desigualdades.
+    \item \resaltar{Cauchy}: $\frac{f(b)-f(a)}{g(b)-g(a)}=\frac{f'(c)}{g'(c)}$.
+  \end{itemize}
+  \vspace{3mm}
+  \textbf{Próxima sesión:} la regla de la cadena y derivación implícita.
+\end{frame}
+
+\end{document}

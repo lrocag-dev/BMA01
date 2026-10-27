@@ -1,0 +1,258 @@
+\documentclass[10pt,aspectratio=169]{beamer}
+\usepackage{bma01}
+
+\title[El residuo de Taylor]{Importancia del residuo en la fórmula de Taylor}
+\subtitle{Estimación del error. Ejemplos\\[2pt]\small Semana 13 -- Sesión 1}
+
+\begin{document}
+
+\begin{frame}
+  \titlepage
+\end{frame}
+
+\begin{frame}{Objetivos de la sesión}
+  \begin{enumerate}
+    \item Enunciar la \resaltar{fórmula de Taylor con residuo de Lagrange}.
+    \item \resaltar{Acotar el error} de una aproximación y elegir el grado necesario para una precisión dada.
+    \item Comprender por qué el residuo determina \emph{dónde} sirve una aproximación.
+    \item Aplicar el residuo a extremos locales (derivadas de orden superior) y a la irracionalidad de $e$.
+  \end{enumerate}
+  \begin{block}{Plan (2 horas)}
+    \begin{tabular}{ll}
+      0:00 -- 0:25 & El residuo: forma de Lagrange e idea de la prueba\\
+      0:25 -- 1:05 & Acotación del error: ejemplos numéricos\\
+      1:05 -- 1:25 & ¿Dónde funciona la aproximación? ($\ln(1+x)$, $e^{-1/x^2}$)\\
+      1:25 -- 1:45 & Aplicaciones: criterio de extremos, $e$ es irracional\\
+      1:45 -- 2:00 & Ejercicios y resumen
+    \end{tabular}
+  \end{block}
+\end{frame}
+
+\section{El residuo}
+
+\begin{frame}{El residuo de Taylor}
+  \begin{definicion}
+    El \resaltar{residuo} (o error) de orden $n$ es \quad $R_n(x)=f(x)-T_n(x)$.
+  \end{definicion}
+  \begin{teorema}[Taylor con residuo de Lagrange]
+    Si $f$ tiene $n+1$ derivadas en un intervalo que contiene a $a$ y $x$, existe $c$ entre $a$ y $x$ tal que
+    \[ R_n(x)=\frac{f^{(n+1)}(c)}{(n+1)!}(x-a)^{n+1}. \]
+  \end{teorema}
+  \begin{itemize}
+    \item Con $n=0$ es el \textbf{TVM}: $f(x)-f(a)=f'(c)(x-a)$.
+    \item El residuo ``se parece'' al siguiente término de Taylor, pero con la derivada evaluada en un punto desconocido $c$.
+  \end{itemize}
+  \begin{teorema}[desigualdad de Taylor]
+    Si $|f^{(n+1)}(t)|\le M$ entre $a$ y $x$: \quad $\displaystyle|R_n(x)|\le\frac{M}{(n+1)!}|x-a|^{n+1}$.
+  \end{teorema}
+\end{frame}
+
+\begin{frame}{Idea de la demostración}
+  Fijemos $x$ y definamos, para $t$ entre $a$ y $x$,
+  \[ g(t)=f(x)-\sum_{k=0}^n\frac{f^{(k)}(t)}{k!}(x-t)^k\qquad(\text{el residuo usando } t \text{ como centro}). \]
+  \begin{itemize}
+    \item $g(x)=0$ y $g(a)=R_n(x)$.
+    \item Al derivar, la suma es telescópica y queda \ $g'(t)=-\dfrac{f^{(n+1)}(t)}{n!}(x-t)^n$.
+    \item Aplicando el TVM de Cauchy a $g$ y $h(t)=(x-t)^{n+1}$ en $[a,x]$:
+      \[ \frac{g(x)-g(a)}{h(x)-h(a)}=\frac{g'(c)}{h'(c)}\ \Rightarrow\ \frac{-R_n(x)}{-(x-a)^{n+1}}=\frac{-\frac{f^{(n+1)}(c)}{n!}(x-c)^n}{-(n+1)(x-c)^n}. \]
+  \end{itemize}
+  Simplificando: $R_n(x)=\dfrac{f^{(n+1)}(c)}{(n+1)!}(x-a)^{n+1}$. \ $\blacksquare$
+\end{frame}
+
+\section{Acotación del error}
+
+\begin{frame}{Ejemplo 1: ¿cuántos términos para calcular $e$?}
+  \begin{ejemplo}
+    $f(x)=e^x$, $a=0$, $x=1$: \ $f^{(n+1)}(c)=e^c$ con $0<c<1$, así $e^c<e<3$.
+    \[ |R_n(1)|\le\frac{3}{(n+1)!}. \]
+    \begin{center}
+      \renewcommand{\arraystretch}{1.3}
+      \begin{tabular}{c|c|c}
+        $n$ & cota $\frac{3}{(n+1)!}$ & error real $|e-T_n(1)|$\\ \hline
+        6 & $5.95\times10^{-4}$ & $2.3\times10^{-4}$\\
+        8 & $8.3\times10^{-6}$ & $3.1\times10^{-6}$\\
+        9 & $8.3\times10^{-7}$ & $3.0\times10^{-7}$
+      \end{tabular}
+    \end{center}
+    Para error $<10^{-6}$ basta $n=9$.
+  \end{ejemplo}
+  \begin{observacion}
+    La cota es \textbf{conservadora} (garantiza, pero sobreestima). Lo importante: \textbf{garantiza} la precisión sin conocer el valor exacto.
+  \end{observacion}
+\end{frame}
+
+\begin{frame}{Ejemplo 2: $\sen x\approx x-\frac{x^3}6$}
+  \begin{columns}
+    \begin{column}{0.55\textwidth}
+      \begin{ejemplo}
+        Como el término de grado 4 es nulo, $T_3=T_4$ y podemos usar $R_4$: $|f^{(5)}|=|\cos c|\le1$:
+        \[ \left|\sen x-\left(x-\frac{x^3}6\right)\right|\le\frac{|x|^5}{120}. \]
+        \begin{itemize}
+          \item Si $|x|\le0.2$: error $\le2.7\times10^{-6}$.
+          \item ¿Para qué $x$ el error es $<0.001$? \ $|x|^5<0.12\iff|x|<0.654$.
+        \end{itemize}
+      \end{ejemplo}
+      \small Física: por eso $\sen\theta\approx\theta$ es excelente para ángulos pequeños, y $\theta-\frac{\theta^3}{6}$ corrige el periodo del péndulo para amplitudes mayores.
+    \end{column}
+    \begin{column}{0.45\textwidth}
+      \centering
+      \begin{tikzpicture}
+        \begin{axis}[bma, xmin=-1.6, xmax=1.6, ymin=-0.012, ymax=0.012, width=6.3cm, height=5.3cm, xtick={-0.654,0.654}, xticklabels={$-0.654$,$0.654$}, ytick={-0.01,0.01}, scaled y ticks=false, yticklabel style={/pgf/number format/fixed}, samples=200, domain=-1.5:1.5]
+          \addplot[curva] {sin(deg(x))-x+x^3/6};
+          \addplot[curva2, dashed] {abs(x)^5/120};
+          \addplot[curva2, dashed] {-abs(x)^5/120};
+          \fill[uniVerde!15] (axis cs:-0.654,-0.012) rectangle (axis cs:0.654,0.012);
+          \addplot[curva] {sin(deg(x))-x+x^3/6};
+        \end{axis}
+      \end{tikzpicture}
+
+      \small Error real (azul) y cota $\pm\frac{|x|^5}{120}$ (granate).
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\begin{frame}{Ejemplo 3: raíz cuadrada}
+  \begin{ejemplo}
+    $\sqrt{1.1}\approx T_2(0.1)=1+\frac{0.1}{2}-\frac{0.01}{8}=1.04875$ (con $f(x)=\sqrt{1+x}$).
+    \begin{itemize}
+      \item $f'''(x)=\dfrac38(1+x)^{-5/2}\le\dfrac38$ para $x\ge0$.
+      \item $|R_2(0.1)|\le\dfrac{3/8}{3!}(0.1)^3=6.25\times10^{-5}$.
+    \end{itemize}
+    Por lo tanto $1.04875\le\sqrt{1.1}\le1.04875+0.0000625$, \ es decir $\sqrt{1.1}\in[1.04875,\ 1.04881]$. \ (Real: $1.048809$.)
+  \end{ejemplo}
+  \begin{observacion}[signo del error]
+    Como $f'''>0$, $R_2>0$: la aproximación es \textbf{por defecto}. El residuo de Lagrange también informa el \emph{signo} del error.
+  \end{observacion}
+\end{frame}
+
+\section{¿Dónde funciona?}
+
+\begin{frame}{El residuo decide dónde sirve la aproximación}
+  \begin{columns}
+    \begin{column}{0.5\textwidth}
+      \begin{ejemplo}[4: $\ln(1+x)$]
+        \begin{center}
+          \small
+          \begin{tabular}{c|r|r}
+            $n$ & $T_n(1)$ & $T_n(2)$\\ \hline
+            2 & $0.5$ & $0$\\
+            4 & $0.5833$ & $-1.333$\\
+            6 & $0.6167$ & $-5.600$\\
+            8 & $0.6345$ & $-19.31$\\ \hline
+            exacto & $0.6931$ & $1.0986$
+          \end{tabular}
+        \end{center}
+        En $x=1$ converge (lentamente); en $x=2$ \textbf{diverge}: $|R_n(2)|$ crece como $\frac{2^{n+1}}{n+1}$.
+      \end{ejemplo}
+    \end{column}
+    \begin{column}{0.5\textwidth}
+      \centering
+      \begin{tikzpicture}
+        \begin{axis}[bma, xmin=-1, xmax=2.5, ymin=-2.5, ymax=2.5, width=6.5cm, height=5.5cm, xtick={1,2}, ytick={-2,1,2}, samples=150, restrict y to domain=-5:5]
+          \addplot[black, very thick, domain=-0.95:2.5] {ln(1+x)};
+          \addplot[curva, domain=-1:2.5] {x-x^2/2+x^3/3-x^4/4};
+          \addplot[curva2, domain=-1:2.5] {x-x^2/2+x^3/3-x^4/4+x^5/5-x^6/6+x^7/7-x^8/8};
+          \draw[dashed, gray] (axis cs:1,-2.5) -- (axis cs:1,2.5);
+          \node[uniAzul] at (axis cs:2.2,-1.5) {\scriptsize $T_4$};
+          \node[uniGranate] at (axis cs:1.55,-2.2) {\scriptsize $T_8$};
+        \end{axis}
+      \end{tikzpicture}
+
+      \small Fuera de $(-1,1]$, más términos \textbf{empeoran} la aproximación.
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\begin{frame}{Una función que Taylor no puede ver}
+  \begin{columns}
+    \begin{column}{0.55\textwidth}
+      \begin{ejemplo}[5]
+        $f(x)=\begin{cases}e^{-1/x^2},&x\neq0\\0,&x=0\end{cases}$
+        \medskip
+
+        Se prueba (con L'Hospital) que $f^{(k)}(0)=0$ para todo $k$. Entonces $T_n(x)=0$ para todo $n$, y
+        \[ R_n(x)=f(x)=e^{-1/x^2}\neq0\quad(x\neq0). \]
+        El residuo \textbf{no} tiende a $0$: los polinomios de Taylor no reconstruyen $f$.
+      \end{ejemplo}
+      \begin{idea}
+        Que $T_n$ se calcule no garantiza que aproxime bien: \textbf{solo el residuo lo dice}.
+      \end{idea}
+    \end{column}
+    \begin{column}{0.45\textwidth}
+      \centering
+      \begin{tikzpicture}
+        \begin{axis}[bma, xmin=-3, xmax=3, ymin=-0.1, ymax=1, width=6.3cm, height=4.6cm, xtick={-2,-1,1,2}, ytick={1}, samples=300, domain=-3:3]
+          \addplot[curva] {exp(-1/(x^2+1e-9))};
+          \addplot[curva2, dashed] {0};
+        \end{axis}
+      \end{tikzpicture}
+
+      \small Extremadamente plana en $0$, pero no nula.
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\section{Aplicaciones del residuo}
+
+\begin{frame}{Criterio de extremos con derivadas superiores}
+  \begin{teorema}
+    Si $f'(a)=f''(a)=\cdots=f^{(n-1)}(a)=0$ y $f^{(n)}(a)\neq0$ (con $f^{(n)}$ continua), entonces:
+    \begin{itemize}
+      \item $n$ \textbf{par}: extremo local (mínimo si $f^{(n)}(a)>0$, máximo si $<0$);
+      \item $n$ \textbf{impar}: no hay extremo (punto de inflexión).
+    \end{itemize}
+  \end{teorema}
+  \textbf{Prueba.} $f(x)-f(a)=R_{n-1}(x)=\dfrac{f^{(n)}(c)}{n!}(x-a)^n$, y $f^{(n)}(c)$ tiene el signo de $f^{(n)}(a)$ cerca de $a$. Si $n$ es par,
+  $(x-a)^n\ge0$ no cambia de signo. \ $\blacksquare$
+  \begin{ejemplo}[6]
+    \begin{itemize}
+      \item $f(x)=x^4$: $f'=f''=f'''=0$ en $0$, $f^{(4)}=24>0$: mínimo. (El criterio de $f''$ no decidía.)
+      \item $g(x)=x-\sen x$: $g'(0)=g''(0)=0$, $g'''(0)=1$: inflexión, no extremo.
+    \end{itemize}
+  \end{ejemplo}
+\end{frame}
+
+\begin{frame}{Una joya: $e$ es irracional}
+  \begin{teorema}
+    $e\notin\Q$.
+  \end{teorema}
+  \textbf{Prueba.} Supongamos $e=\frac pq$ con $p,q\in\N$. Por Taylor con $n=q$:
+  \[ e=\sum_{k=0}^q\frac1{k!}+\frac{e^c}{(q+1)!},\quad0<c<1. \]
+  Multiplicando por $q!$:
+  \[ \underbrace{q!\,e}_{\text{entero}}-\underbrace{\sum_{k=0}^q\frac{q!}{k!}}_{\text{entero}}=\frac{e^c}{q+1}. \]
+  El lado izquierdo es un entero, pero $0<\dfrac{e^c}{q+1}<\dfrac{3}{q+1}\le1$ si $q\ge2$ (y $e$ no es entero, así $q\ge2$). \
+  Contradicción. \ $\blacksquare$
+  \begin{idea}
+    El residuo no solo estima errores: también permite \textbf{demostrar} propiedades exactas.
+  \end{idea}
+\end{frame}
+
+\section{Ejercicios}
+
+\begin{frame}{Ejercicios propuestos}
+  \small
+  \begin{ejercicio}
+    \begin{enumerate}
+      \item Acote el error al aproximar: (a) $\cos(0.3)$ por $1-\frac{0.09}{2}$, \ (b) $e^{0.2}$ por $T_3(0.2)$, \ (c) $\ln(1.1)$ por $T_3(0.1)$.
+      \item ¿Qué grado $n$ garantiza calcular $\sen1$ con error menor que $10^{-6}$? ¿Y $e^2$?
+      \item ¿En qué intervalo la aproximación $\cos x\approx1-\frac{x^2}2$ tiene error menor que $0.001$?
+      \item Aproxime $\sqrt[3]{28}$ con $T_2$ de $\sqrt[3]{x}$ en $a=27$ y acote el error.
+      \item Pruebe que $1+x+\frac{x^2}2\le e^x\le1+x+\frac{x^2}2e^x$ para $x\ge0$.
+      \item Clasifique el punto crítico $x=0$ de: (a) $f(x)=x^5-x^6$, \ (b) $g(x)=\cos x-1+\frac{x^2}{2}$, \ (c) $h(x)=e^{x}-1-x-\frac{x^2}{2}$.
+      \item Un físico usa $\sqrt{1-v^2/c^2}\approx1-\frac{v^2}{2c^2}$. Si $v\le0.1c$, acote el error relativo.
+    \end{enumerate}
+  \end{ejercicio}
+\end{frame}
+
+\begin{frame}{Resumen}
+  \begin{itemize}
+    \item $f(x)=T_n(x)+R_n(x)$, \ $R_n(x)=\dfrac{f^{(n+1)}(c)}{(n+1)!}(x-a)^{n+1}$ (Lagrange).
+    \item Desigualdad de Taylor: $|R_n|\le\dfrac{M|x-a|^{n+1}}{(n+1)!}$; permite elegir $n$ para una precisión dada.
+    \item El residuo indica \textbf{dónde} y \textbf{cuán bien} aproxima $T_n$ (y el signo del error).
+    \item Aplicaciones: criterio de extremos con derivadas superiores; irracionalidad de $e$.
+  \end{itemize}
+  \vspace{3mm}
+  \textbf{Próxima sesión:} curvas paramétricas: ecuaciones paramétricas y sus derivadas.
+\end{frame}
+
+\end{document}

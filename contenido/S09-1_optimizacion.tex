@@ -1,0 +1,288 @@
+\documentclass[10pt,aspectratio=169]{beamer}
+\usepackage{bma01}
+
+\title[Optimización]{Aplicación de derivadas: optimización}
+\subtitle{Extremos absolutos y problemas de máximos y mínimos\\[2pt]\small Semana 9 -- Sesión 1}
+
+\begin{document}
+
+\begin{frame}
+  \titlepage
+\end{frame}
+
+\begin{frame}{Objetivos de la sesión}
+  \begin{enumerate}
+    \item Hallar \resaltar{puntos críticos} y \resaltar{extremos absolutos} en intervalos cerrados.
+    \item Usar el signo de $f'$ (\resaltar{criterio de la primera derivada}) para clasificar extremos locales.
+    \item Resolver \resaltar{problemas de optimización} de geometría, física y química.
+  \end{enumerate}
+  \begin{block}{Plan (2 horas)}
+    \begin{tabular}{ll}
+      0:00 -- 0:25 & Puntos críticos; método del intervalo cerrado\\
+      0:25 -- 0:45 & Crecimiento y criterio de la primera derivada\\
+      0:45 -- 1:40 & Problemas de optimización: estrategia y ejemplos\\
+      1:40 -- 2:00 & Ejercicios y resumen
+    \end{tabular}
+  \end{block}
+\end{frame}
+
+\section{Extremos absolutos}
+
+\begin{frame}{Puntos críticos y extremos absolutos}
+  \begin{definicion}
+    \begin{itemize}
+      \item $f(c)$ es \resaltar{máximo absoluto} de $f$ en $D$ si $f(c)\ge f(x)$ para todo $x\in D$ (análogo para mínimo).
+      \item $c$ es \resaltar{punto crítico} de $f$ si $c\in\Dom f$ y $f'(c)=0$ o $f'(c)$ no existe.
+    \end{itemize}
+  \end{definicion}
+  \begin{teorema}[método del intervalo cerrado]
+    Si $f$ es continua en $[a,b]$ (Weierstrass garantiza extremos absolutos), estos se alcanzan en:
+    \begin{enumerate}
+      \item los puntos críticos de $f$ en $(a,b)$ (por Fermat), o
+      \item los extremos $a$ y $b$.
+    \end{enumerate}
+    Se evalúa $f$ en todos esos puntos: el mayor valor es el máximo y el menor, el mínimo.
+  \end{teorema}
+\end{frame}
+
+\begin{frame}{Ejemplo 1: método del intervalo cerrado}
+  \begin{columns}
+    \begin{column}{0.52\textwidth}
+      \begin{ejemplo}
+        $f(x)=x^3-3x$ en $[-2,3]$.
+        \begin{itemize}
+          \item $f'(x)=3x^2-3=0\iff x=\pm1$.
+          \item Tabla:
+            \begin{center}
+              \begin{tabular}{c|cccc}
+                $x$ & $-2$ & $-1$ & $1$ & $3$\\ \hline
+                $f(x)$ & $-2$ & $2$ & $-2$ & $18$
+              \end{tabular}
+            \end{center}
+          \item Máximo absoluto: $18$ (en $x=3$). \ Mínimo absoluto: $-2$ (en $x=-2$ y $x=1$).
+        \end{itemize}
+      \end{ejemplo}
+      \small Note que el máximo \emph{local} en $x=-1$ no es absoluto.
+    \end{column}
+    \begin{column}{0.48\textwidth}
+      \centering
+      \begin{tikzpicture}
+        \begin{axis}[bma, xmin=-2.5, xmax=3.5, ymin=-4, ymax=20, width=6.5cm, height=6cm, xtick={-2,-1,1,3}, ytick={-2,2,18}, samples=100, domain=-2:3]
+          \addplot[curva] {x^3-3*x};
+          \addplot[only marks, mark=*, uniGranate] coordinates {(-2,-2) (-1,2) (1,-2) (3,18)};
+        \end{axis}
+      \end{tikzpicture}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\begin{frame}{Criterio de la primera derivada}
+  \begin{teorema}
+    Sea $c$ un punto crítico de $f$ continua.
+    \begin{itemize}
+      \item Si $f'$ cambia de $+$ a $-$ en $c$: \ \resaltar{máximo local}.
+      \item Si $f'$ cambia de $-$ a $+$ en $c$: \ \resaltar{mínimo local}.
+      \item Si $f'$ no cambia de signo: no hay extremo en $c$.
+    \end{itemize}
+  \end{teorema}
+  \small (Consecuencia del TVM: $f'>0$ $\Rightarrow$ creciente, $f'<0$ $\Rightarrow$ decreciente.)
+  \normalsize
+  \begin{ejemplo}[2]
+    $f(x)=x^{2/3}(x-5)$, \ $f'(x)=\dfrac53x^{2/3}-\dfrac{10}{3}x^{-1/3}=\dfrac{5(x-2)}{3x^{1/3}}$. \ Críticos: $x=0$ ($f'$ no existe) y $x=2$.
+    \begin{center}
+      \begin{tabular}{c|ccc}
+        intervalo & $(-\infty,0)$ & $(0,2)$ & $(2,\infty)$\\ \hline
+        signo de $f'$ & $+$ & $-$ & $+$\\
+        $f$ & $\nearrow$ & $\searrow$ & $\nearrow$
+      \end{tabular}
+    \end{center}
+    Máximo local en $x=0$ ($f=0$, una cúspide); mínimo local en $x=2$ ($f=-3\sqrt[3]4$).
+  \end{ejemplo}
+\end{frame}
+
+\begin{frame}{Extremos absolutos en intervalos abiertos}
+  \begin{teorema}[un único punto crítico]
+    Si $f$ es continua en un intervalo $I$ (cualquiera) y tiene un \textbf{único} punto crítico $c$, que es un máximo local, entonces $f(c)$
+    es el \textbf{máximo absoluto} de $f$ en $I$ (análogo para mínimo).
+  \end{teorema}
+  \begin{columns}
+    \begin{column}{0.55\textwidth}
+      \begin{ejemplo}[3]
+        $f(x)=\dfrac{x}{1+x^2}$ en $[0,\infty)$: \ $f'(x)=\dfrac{1-x^2}{(1+x^2)^2}$; único crítico $x=1$; $f'>0$ antes y $<0$ después.
+        \ Máximo absoluto $f(1)=\frac12$. El mínimo absoluto es $f(0)=0$, en el extremo del intervalo.
+      \end{ejemplo}
+    \end{column}
+    \begin{column}{0.45\textwidth}
+      \centering
+      \begin{tikzpicture}
+        \begin{axis}[bma, xmin=0, xmax=8, ymin=0, ymax=0.6, width=6cm, height=4cm, xtick={1}, ytick={0.5}, samples=100, domain=0:8]
+          \addplot[curva] {x/(1+x^2)};
+          \addplot[only marks, mark=*, uniGranate] coordinates {(1,0.5)};
+        \end{axis}
+      \end{tikzpicture}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\section{Problemas de optimización}
+
+\begin{frame}{Estrategia para problemas de optimización}
+  \begin{block}{Pasos}
+    \begin{enumerate}
+      \item \textbf{Comprender} el problema: ¿qué se maximiza o minimiza? Dibujar.
+      \item \textbf{Variables}: nombrar cantidades; escribir la \textbf{función objetivo}.
+      \item \textbf{Restricciones}: relaciones que permiten dejar una sola variable.
+      \item \textbf{Dominio}: valores con sentido físico.
+      \item \textbf{Derivar}, hallar puntos críticos y justificar que es un máximo/mínimo \emph{absoluto}
+        (intervalo cerrado o único punto crítico con cambio de signo).
+      \item \textbf{Responder} la pregunta con unidades.
+    \end{enumerate}
+  \end{block}
+  \begin{idea}
+    En la Semana 2 construimos funciones a partir de enunciados. Ahora las optimizamos.
+  \end{idea}
+\end{frame}
+
+\begin{frame}{Ejemplo 4: la caja de volumen máximo}
+  \begin{columns}
+    \begin{column}{0.55\textwidth}
+      \begin{ejemplo}
+        Lámina de $20\times30$ cm; se cortan cuadrados de lado $x$:
+        \[ V(x)=x(30-2x)(20-2x)=4x^3-100x^2+600x,\quad 0\le x\le10. \]
+        \[ V'(x)=12x^2-200x+600=0\Rightarrow x=\frac{50\pm10\sqrt7}{6}. \]
+        Solo $x_1=\frac{25-5\sqrt7}{3}\approx3.92$ está en $[0,10]$.
+        \begin{itemize}
+          \item $V(0)=V(10)=0$, \ $V(3.92)\approx1056$ cm$^3$.
+        \end{itemize}
+        Máximo absoluto: cortar cuadrados de $\approx3.92$ cm.
+      \end{ejemplo}
+    \end{column}
+    \begin{column}{0.45\textwidth}
+      \centering
+      \begin{tikzpicture}
+        \begin{axis}[bma, xlabel={$x$}, ylabel={$V$}, xmin=0, xmax=10.5, ymin=0, ymax=1250, width=6.3cm, height=5cm, xtick={3.92,10}, ytick={1056}, samples=100, domain=0:10]
+          \addplot[curva] {x*(30-2*x)*(20-2*x)};
+          \addplot[only marks, mark=*, uniGranate] coordinates {(3.92,1056)};
+          \draw[dashed] (axis cs:3.92,0) -- (axis cs:3.92,1056);
+        \end{axis}
+      \end{tikzpicture}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\begin{frame}{Ejemplo 5: la lata más económica}
+  \begin{columns}
+    \begin{column}{0.55\textwidth}
+      \begin{ejemplo}
+        Lata cilíndrica de $500$ cm$^3$ con área mínima:
+        \[ A(r)=2\pi r^2+\frac{1000}{r},\quad r>0. \]
+        \[ A'(r)=4\pi r-\frac{1000}{r^2}=0\iff r^3=\frac{250}{\pi}\iff r\approx4.30\ \text{cm}. \]
+        $A'<0$ para $r$ menor y $A'>0$ para $r$ mayor: mínimo absoluto. Entonces $h=\frac{500}{\pi r^2}=2r\approx8.60$ cm.
+      \end{ejemplo}
+      \begin{idea}
+        ¡La lata óptima tiene altura igual al diámetro! (Las latas reales difieren por costos de soldadura, tapas más gruesas, ergonomía\dots)
+      \end{idea}
+    \end{column}
+    \begin{column}{0.45\textwidth}
+      \centering
+      \begin{tikzpicture}
+        \begin{axis}[bma, xlabel={$r$}, ylabel={$A$}, xmin=0, xmax=10, ymin=0, ymax=900, width=6.3cm, height=5cm, xtick={4.3}, ytick={349}, samples=100, domain=1.2:10]
+          \addplot[curva] {2*pi*x^2+1000/x};
+          \addplot[only marks, mark=*, uniGranate] coordinates {(4.3,348.7)};
+        \end{axis}
+      \end{tikzpicture}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\begin{frame}{Ejemplo 6: punto más cercano}
+  \begin{columns}
+    \begin{column}{0.55\textwidth}
+      \begin{ejemplo}
+        ¿Qué punto de $y=x^2$ está más cerca de $(0,3)$?
+        \begin{itemize}
+          \item Minimizar el \textbf{cuadrado} de la distancia (más simple, mismo punto óptimo):
+            $D(x)=x^2+(x^2-3)^2$.
+          \item $D'(x)=2x+4x(x^2-3)=2x(2x^2-5)=0$: \ $x=0$, \ $x=\pm\sqrt{5/2}$.
+          \item $D(0)=9$, \ $D\big(\pm\sqrt{5/2}\big)=\frac52+\frac14=\frac{11}{4}$.
+        \end{itemize}
+        Puntos más cercanos: $\left(\pm\sqrt{\tfrac52},\tfrac52\right)$, a distancia $\frac{\sqrt{11}}2\approx1.66$.
+      \end{ejemplo}
+      \small En el punto óptimo, el segmento es \textbf{normal} a la curva.
+    \end{column}
+    \begin{column}{0.45\textwidth}
+      \centering
+      \begin{tikzpicture}
+        \begin{axis}[bma, xmin=-3, xmax=3, ymin=-0.5, ymax=5, axis equal image, width=6.3cm, height=5.5cm, xtick={-1.58,1.58}, ytick={3}, samples=100]
+          \addplot[curva, domain=-2.2:2.2] {x^2};
+          \addplot[only marks, mark=*, black] coordinates {(0,3)};
+          \addplot[only marks, mark=*, uniGranate] coordinates {(1.581,2.5) (-1.581,2.5)};
+          \draw[uniGranate, thick] (axis cs:0,3) -- (axis cs:1.581,2.5);
+          \draw[uniGranate, thick] (axis cs:0,3) -- (axis cs:-1.581,2.5);
+          \draw[gray, dashed] (axis cs:0,3) circle[radius=1.658];
+        \end{axis}
+      \end{tikzpicture}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\begin{frame}{Ejemplo 7: principio de Fermat y ley de Snell}
+  \begin{columns}
+    \begin{column}{0.58\textwidth}
+      \begin{ejemplo}
+        La luz va de $A$ (en un medio con velocidad $v_1$) a $B$ (velocidad $v_2$) por el camino de \textbf{tiempo mínimo}.
+        \[ T(x)=\frac{\sqrt{a^2+x^2}}{v_1}+\frac{\sqrt{b^2+(d-x)^2}}{v_2},\quad0\le x\le d. \]
+        \[ T'(x)=\frac{x}{v_1\sqrt{a^2+x^2}}-\frac{d-x}{v_2\sqrt{b^2+(d-x)^2}}=0 \]
+        \[ \Longleftrightarrow\quad\frac{\sen\theta_1}{v_1}=\frac{\sen\theta_2}{v_2}\qquad\text{(ley de Snell).} \]
+      \end{ejemplo}
+      \small $T'$ es creciente (pasa de negativa a positiva), así que es un mínimo. ¡La refracción es un problema de optimización!
+    \end{column}
+    \begin{column}{0.42\textwidth}
+      \centering
+      \begin{tikzpicture}[scale=0.9]
+        \fill[uniAzul!10] (-0.5,0) rectangle (4.5,-2.3);
+        \draw[thick] (-0.5,0) -- (4.5,0);
+        \coordinate (A) at (0,2); \coordinate (P) at (2.6,0); \coordinate (B) at (4,-2);
+        \draw[very thick, uniGranate] (A) -- (P) -- (B);
+        \fill (A) circle (2pt) node[above] {$A$}; \fill (B) circle (2pt) node[below] {$B$};
+        \draw[dashed] (2.6,1.5) -- (2.6,-1.8);
+        \draw (2.6,0.7) arc (90:142:0.7); \node at (2.25,0.95) {\scriptsize $\theta_1$};
+        \draw (2.6,-0.7) arc (-90:-55:0.7); \node at (2.85,-0.95) {\scriptsize $\theta_2$};
+        \draw[<->] (0,-0.25) -- (2.6,-0.25) node[midway, below] {\scriptsize $x$};
+        \node at (0.5,0.4) {\scriptsize $v_1$}; \node at (0.5,-1) {\scriptsize $v_2$};
+      \end{tikzpicture}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\section{Ejercicios}
+
+\begin{frame}{Ejercicios propuestos}
+  \small
+  \begin{ejercicio}
+    \begin{enumerate}
+      \item Halle los extremos absolutos: (a) $f(x)=x^4-2x^2+3$ en $[-2,3]$, \ (b) $g(x)=x-2\sen x$ en $[0,2\pi]$, \ (c) $h(x)=x\,e^{-x}$ en $[0,4]$, \ (d) $k(x)=\sqrt[3]{x^2}(2-x)$ en $[-1,2]$.
+      \item Dos números positivos suman $20$. Halle el máximo de su producto y el mínimo de la suma de sus cuadrados.
+      \item Un terreno rectangular junto a un río (sin cerca en ese lado) tiene $240$ m de cerca. Halle el área máxima.
+      \item Halle el rectángulo de área máxima inscrito en la semicircunferencia $y=\sqrt{25-x^2}$.
+      \item Una ventana normanda (rectángulo + semicírculo) tiene perímetro $8$ m. Halle sus dimensiones para que deje pasar la máxima luz.
+      \item Un cono de radio $r$ y altura $h$ se inscribe en una esfera de radio $R$. Halle el volumen máximo del cono.
+      \item La potencia entregada a una resistencia $R$ por una fuente de fem $\varepsilon$ y resistencia interna $r$ es $P(R)=\dfrac{\varepsilon^2R}{(R+r)^2}$. Pruebe que es máxima cuando $R=r$.
+      \item Un nadador está a $3$ km de una playa recta; quiere llegar a un punto $8$ km más allá en la playa. Nada a $2$ km/h y corre a $5$ km/h. ¿Dónde debe salir del agua?
+    \end{enumerate}
+  \end{ejercicio}
+\end{frame}
+
+\begin{frame}{Resumen}
+  \begin{itemize}
+    \item Puntos críticos: $f'(c)=0$ ó $f'(c)$ no existe.
+    \item En $[a,b]$: comparar $f$ en críticos y extremos del intervalo.
+    \item Criterio de la primera derivada: cambio de signo de $f'$ $\Rightarrow$ extremo local.
+    \item Un único crítico que es extremo local $\Rightarrow$ extremo absoluto.
+    \item Optimización: función objetivo, restricción, dominio, derivar, justificar, responder.
+  \end{itemize}
+  \vspace{3mm}
+  \textbf{Próxima sesión:} aproximación lineal de una función en un punto.
+\end{frame}
+
+\end{document}

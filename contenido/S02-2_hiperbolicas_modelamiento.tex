@@ -1,0 +1,325 @@
+\documentclass[10pt,aspectratio=169]{beamer}
+\usepackage{bma01}
+
+\title[Hiperbólicas y modelamiento]{Funciones hiperbólicas}
+\subtitle{Problemas de modelamiento\\[2pt]\small Semana 2 -- Sesión 2}
+
+\begin{document}
+
+\begin{frame}
+  \titlepage
+\end{frame}
+
+\begin{frame}{Objetivos de la sesión}
+  \begin{enumerate}
+    \item Definir las \resaltar{funciones hiperbólicas}, graficarlas y probar sus identidades.
+    \item Obtener las \resaltar{inversas hiperbólicas} en forma logarítmica.
+    \item \resaltar{Modelar} situaciones de geometría, física, química y economía mediante funciones, indicando su dominio.
+  \end{enumerate}
+  \begin{block}{Plan (2 horas)}
+    \begin{tabular}{ll}
+      0:00 -- 0:35 & Funciones hiperbólicas: definición, gráficas, identidades\\
+      0:35 -- 0:55 & Inversas hiperbólicas. La catenaria\\
+      0:55 -- 1:40 & Modelamiento: estrategia y ejemplos\\
+      1:40 -- 2:00 & Ejercicios y resumen
+    \end{tabular}
+  \end{block}
+\end{frame}
+
+\section{Funciones hiperbólicas}
+
+\begin{frame}{Definición}
+  \begin{columns}
+    \begin{column}{0.5\textwidth}
+      \begin{definicion}
+        \[ \senh x=\frac{e^x-e^{-x}}{2},\qquad \cosh x=\frac{e^x+e^{-x}}{2}, \]
+        \[ \tanh x=\frac{\senh x}{\cosh x}=\frac{e^x-e^{-x}}{e^x+e^{-x}}, \]
+        \[ \coth x=\frac1{\tanh x},\quad \sech x=\frac1{\cosh x},\quad \csch x=\frac1{\senh x}. \]
+      \end{definicion}
+      \begin{itemize}
+        \item $\cosh$ es la \textbf{parte par} de $e^x$ y $\senh$ la \textbf{parte impar}: $e^x=\cosh x+\senh x$.
+        \item $\Ran\cosh=[1,\infty)$, \ $\Ran\senh=\R$, \ $\Ran\tanh=(-1,1)$.
+      \end{itemize}
+    \end{column}
+    \begin{column}{0.5\textwidth}
+      \centering
+      \begin{tikzpicture}
+        \begin{axis}[bma, xmin=-2.6, xmax=2.6, ymin=-3.2, ymax=3.6, width=7cm, height=6.5cm, xtick={-2,-1,1,2}, ytick={-1,1}, samples=100]
+          \addplot[curva2, domain=-1.9:1.9] {cosh(x)};
+          \addplot[curva, domain=-1.85:1.85] {sinh(x)};
+          \addplot[uniVerde, very thick, domain=-2.5:2.5] {tanh(x)};
+          \addplot[gray, dashed, domain=-2.5:1.95] {exp(x)/2};
+          \addplot[gray, dashed, domain=-1.95:2.5] {exp(-x)/2};
+          \node[uniGranate] at (axis cs:1.4,3.3) {\scriptsize $\cosh x$};
+          \node[uniAzul] at (axis cs:2.1,2.3) {\scriptsize $\senh x$};
+          \node[uniVerde] at (axis cs:2.1,0.65) {\scriptsize $\tanh x$};
+        \end{axis}
+      \end{tikzpicture}
+
+      \small Para $|x|$ grande, $\cosh x\approx\senh x\approx\frac{e^{|x|}}2$ (líneas grises).
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\begin{frame}{Identidades hiperbólicas}
+  \begin{proposicion}
+    \begin{enumerate}
+      \item $\cosh^2x-\senh^2x=1$ \qquad (análoga a $\cos^2+\sen^2=1$)
+      \item $1-\tanh^2x=\sech^2x$
+      \item $\senh(x\pm y)=\senh x\cosh y\pm\cosh x\senh y$
+      \item $\cosh(x\pm y)=\cosh x\cosh y\pm\senh x\senh y$
+      \item $\senh2x=2\senh x\cosh x$, \quad $\cosh2x=\cosh^2x+\senh^2x=1+2\senh^2x$
+    \end{enumerate}
+  \end{proposicion}
+  \textbf{Prueba de 1.}
+  \[ \cosh^2x-\senh^2x=\frac{e^{2x}+2+e^{-2x}}{4}-\frac{e^{2x}-2+e^{-2x}}{4}=\frac44=1.\qquad\blacksquare \]
+  \begin{idea}
+    \textbf{Regla de Osborn:} una identidad trigonométrica se convierte en hiperbólica cambiando $\cos\to\cosh$, $\sen\to\senh$
+    y el signo de cada producto de \emph{dos} senos.
+  \end{idea}
+\end{frame}
+
+\begin{frame}{¿Por qué ``hiperbólicas''?}
+  \begin{columns}
+    \begin{column}{0.5\textwidth}
+      \begin{itemize}
+        \item $(\cos t,\sen t)$ recorre la circunferencia $x^2+y^2=1$.
+        \item $(\cosh t,\senh t)$ recorre la rama derecha de la hipérbola $x^2-y^2=1$ (por la identidad 1).
+      \end{itemize}
+      \begin{ejemplo}[física]
+        En relatividad especial, la velocidad se describe con la \emph{rapidez} $\phi$: $v=c\tanh\phi$. Así $|v|<c$ siempre,
+        y el factor de Lorentz es $\gamma=\cosh\phi$.
+      \end{ejemplo}
+    \end{column}
+    \begin{column}{0.5\textwidth}
+      \centering
+      \begin{tikzpicture}
+        \begin{axis}[bma, xmin=-1.5, xmax=3, ymin=-2, ymax=2, axis equal image, width=6.8cm, height=6cm, xtick={1}, ytick={1}]
+          \addplot[curva, domain=0:360, samples=100] ({cos(x)},{sin(x)});
+          \addplot[curva2, domain=-1.4:1.4, samples=100] ({cosh(x)},{sinh(x)});
+          \addplot[curva2, dashed, domain=-1.4:1.4, samples=100] ({-cosh(x)},{sinh(x)});
+          \addplot[only marks, mark=*, uniGranate] coordinates {(1.543,1.175)};
+          \node[uniGranate, right] at (axis cs:1.55,1.0) {\scriptsize $(\cosh t,\senh t)$};
+        \end{axis}
+      \end{tikzpicture}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\begin{frame}{Inversas hiperbólicas}
+  \begin{columns}
+    \begin{column}{0.55\textwidth}
+      $\senh$ y $\tanh$ son inyectivas en $\R$; $\cosh$ lo es en $[0,\infty)$.
+      \begin{teorema}
+        \begin{align*}
+          \arcsenh x&=\ln\big(x+\sqrt{x^2+1}\big), & x&\in\R\\
+          \arccosh x&=\ln\big(x+\sqrt{x^2-1}\big), & x&\ge1\\
+          \arctanh x&=\tfrac12\ln\dfrac{1+x}{1-x}, & |x|&<1
+        \end{align*}
+      \end{teorema}
+      \textbf{Prueba} ($\arcsenh$). $x=\frac{e^y-e^{-y}}2$; con $w=e^y>0$: $w^2-2xw-1=0$, \
+      $w=x+\sqrt{x^2+1}$ (la raíz positiva). Luego $y=\ln\big(x+\sqrt{x^2+1}\big)$. $\blacksquare$
+    \end{column}
+    \begin{column}{0.45\textwidth}
+      \centering
+      \begin{tikzpicture}
+        \begin{axis}[bma, xmin=-3.2, xmax=3.2, ymin=-3.2, ymax=3.2, axis equal image, width=6.3cm, height=6.3cm, xtick={-2,2}, ytick={-2,2}, samples=100]
+          \addplot[curva, domain=-1.85:1.85] {sinh(x)};
+          \addplot[curva2, domain=-3.2:3.2] {ln(x+sqrt(x^2+1))};
+          \addplot[gray, dashed, domain=-3.2:3.2] {x};
+          \node[uniAzul] at (axis cs:1.2,2.8) {\scriptsize $\senh$};
+          \node[uniGranate] at (axis cs:2.6,1.3) {\scriptsize $\arcsenh$};
+        \end{axis}
+      \end{tikzpicture}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\begin{frame}{Aplicación: la catenaria}
+  \begin{columns}
+    \begin{column}{0.55\textwidth}
+      Un cable flexible homogéneo colgado entre dos puntos toma la forma de una \resaltar{catenaria}:
+      \[ y=a\cosh\frac xa. \]
+      ($a=\frac{T_0}{\rho g}$: tensión horizontal / peso por unidad de longitud.)
+      \begin{ejemplo}
+        Un cable cuelga entre dos postes a $x=\pm10$ m con $a=8$ m. La flecha (diferencia de altura entre los apoyos y el punto más bajo) es
+        \[ 8\cosh\tfrac{10}{8}-8\approx8(1.888)-8\approx7.1\ \text{m}. \]
+      \end{ejemplo}
+      \small Galileo pensó que era una parábola: son parecidas cerca del vértice, pero distintas.
+    \end{column}
+    \begin{column}{0.45\textwidth}
+      \centering
+      \begin{tikzpicture}
+        \begin{axis}[bma, xmin=-12, xmax=12, ymin=0, ymax=17, width=6.6cm, height=5.6cm, xtick={-10,10}, ytick={8}, samples=100, domain=-10:10]
+          \addplot[curva] {8*cosh(x/8)};
+          \addplot[curva2, dashed] {8+x^2/16*1.1};
+          \draw[very thick] (axis cs:-10,0) -- (axis cs:-10,15.1);
+          \draw[very thick] (axis cs:10,0) -- (axis cs:10,15.1);
+          \node[uniAzul] at (axis cs:0,12) {\scriptsize catenaria};
+          \node[uniGranate] at (axis cs:0,6.5) {\scriptsize parábola};
+        \end{axis}
+      \end{tikzpicture}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\section{Modelamiento}
+
+\begin{frame}{Modelar con funciones}
+  \begin{block}{Estrategia}
+    \begin{enumerate}
+      \item Leer y \textbf{dibujar} la situación; identificar la cantidad que se quiere expresar.
+      \item Elegir la \textbf{variable independiente} y nombrar las demás cantidades.
+      \item Escribir las \textbf{relaciones} (geometría, leyes físicas, datos) y eliminar variables auxiliares.
+      \item Determinar el \textbf{dominio} con sentido físico.
+      \item Verificar con valores particulares (unidades, casos extremos).
+    \end{enumerate}
+  \end{block}
+  \begin{idea}
+    En la Semana 9 usaremos estas funciones para \textbf{optimizar}. Hoy aprendemos a construirlas.
+  \end{idea}
+\end{frame}
+
+\begin{frame}{Ejemplo 1: caja sin tapa}
+  \begin{columns}
+    \begin{column}{0.55\textwidth}
+      \begin{ejemplo}
+        De una lámina de $20\times30$ cm se cortan cuadrados de lado $x$ en las esquinas y se doblan los lados para formar una caja sin tapa.
+        Exprese el volumen en función de $x$.
+        \begin{itemize}
+          \item Base: $(30-2x)\times(20-2x)$; \ altura: $x$.
+          \item $V(x)=x(30-2x)(20-2x)$.
+          \item Dominio: $x>0$ y $20-2x>0$: \ $0<x<10$.
+        \end{itemize}
+      \end{ejemplo}
+      \small La gráfica sugiere un volumen máximo cerca de $x\approx4$ cm.
+    \end{column}
+    \begin{column}{0.45\textwidth}
+      \centering
+      \begin{tikzpicture}[scale=0.13]
+        \draw[thick] (0,0) rectangle (30,20);
+        \foreach \a/\b in {0/0,26/0,0/16,26/16} \fill[uniGranate!40] (\a,\b) rectangle (\a+4,\b+4);
+        \draw[dashed] (4,4) rectangle (26,16);
+        \node at (2,2) {\tiny $x$};
+        \node at (15,10) {\scriptsize base};
+      \end{tikzpicture}
+      \vspace{1mm}
+
+      \begin{tikzpicture}
+        \begin{axis}[bma, xlabel={$x$}, ylabel={$V$}, xmin=0, xmax=10.5, ymin=0, ymax=1300, width=6.3cm, height=4.3cm, xtick={2,4,6,8,10}, ytick={500,1000}, domain=0:10, samples=100]
+          \addplot[curva] {x*(30-2*x)*(20-2*x)};
+        \end{axis}
+      \end{tikzpicture}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\begin{frame}{Ejemplo 2: una lata cilíndrica}
+  \begin{ejemplo}
+    Una lata cilíndrica debe contener $V=500$ cm$^3$. Exprese el área total de material en función del radio $r$.
+    \begin{itemize}
+      \item $V=\pi r^2h=500\Rightarrow h=\dfrac{500}{\pi r^2}$.
+      \item $A=2\pi r^2+2\pi rh=2\pi r^2+\dfrac{1000}{r}$, \quad $r>0$.
+    \end{itemize}
+  \end{ejemplo}
+  \begin{columns}
+    \begin{column}{0.5\textwidth}
+      \begin{observacion}
+        Cuando $r\to0^+$, la lata es muy alta y delgada ($A\to\infty$); cuando $r\to\infty$, muy ancha y baja ($A\to\infty$).
+        Debe haber un radio óptimo.
+      \end{observacion}
+    \end{column}
+    \begin{column}{0.5\textwidth}
+      \centering
+      \begin{tikzpicture}
+        \begin{axis}[bma, xlabel={$r$}, ylabel={$A$}, xmin=0, xmax=10, ymin=0, ymax=1000, width=6.5cm, height=4.3cm, xtick={2,4,6,8}, ytick={500}, domain=1:10, samples=100]
+          \addplot[curva] {2*pi*x^2+1000/x};
+        \end{axis}
+      \end{tikzpicture}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\begin{frame}{Ejemplo 3: distancia entre dos móviles}
+  \begin{columns}
+    \begin{column}{0.58\textwidth}
+      \begin{ejemplo}
+        A las 12:00 un barco $A$ está $40$ km al norte de un barco $B$. $A$ navega hacia el sur a $15$ km/h y $B$ hacia el este a $20$ km/h.
+        Exprese la distancia entre ellos en función del tiempo $t$ (horas).
+        \begin{itemize}
+          \item Con $B$ inicialmente en el origen: $A(t)=(0,\,40-15t)$, \ $B(t)=(20t,\,0)$.
+          \item $d(t)=\sqrt{(20t)^2+(40-15t)^2}=\sqrt{625t^2-1200t+1600}$.
+          \item Dominio: $t\ge0$.
+        \end{itemize}
+      \end{ejemplo}
+    \end{column}
+    \begin{column}{0.42\textwidth}
+      \centering
+      \begin{tikzpicture}[scale=0.07]
+        \draw[->] (-5,0) -- (55,0) node[right] {\scriptsize E};
+        \draw[->] (0,-5) -- (0,50) node[above] {\scriptsize N};
+        \fill[uniAzul] (0,40) circle (1) node[left] {\scriptsize $A_0$};
+        \fill[uniAzul] (0,25) circle (1) node[left] {\scriptsize $A(t)$};
+        \fill[uniGranate] (20,0) circle (1) node[below] {\scriptsize $B(t)$};
+        \draw[->, uniAzul, thick] (0,40) -- (0,27);
+        \draw[->, uniGranate, thick] (0,0) -- (18,0);
+        \draw[uniVerde, thick] (0,25) -- (20,0) node[midway, above right] {\scriptsize $d(t)$};
+      \end{tikzpicture}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\begin{frame}{Ejemplo 4: modelos en ciencias}
+  \begin{ejemplo}[química: ley de los gases ideales]
+    A temperatura constante $T=300$ K y $n=1$ mol: \ $P(V)=\dfrac{nRT}{V}=\dfrac{24.9}{V}$ (kPa, con $V$ en L), $V>0$.
+    \ Es decreciente e inyectiva; su inversa es $V(P)=\dfrac{24.9}{P}$.
+  \end{ejemplo}
+  \begin{ejemplo}[física: velocidad límite]
+    Un paracaidista con resistencia del aire cuadrática alcanza la velocidad
+    $v(t)=v_\infty\tanh\left(\dfrac{g\,t}{v_\infty}\right)$, \ con $v_\infty\approx55$ m/s.
+    Como $\tanh<1$, nunca supera $v_\infty$.
+  \end{ejemplo}
+\end{frame}
+
+\begin{frame}{Ejemplo 5: un modelo por partes}
+  \begin{ejemplo}[economía: impuesto escalonado]
+    Un impuesto del $0$ hasta $S/\ 10\,000$, $10$ por ciento sobre el exceso hasta $S/\ 30\,000$ y $20$ por ciento sobre el exceso siguiente:
+    \[ I(x)=\begin{cases}0,&0\le x\le10\,000\\0.1(x-10\,000),&10\,000<x\le30\,000\\2000+0.2(x-30\,000),&x>30\,000\end{cases} \]
+  \end{ejemplo}
+  \begin{observacion}
+    $I$ es creciente y sus piezas empalman: $I(10\,000)=0$ y $I(30\,000)=2000$ con ambas fórmulas. Así, ganar un sol más nunca
+    hace pagar ``mucho más'' de golpe.
+  \end{observacion}
+\end{frame}
+
+\section{Ejercicios}
+
+\begin{frame}{Ejercicios propuestos}
+  \small
+  \begin{ejercicio}
+    \begin{enumerate}
+      \item Pruebe: (a) $\cosh(x+y)=\cosh x\cosh y+\senh x\senh y$, \ (b) $\tanh2x=\dfrac{2\tanh x}{1+\tanh^2x}$, \ (c) $(\cosh x+\senh x)^n=\cosh nx+\senh nx$.
+      \item Si $\senh x=\frac34$, halle $\cosh x$, $\tanh x$ y $x$.
+      \item Pruebe que $\arctanh x=\frac12\ln\frac{1+x}{1-x}$ y que $\arccosh x=\ln\big(x+\sqrt{x^2-1}\big)$.
+      \item Resuelva $2\cosh x+\senh x=2$.
+      \item Un terreno rectangular de $600$ m$^2$ se cerca y se divide en dos con una cerca paralela a uno de los lados. Exprese la longitud total de cerca en
+        función del largo $x$.
+      \item Se inscribe un rectángulo en la semicircunferencia $y=\sqrt{25-x^2}$ con base en el eje $x$. Exprese su área en función de $x$.
+      \item Un punto $P$ se mueve sobre la parábola $y=x^2$. Exprese su distancia al punto $(0,3)$ en función de $x$.
+      \item Una ventana tiene forma de rectángulo coronado por un semicírculo y perímetro $8$ m. Exprese su área en función del ancho.
+    \end{enumerate}
+  \end{ejercicio}
+\end{frame}
+
+\begin{frame}{Resumen}
+  \begin{itemize}
+    \item $\senh x=\frac{e^x-e^{-x}}2$, $\cosh x=\frac{e^x+e^{-x}}2$, $\tanh=\frac{\senh}{\cosh}$; \ $\cosh^2-\senh^2=1$.
+    \item Inversas: $\arcsenh x=\ln(x+\sqrt{x^2+1})$, $\arccosh x=\ln(x+\sqrt{x^2-1})$, $\arctanh x=\frac12\ln\frac{1+x}{1-x}$.
+    \item Aplicaciones: catenaria, relatividad, caída con resistencia del aire.
+    \item Modelar: dibujar, elegir variable, relacionar, eliminar auxiliares, \textbf{dominio}.
+  \end{itemize}
+  \vspace{3mm}
+  \textbf{Próxima sesión:} límite de una función; punto de acumulación.
+\end{frame}
+
+\end{document}

@@ -1,0 +1,230 @@
+\documentclass[10pt,aspectratio=169]{beamer}
+\usepackage{bma01}
+
+\title[Regla de la cadena]{La regla de la cadena}
+\subtitle{Derivación implícita\\[2pt]\small Semana 7 -- Sesión 2}
+
+\begin{document}
+
+\begin{frame}
+  \titlepage
+\end{frame}
+
+\begin{frame}{Objetivos de la sesión}
+  \begin{enumerate}
+    \item Enunciar, justificar y aplicar la \resaltar{regla de la cadena}.
+    \item Derivar potencias reales, exponenciales y logaritmos generales; \resaltar{derivación logarítmica}.
+    \item Derivar funciones definidas \resaltar{implícitamente}; hallar tangentes a curvas como circunferencias y el folium.
+    \item Calcular segundas derivadas implícitas.
+  \end{enumerate}
+  \begin{block}{Plan (2 horas)}
+    \begin{tabular}{ll}
+      0:00 -- 0:45 & Regla de la cadena: idea, enunciado, prueba, ejemplos\\
+      0:45 -- 1:05 & Potencias reales, $a^x$, $\ln|x|$; derivación logarítmica\\
+      1:05 -- 1:45 & Derivación implícita; tangentes; segunda derivada\\
+      1:45 -- 2:00 & Ejercicios y resumen
+    \end{tabular}
+  \end{block}
+\end{frame}
+
+\section{Regla de la cadena}
+
+\begin{frame}{Idea: las razones de cambio se multiplican}
+  \begin{columns}
+    \begin{column}{0.55\textwidth}
+      Tres engranajes: si $A$ gira el doble de rápido que $B$, y $B$ el triple que $C$, entonces $A$ gira $2\cdot3=6$ veces más rápido que $C$:
+      \[ \frac{dA}{dC}=\frac{dA}{dB}\cdot\frac{dB}{dC}. \]
+      \begin{ejemplo}[física]
+        Un globo esférico se infla: $V=\frac43\pi r^3$, y el radio crece a $\frac{dr}{dt}=2$ cm/s. Cuando $r=5$ cm:
+        \[ \frac{dV}{dt}=\frac{dV}{dr}\cdot\frac{dr}{dt}=4\pi r^2\cdot2=200\pi\ \text{cm}^3/\text{s}. \]
+      \end{ejemplo}
+    \end{column}
+    \begin{column}{0.45\textwidth}
+      \centering
+      \begin{tikzpicture}[scale=0.8]
+        \draw[thick, fill=uniAzul!20] (0,0) circle (0.6) node {\scriptsize $A$};
+        \draw[thick, fill=uniVerde!20] (1.5,0) circle (0.9) node {\scriptsize $B$};
+        \draw[thick, fill=uniGranate!20] (4.1,0) circle (1.7) node {\scriptsize $C$};
+        \draw[->, thick] (-0.3,0.85) arc (110:70:0.9);
+      \end{tikzpicture}
+      \vspace{3mm}
+
+      \begin{tikzpicture}[scale=0.85, every node/.style={font=\small}]
+        \node (x) at (0,0) {$x$};
+        \node (u) at (2,0) {$u=g(x)$};
+        \node (y) at (4.4,0) {$y=f(u)$};
+        \draw[->] (x) -- node[above] {\scriptsize $\frac{du}{dx}$} (u);
+        \draw[->] (u) -- node[above] {\scriptsize $\frac{dy}{du}$} (y);
+        \draw[->, uniGranate, bend right=25] (x) to node[below] {\scriptsize $\frac{dy}{dx}=\frac{dy}{du}\frac{du}{dx}$} (y);
+      \end{tikzpicture}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\begin{frame}{La regla de la cadena}
+  \begin{teorema}[regla de la cadena]
+    Si $g$ es derivable en $x$ y $f$ es derivable en $g(x)$, entonces $f\circ g$ es derivable en $x$ y
+    \[ (f\circ g)'(x)=f'\big(g(x)\big)\cdot g'(x)\qquad\Big(\frac{dy}{dx}=\frac{dy}{du}\frac{du}{dx}\Big). \]
+  \end{teorema}
+  \textbf{Idea de la prueba.} $\dfrac{f(g(x+h))-f(g(x))}{h}=\dfrac{f(g(x+h))-f(g(x))}{g(x+h)-g(x)}\cdot\dfrac{g(x+h)-g(x)}{h}$.
+  Si $h\to0$, $g(x+h)\to g(x)$ y los factores tienden a $f'(g(x))$ y $g'(x)$.
+  \smallskip
+
+  \small (El caso $g(x+h)=g(x)$ para $h$ arbitrariamente pequeños se trata con la función auxiliar $\phi(k)=\frac{f(u+k)-f(u)}{k}$, $\phi(0)=f'(u)$.)
+  \normalsize
+  \begin{block}{Regla práctica}
+    ``Derivada de la función exterior evaluada en la interior, por la derivada de la interior''.
+  \end{block}
+\end{frame}
+
+\begin{frame}{Ejemplos}
+  \small
+  \begin{ejemplo}[1]
+    $\big[(x^2+1)^{10}\big]'=10(x^2+1)^9\cdot2x=20x(x^2+1)^9$.
+  \end{ejemplo}
+  \begin{ejemplo}[2]
+    $\big[\sen(x^2)\big]'=\cos(x^2)\cdot2x$, \qquad $\big[\sen^2x\big]'=2\sen x\cos x=\sen2x$.
+  \end{ejemplo}
+  \begin{ejemplo}[3]
+    $\big[e^{-x^2}\big]'=-2xe^{-x^2}$, \qquad $\left[\sqrt{1+\cos x}\right]'=\dfrac{-\sen x}{2\sqrt{1+\cos x}}$.
+  \end{ejemplo}
+  \begin{ejemplo}[4: cadena múltiple]
+    $\left[\cos^3(5x+1)\right]'=3\cos^2(5x+1)\cdot\big(-\sen(5x+1)\big)\cdot5=-15\cos^2(5x+1)\sen(5x+1)$.
+  \end{ejemplo}
+  \begin{ejemplo}[5: física]
+    Oscilador: $x(t)=A\cos(\omega t+\varphi)$. \ $v=x'=-A\omega\sen(\omega t+\varphi)$, \ $a=x''=-\omega^2x$. \ ¡La ecuación del MAS!
+  \end{ejemplo}
+\end{frame}
+
+\begin{frame}{Potencias reales, exponenciales y logaritmos}
+  \begin{teorema}
+    \begin{enumerate}
+      \item $(x^r)'=rx^{r-1}$ para todo $r\in\R$, $x>0$: \ $x^r=e^{r\ln x}$, así $(x^r)'=e^{r\ln x}\cdot\frac rx=rx^{r-1}$.
+      \item $(a^x)'=(e^{x\ln a})'=a^x\ln a$.
+      \item $(\ln|x|)'=\dfrac1x$ para $x\neq0$; \quad $\big(\ln|u|\big)'=\dfrac{u'}{u}$.
+      \item $(\log_ax)'=\dfrac{1}{x\ln a}$.
+    \end{enumerate}
+  \end{teorema}
+  \begin{ejemplo}[6]
+    $\left(x^{\pi}+\pi^x\right)'=\pi x^{\pi-1}+\pi^x\ln\pi$. \qquad
+    $\left[\ln(x^2+1)\right]'=\dfrac{2x}{x^2+1}$. \qquad $\left[\ln|\cos x|\right]'=-\tan x$.
+  \end{ejemplo}
+\end{frame}
+
+\begin{frame}{Derivación logarítmica}
+  \small
+  \begin{block}{Método}
+    Para $y=f(x)$ con productos, cocientes o potencias variables: tomar $\ln|y|$, derivar ($\frac{y'}{y}$) y despejar $y'$.
+  \end{block}
+  \begin{ejemplo}[7: $x^x$]
+    $\ln y=x\ln x\Rightarrow\dfrac{y'}{y}=\ln x+1\Rightarrow y'=x^x(\ln x+1)$.
+  \end{ejemplo}
+  \begin{ejemplo}[8]
+    $y=\dfrac{x^3\sqrt{x^2+1}}{(2x-1)^4}$: \ $\ln|y|=3\ln|x|+\frac12\ln(x^2+1)-4\ln|2x-1|$,
+    \[ y'=y\left(\frac3x+\frac{x}{x^2+1}-\frac{8}{2x-1}\right). \]
+  \end{ejemplo}
+  \begin{ejemplo}[9]
+    $y=(\sen x)^{\cos x}$, $0<x<\pi$: \ $\ln y=\cos x\ln\sen x$, \ $y'=y\left(-\sen x\ln\sen x+\dfrac{\cos^2x}{\sen x}\right)$.
+  \end{ejemplo}
+\end{frame}
+
+\section{Derivación implícita}
+
+\begin{frame}{Funciones definidas implícitamente}
+  \begin{columns}
+    \begin{column}{0.55\textwidth}
+      Una ecuación $F(x,y)=0$ puede definir $y$ como función de $x$ \emph{localmente}, aunque no podamos (o no convenga) despejarla.
+      \begin{block}{Método}
+        \begin{enumerate}
+          \item Derivar ambos lados respecto de $x$, tratando $y$ como $y(x)$ (cadena: $(y^n)'=ny^{n-1}y'$).
+          \item Despejar $y'$.
+        \end{enumerate}
+      \end{block}
+      \begin{ejemplo}[10: circunferencia]
+        $x^2+y^2=25$: \ $2x+2yy'=0\Rightarrow y'=-\dfrac xy$.\\
+        Tangente en $(3,4)$: $y-4=-\frac34(x-3)$. \ (Perpendicular al radio.)
+      \end{ejemplo}
+    \end{column}
+    \begin{column}{0.45\textwidth}
+      \centering
+      \begin{tikzpicture}
+        \begin{axis}[bma, xmin=-6.5, xmax=8.5, ymin=-6.5, ymax=8, axis equal image, width=6.5cm, height=6.3cm, xtick={3}, ytick={4}, samples=100]
+          \addplot[curva, domain=0:360] ({5*cos(x)},{5*sin(x)});
+          \addplot[curva2, domain=-1:8] {4-0.75*(x-3)};
+          \draw[gray] (axis cs:0,0) -- (axis cs:3,4);
+          \addplot[only marks, mark=*, black] coordinates {(3,4)};
+        \end{axis}
+      \end{tikzpicture}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\begin{frame}{Ejemplo: el folium de Descartes}
+  \begin{columns}
+    \begin{column}{0.55\textwidth}
+      \begin{ejemplo}[11]
+        $x^3+y^3=6xy$. Derivando:
+        \[ 3x^2+3y^2y'=6y+6xy'\ \Rightarrow\ y'=\frac{2y-x^2}{y^2-2x}. \]
+        \begin{itemize}
+          \item En $(3,3)$: $y'=\frac{6-9}{9-6}=-1$. Tangente: $x+y=6$.
+          \item Tangente horizontal: $2y=x^2$; con la curva: $x=2\sqrt[3]{2}$, $y=2\sqrt[3]4$, es decir $\approx(2.52,\,3.17)$.
+        \end{itemize}
+      \end{ejemplo}
+      \small Aquí despejar $y$ requeriría la fórmula de la cúbica.
+    \end{column}
+    \begin{column}{0.45\textwidth}
+      \centering
+      \begin{tikzpicture}
+        \begin{axis}[bma, xmin=-3.5, xmax=5, ymin=-3.5, ymax=5, axis equal image, width=6.4cm, height=6.4cm, xtick={3}, ytick={3}]
+          \addplot[curva, domain=-0.6:8, samples=300] ({6*x/(1+x^3)},{6*x^2/(1+x^3)});
+          \addplot[curva, domain=-8:-1.6, samples=200] ({6*x/(1+x^3)},{6*x^2/(1+x^3)});
+          \addplot[curva2, domain=1:5] {6-x};
+          \addplot[uniVerde, thick, domain=1.5:3.6] {3.175};
+          \addplot[only marks, mark=*, black] coordinates {(3,3) (2.52,3.175)};
+        \end{axis}
+      \end{tikzpicture}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\begin{frame}{Segunda derivada implícita y un ejemplo en química}
+  \begin{ejemplo}[12]
+    $x^2+y^2=25$: \ $y'=-\frac xy$. \ Derivando otra vez (cociente) y sustituyendo $y'$:
+    \[ y''=-\frac{y-xy'}{y^2}=-\frac{y+\frac{x^2}{y}}{y^2}=-\frac{x^2+y^2}{y^3}=-\frac{25}{y^3}. \]
+  \end{ejemplo}
+  \begin{ejemplo}[13: gas de van der Waals]
+    $\left(P+\dfrac{a}{V^2}\right)(V-b)=nRT$ (con $T$ constante). Derivando respecto de $V$:
+    \[ \left(\frac{dP}{dV}-\frac{2a}{V^3}\right)(V-b)+\left(P+\frac{a}{V^2}\right)=0\ \Rightarrow\ \frac{dP}{dV}=\frac{2a}{V^3}-\frac{P+\frac a{V^2}}{V-b}. \]
+    Con $a=b=0$ se recupera el gas ideal: $\frac{dP}{dV}=-\frac PV$.
+  \end{ejemplo}
+\end{frame}
+
+\section{Ejercicios}
+
+\begin{frame}{Ejercicios propuestos}
+  \small
+  \begin{ejercicio}
+    \begin{enumerate}
+      \item Derive: (a) $\sqrt[3]{1+x^4}$, \ (b) $\tan^3(2x)$, \ (c) $e^{\sen^2x}$, \ (d) $\ln\left(x+\sqrt{x^2+1}\right)$, \ (e) $\sen\big(\cos(\tan x)\big)$, \ (f) $\dfrac{(x+1)^2}{\sqrt{x-1}}$.
+      \item Use derivación logarítmica: (a) $y=x^{\sen x}$, \ (b) $y=(\ln x)^x$, \ (c) $y=\sqrt[x]{x}$.
+      \item Si $F(x)=f(g(x))$ con $g(2)=5$, $g'(2)=-3$, $f'(5)=4$, halle $F'(2)$.
+      \item Halle $y'$: (a) $x^2y+xy^3=6$, \ (b) $\sen(xy)=x+y$, \ (c) $e^{x/y}=x-y$, \ (d) $\sqrt{x}+\sqrt{y}=4$.
+      \item Halle la tangente a la elipse $\frac{x^2}{16}+\frac{y^2}{9}=1$ en $\left(2,\frac{3\sqrt3}{2}\right)$ y a la elipse rotada $x^2+xy+y^2=7$ en $(1,2)$.
+      \item Halle $y''$ si $x^3+y^3=1$.
+      \item Pruebe que las hipérbolas $xy=c$ y $x^2-y^2=k$ se cortan perpendicularmente (familias ortogonales).
+    \end{enumerate}
+  \end{ejercicio}
+\end{frame}
+
+\begin{frame}{Resumen}
+  \begin{itemize}
+    \item \resaltar{Cadena}: $(f\circ g)'=f'(g)\,g'$; \ $\frac{dy}{dx}=\frac{dy}{du}\frac{du}{dx}$.
+    \item $(x^r)'=rx^{r-1}$ ($r\in\R$), \ $(a^x)'=a^x\ln a$, \ $(\ln|u|)'=\frac{u'}{u}$.
+    \item \resaltar{Derivación logarítmica}: $\ln y$ $\to$ $\frac{y'}{y}$ $\to$ $y'$; para $f^g$ y productos complicados.
+    \item \resaltar{Implícita}: derivar $F(x,y)=0$ tratando $y=y(x)$; despejar $y'$.
+  \end{itemize}
+  \vspace{3mm}
+  \textbf{Siguiente:} Examen Parcial (semanas 1 a 6). Después: aplicaciones de la derivada (optimización).
+\end{frame}
+
+\end{document}

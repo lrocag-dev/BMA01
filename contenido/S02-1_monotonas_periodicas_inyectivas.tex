@@ -1,0 +1,276 @@
+\documentclass[10pt,aspectratio=169]{beamer}
+\usepackage{bma01}
+
+\title[Monotonía, periodicidad, biyección]{Funciones monótonas y periódicas}
+\subtitle{Funciones inyectivas, sobreyectivas y biyectivas. Función inversa\\[2pt]\small Semana 2 -- Sesión 1}
+
+\begin{document}
+
+\begin{frame}
+  \titlepage
+\end{frame}
+
+\begin{frame}{Objetivos de la sesión}
+  \begin{enumerate}
+    \item Definir y reconocer funciones \resaltar{crecientes}, \resaltar{decrecientes} y \resaltar{monótonas}.
+    \item Determinar el \resaltar{periodo} de funciones periódicas.
+    \item Probar que una función es \resaltar{inyectiva}, \resaltar{sobreyectiva} o \resaltar{biyectiva}.
+    \item Construir la \resaltar{función inversa} y su gráfica.
+  \end{enumerate}
+  \begin{block}{Plan (2 horas)}
+    \begin{tabular}{ll}
+      0:00 -- 0:25 & Funciones monótonas\\
+      0:25 -- 0:50 & Funciones periódicas\\
+      0:50 -- 1:20 & Inyectividad, sobreyectividad y biyección\\
+      1:20 -- 1:45 & Función inversa\\
+      1:45 -- 2:00 & Ejercicios y resumen
+    \end{tabular}
+  \end{block}
+\end{frame}
+
+\section{Funciones monótonas}
+
+\begin{frame}{Funciones crecientes y decrecientes}
+  \begin{columns}
+    \begin{column}{0.55\textwidth}
+      \begin{definicion}
+        Sea $I\subseteq\Dom f$. Para todo $x_1,x_2\in I$ con $x_1<x_2$:
+        \begin{itemize}
+          \item $f$ es \resaltar{creciente} en $I$ si $f(x_1)\le f(x_2)$;
+          \item \resaltar{estrictamente creciente} si $f(x_1)<f(x_2)$;
+          \item \resaltar{decreciente} si $f(x_1)\ge f(x_2)$; estrictamente si $>$.
+        \end{itemize}
+        $f$ es \resaltar{monótona} en $I$ si es creciente o decreciente en $I$.
+      \end{definicion}
+      \begin{ejemplo}[1]
+        $f(x)=x^3$ es estrictamente creciente en $\R$:
+        si $x_1<x_2$, \ $x_2^3-x_1^3=(x_2-x_1)\left(x_1^2+x_1x_2+x_2^2\right)>0$.
+      \end{ejemplo}
+    \end{column}
+    \begin{column}{0.45\textwidth}
+      \centering
+      \begin{tikzpicture}
+        \begin{axis}[bma, xmin=-2.5, xmax=2.5, ymin=-2.5, ymax=3, width=6.5cm, height=5.6cm, xtick={-1,1}, ytick=\empty, domain=-2.3:2.3, samples=100]
+          \addplot[curva] {x^3/2-1.5*x};
+          \fill[uniVerde!20] (axis cs:-2.5,-2.5) rectangle (axis cs:-1,3);
+          \fill[uniGranate!15] (axis cs:-1,-2.5) rectangle (axis cs:1,3);
+          \fill[uniVerde!20] (axis cs:1,-2.5) rectangle (axis cs:2.5,3);
+          \addplot[curva] {x^3/2-1.5*x};
+          \node at (axis cs:-1.75,2.5) {\scriptsize crece};
+          \node at (axis cs:0,2.5) {\scriptsize decrece};
+          \node at (axis cs:1.75,2.5) {\scriptsize crece};
+        \end{axis}
+      \end{tikzpicture}
+
+      \small $y=\frac{x^3}2-\frac32x$: la monotonía depende del intervalo.
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\begin{frame}{Ejemplos de monotonía}
+  \begin{ejemplo}[2]
+    $f(x)=x^2$ es decreciente en $(-\infty,0]$ y creciente en $[0,\infty)$, pero \textbf{no} es monótona en $\R$.
+  \end{ejemplo}
+  \begin{ejemplo}[3]
+    $f(x)=\dfrac1x$ es decreciente en $(-\infty,0)$ y en $(0,\infty)$, pero \textbf{no} en $\R\setminus\{0\}$: \ $-1<1$ y $f(-1)=-1<1=f(1)$.
+  \end{ejemplo}
+  \begin{ejemplo}[4: usando álgebra]
+    $f(x)=\dfrac{x}{x+1}$ en $(-1,\infty)$: \ si $-1<x_1<x_2$,
+    \[ f(x_2)-f(x_1)=\frac{x_2(x_1+1)-x_1(x_2+1)}{(x_1+1)(x_2+1)}=\frac{x_2-x_1}{(x_1+1)(x_2+1)}>0. \]
+    Estrictamente creciente.
+  \end{ejemplo}
+  \small \textbf{Composición:} creciente $\circ$ creciente y decreciente $\circ$ decreciente son crecientes; creciente $\circ$ decreciente
+  es decreciente. Ej.: $e^{-x^2}$ crece en $(-\infty,0]$ y decrece en $[0,\infty)$.
+\end{frame}
+
+\section{Funciones periódicas}
+
+\begin{frame}{Funciones periódicas}
+  \begin{columns}
+    \begin{column}{0.55\textwidth}
+      \begin{definicion}
+        $f$ es \resaltar{periódica} si existe $T>0$ tal que $f(x+T)=f(x)$ para todo $x\in\Dom f$ (y $x+T\in\Dom f$).
+        El menor tal $T$ (si existe) es el \resaltar{periodo fundamental}.
+      \end{definicion}
+      \begin{ejemplo}
+        \begin{itemize}
+          \item $\sen x$, $\cos x$: periodo $2\pi$; \ $\tan x$: periodo $\pi$.
+          \item $x-\ent{x}$: periodo $1$.
+          \item Constante: periódica sin periodo fundamental.
+        \end{itemize}
+      \end{ejemplo}
+      \begin{proposicion}
+        Si $f$ tiene periodo $T$, entonces $g(x)=Af(\omega x+\varphi)+B$ tiene periodo $\dfrac{T}{|\omega|}$.
+      \end{proposicion}
+    \end{column}
+    \begin{column}{0.45\textwidth}
+      \centering
+      \begin{tikzpicture}
+        \begin{axis}[bma, xmin=0, xmax=6.8, ymin=-2.5, ymax=2.5, width=6.6cm, height=4.5cm, xtick={1.5708,3.1416,6.2832}, xticklabels={$\frac\pi2$,$\pi$,$2\pi$}, ytick={-2,2}, samples=200, domain=0:6.6]
+          \addplot[curva] {2*sin(deg(2*x))};
+          \draw[<->, uniGranate] (axis cs:0.785,2.2) -- (axis cs:3.927,2.2) node[midway, above] {\scriptsize $T=\pi$};
+        \end{axis}
+      \end{tikzpicture}
+
+      \small $y=2\sen2x$: amplitud $2$, periodo $\frac{2\pi}{2}=\pi$.
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\begin{frame}{Más ejemplos de periodicidad}
+  \begin{ejemplo}[5]
+    $f(x)=\sen^2x=\dfrac{1-\cos2x}{2}$ tiene periodo $\pi$ (no $2\pi$).
+  \end{ejemplo}
+  \begin{ejemplo}[6: suma de periódicas]
+    $f(x)=\sen\dfrac{x}{2}+\cos\dfrac{x}{3}$: periodos $4\pi$ y $6\pi$. Periodo de la suma: $\operatorname{mcm}(4\pi,6\pi)=12\pi$.
+  \end{ejemplo}
+  \begin{ejemplo}[7: una suma que no es periódica]
+    $f(x)=\sen x+\sen(\sqrt2\,x)$ \textbf{no} es periódica: los periodos $2\pi$ y $\sqrt2\pi$ son inconmensurables (su cociente es irracional).
+  \end{ejemplo}
+  \begin{ejemplo}[8: física]
+    Un péndulo de longitud $L$ (oscilaciones pequeñas): $\theta(t)=\theta_0\cos\left(\sqrt{g/L}\;t\right)$, periodo $T=2\pi\sqrt{L/g}$.
+    Con $L=1$ m: $T\approx2.0$ s.
+  \end{ejemplo}
+\end{frame}
+
+\section{Inyectividad, sobreyectividad y biyección}
+
+\begin{frame}{Funciones inyectivas}
+  \begin{columns}
+    \begin{column}{0.55\textwidth}
+      \begin{definicion}
+        $f$ es \resaltar{inyectiva} (uno a uno) si
+        \[ f(x_1)=f(x_2)\ \Rightarrow\ x_1=x_2, \]
+        es decir, valores distintos de $x$ tienen imágenes distintas.
+      \end{definicion}
+      \textbf{Prueba de la recta horizontal:} $f$ es inyectiva $\iff$ toda recta horizontal corta su gráfica a lo sumo una vez.
+      \begin{proposicion}
+        Toda función estrictamente monótona es inyectiva.
+      \end{proposicion}
+      \begin{ejemplo}[9]
+        $f(x)=\dfrac{2x+1}{x-3}$: \ si $\dfrac{2x_1+1}{x_1-3}=\dfrac{2x_2+1}{x_2-3}$, operando: $-7x_1=-7x_2$, luego $x_1=x_2$. \ Inyectiva.
+      \end{ejemplo}
+    \end{column}
+    \begin{column}{0.45\textwidth}
+      \centering
+      \begin{tikzpicture}
+        \begin{axis}[bma, xmin=-2.4, xmax=2.4, ymin=-0.5, ymax=4.6, width=6.3cm, height=5cm, xtick={-1.5,1.5}, ytick={2.25}, domain=-2.1:2.1]
+          \addplot[curva] {x^2};
+          \addplot[uniGranate, thick, dashed] {2.25};
+          \addplot[only marks, mark=*, uniGranate] coordinates {(-1.5,2.25) (1.5,2.25)};
+        \end{axis}
+      \end{tikzpicture}
+
+      \small $x^2$ no es inyectiva en $\R$: $f(-1.5)=f(1.5)$. Sí lo es en $[0,\infty)$.
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\begin{frame}{Sobreyectividad y biyección}
+  \begin{definicion}
+    $f:A\to B$ es \resaltar{sobreyectiva} si $\Ran f=B$: para todo $y\in B$ existe $x\in A$ con $f(x)=y$.\\
+    $f$ es \resaltar{biyectiva} si es inyectiva y sobreyectiva.
+  \end{definicion}
+  \begin{observacion}
+    La sobreyectividad depende del \textbf{conjunto de llegada} $B$. Toda función inyectiva $f:A\to\Ran f$ es biyectiva.
+  \end{observacion}
+  \begin{ejemplo}[10]
+    \renewcommand{\arraystretch}{1.3}
+    \begin{tabular}{l|c|c|c}
+      Función & Inyectiva & Sobreyectiva & Biyectiva\\ \hline
+      $x^2:\R\to\R$ & no & no & no\\
+      $x^2:[0,\infty)\to\R$ & sí & no & no\\
+      $x^2:[0,\infty)\to[0,\infty)$ & sí & sí & sí\\
+      $\sen:\R\to[-1,1]$ & no & sí & no\\
+      $\sen:[-\frac\pi2,\frac\pi2]\to[-1,1]$ & sí & sí & sí
+    \end{tabular}
+  \end{ejemplo}
+\end{frame}
+
+\section{Función inversa}
+
+\begin{frame}{Función inversa}
+  \begin{columns}
+    \begin{column}{0.55\textwidth}
+      \begin{definicion}
+        Si $f:A\to B$ es biyectiva, su \resaltar{inversa} $f^{-1}:B\to A$ se define por
+        \[ f^{-1}(y)=x\iff f(x)=y. \]
+        Se cumple $f^{-1}(f(x))=x$ y $f(f^{-1}(y))=y$.
+      \end{definicion}
+      \begin{block}{Cálculo}
+        \begin{enumerate}
+          \item Verificar que $f$ es inyectiva y hallar su rango.
+          \item Despejar $x$ en $y=f(x)$.
+          \item Intercambiar $x$ e $y$.
+        \end{enumerate}
+      \end{block}
+      \textbf{Gráfica:} la de $f^{-1}$ es la reflexión de la de $f$ respecto de la recta $y=x$.
+    \end{column}
+    \begin{column}{0.45\textwidth}
+      \centering
+      \begin{tikzpicture}
+        \begin{axis}[bma, xmin=-1, xmax=5, ymin=-1, ymax=5, axis equal image, width=6.3cm, height=6.3cm, xtick={1,2,4}, ytick={1,2,4}, samples=100]
+          \addplot[curva, domain=0:2.2] {x^2};
+          \addplot[curva2, domain=0:4.9] {sqrt(x)};
+          \addplot[gray, dashed, domain=-1:5] {x};
+          \addplot[only marks, mark=*, uniAzul] coordinates {(2,4)};
+          \addplot[only marks, mark=*, uniGranate] coordinates {(4,2)};
+          \draw[dotted] (axis cs:2,4) -- (axis cs:4,2);
+          \node[uniAzul] at (axis cs:1.2,4.4) {\scriptsize $x^2$, $x\ge0$};
+          \node[uniGranate] at (axis cs:4.2,1.5) {\scriptsize $\sqrt x$};
+        \end{axis}
+      \end{tikzpicture}
+
+      \small $(a,b)\in G_f\iff(b,a)\in G_{f^{-1}}$.
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\begin{frame}{Ejemplos de inversas}
+  \begin{ejemplo}[11]
+    $f(x)=\dfrac{2x+1}{x-3}$, $f:\R\setminus\{3\}\to\R\setminus\{2\}$. \ Despejando (sesión anterior): $x=\dfrac{3y+1}{y-2}$.
+    \[ f^{-1}(x)=\frac{3x+1}{x-2}. \]
+  \end{ejemplo}
+  \begin{ejemplo}[12: restringiendo el dominio]
+    $f(x)=x^2-4x+1=(x-2)^2-3$ con $x\ge2$: es estrictamente creciente, rango $[-3,\infty)$.
+    \[ y=(x-2)^2-3\Rightarrow x=2+\sqrt{y+3}\quad\Rightarrow\quad f^{-1}(x)=2+\sqrt{x+3},\ x\ge-3. \]
+  \end{ejemplo}
+  \begin{ejemplo}[13: exponencial y logaritmo]
+    $f(x)=e^x:\R\to(0,\infty)$ es biyectiva; \ $f^{-1}(x)=\ln x$. \ Por eso $e^{\ln x}=x$ y $\ln(e^x)=x$.
+  \end{ejemplo}
+  \small \textbf{Química:} si $\mathrm{pH}=-\log_{10}[\mathrm{H^+}]$, la inversa da la concentración: $[\mathrm{H^+}]=10^{-\mathrm{pH}}$.
+\end{frame}
+
+\section{Ejercicios}
+
+\begin{frame}{Ejercicios propuestos}
+  \small
+  \begin{ejercicio}
+    \begin{enumerate}
+      \item Determine los intervalos de monotonía (usando la definición o transformaciones): (a) $f(x)=|x-1|+|x+1|$,
+        \ (b) $g(x)=\dfrac{1}{x^2+1}$, \ (c) $h(x)=\sqrt{4-x^2}$.
+      \item Pruebe que si $f$ y $g$ son crecientes en $I$, entonces $f+g$ es creciente. ¿Y $fg$?
+      \item Halle el periodo: (a) $3\cos\left(\frac{\pi x}{4}\right)$, \ (b) $|\sen x|$, \ (c) $\sen^4x+\cos^4x$, \ (d) $\tan2x+\sen3x$.
+      \item ¿Es periódica $f(x)=\sen(x^2)$? Justifique.
+      \item Determine si son inyectivas: (a) $f(x)=x^3+x$, \ (b) $g(x)=x+\dfrac1x$, $x>0$, \ (c) $h(x)=\dfrac{x}{1+|x|}$.
+      \item Halle la inversa, su dominio y grafique ambas: (a) $f(x)=\sqrt[3]{2x-1}$, \ (b) $g(x)=\dfrac{e^x-1}{e^x+1}$,
+        \ (c) $h(x)=\begin{cases}x,&x<0\\ x^2,&x\ge0\end{cases}$.
+      \item Restrinja el dominio de $f(x)=\cos x$ para que sea biyectiva sobre $[-1,1]$.
+      \item Pruebe que si $f$ es estrictamente creciente y biyectiva, $f^{-1}$ también es estrictamente creciente.
+    \end{enumerate}
+  \end{ejercicio}
+\end{frame}
+
+\begin{frame}{Resumen}
+  \begin{itemize}
+    \item \resaltar{Monótona}: conserva (creciente) o invierte (decreciente) el orden en un intervalo.
+    \item \resaltar{Periódica}: $f(x+T)=f(x)$; \ $Af(\omega x+\varphi)$ tiene periodo $T/|\omega|$.
+    \item \resaltar{Inyectiva}: $f(x_1)=f(x_2)\Rightarrow x_1=x_2$ (recta horizontal). Estrictamente monótona $\Rightarrow$ inyectiva.
+    \item \resaltar{Sobreyectiva}: rango = conjunto de llegada. \resaltar{Biyectiva}: ambas.
+    \item \resaltar{Inversa}: despejar e intercambiar; gráfica simétrica respecto de $y=x$.
+  \end{itemize}
+  \vspace{3mm}
+  \textbf{Próxima sesión:} funciones hiperbólicas y problemas de modelamiento.
+\end{frame}
+
+\end{document}

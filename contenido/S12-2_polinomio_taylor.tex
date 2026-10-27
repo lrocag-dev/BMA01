@@ -1,0 +1,234 @@
+\documentclass[10pt,aspectratio=169]{beamer}
+\usepackage{bma01}
+
+\title[Polinomio de Taylor]{Polinomio de Taylor}
+\subtitle{Aproximación polinomial\\[2pt]\small Semana 12 -- Sesión 2}
+
+\begin{document}
+
+\begin{frame}
+  \titlepage
+\end{frame}
+
+\begin{frame}{Objetivos de la sesión}
+  \begin{enumerate}
+    \item Construir el \resaltar{polinomio de Taylor} de grado $n$ de una función en un punto.
+    \item Obtener los polinomios de Maclaurin de las funciones elementales.
+    \item Usar polinomios de Taylor para \resaltar{aproximar valores} y \resaltar{calcular límites}.
+    \item Obtener nuevos polinomios por sustitución, derivación y productos.
+  \end{enumerate}
+  \begin{block}{Plan (2 horas)}
+    \begin{tabular}{ll}
+      0:00 -- 0:20 & De la aproximación lineal a la cuadrática\\
+      0:20 -- 0:50 & Definición y construcción. Polinomios de Maclaurin básicos\\
+      0:50 -- 1:20 & Gráficas y aproximaciones numéricas\\
+      1:20 -- 1:45 & Operaciones con polinomios de Taylor; cálculo de límites\\
+      1:45 -- 2:00 & Ejercicios y resumen
+    \end{tabular}
+  \end{block}
+\end{frame}
+
+\section{Idea}
+
+\begin{frame}{Más allá de la recta tangente}
+  \begin{columns}
+    \begin{column}{0.5\textwidth}
+      La linealización $L(x)=f(a)+f'(a)(x-a)$ coincide con $f$ en \textbf{valor} y \textbf{pendiente} en $a$.
+      \medskip
+
+      Para mejorar, buscamos un polinomio que coincida también en la \textbf{curvatura} ($f''$), y en más derivadas:
+      \[ P(a)=f(a),\ P'(a)=f'(a),\ P''(a)=f''(a),\ \dots \]
+      \begin{ejemplo}[$\cos x$ en $0$]
+        $L(x)=1$ (¡no capta la curvatura!). \
+        $P_2(x)=1-\frac{x^2}{2}$ sí: $P_2''(0)=-1=\cos''(0)$.
+      \end{ejemplo}
+    \end{column}
+    \begin{column}{0.5\textwidth}
+      \centering
+      \begin{tikzpicture}
+        \begin{axis}[bma, xmin=-3.5, xmax=3.5, ymin=-1.5, ymax=1.5, width=6.6cm, height=5.3cm, xtick={-3.1416,3.1416}, xticklabels={$-\pi$,$\pi$}, ytick={-1,1}, samples=150, domain=-3.5:3.5, restrict y to domain=-3:3]
+          \addplot[black, very thick] {cos(deg(x))};
+          \addplot[curva] {1};
+          \addplot[curva2] {1-x^2/2};
+          \addplot[uniVerde, very thick] {1-x^2/2+x^4/24};
+          \node[uniAzul] at (axis cs:2.8,1.2) {\scriptsize $P_0=P_1$};
+          \node[uniGranate] at (axis cs:2.4,-1.3) {\scriptsize $P_2$};
+          \node[uniVerde] at (axis cs:-2.9,-0.4) {\scriptsize $P_4$};
+        \end{axis}
+      \end{tikzpicture}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\section{Definición}
+
+\begin{frame}{El polinomio de Taylor}
+  \begin{definicion}
+    Si $f$ tiene $n$ derivadas en $a$, su \resaltar{polinomio de Taylor de grado $n$} centrado en $a$ es
+    \[ T_n(x)=\sum_{k=0}^n\frac{f^{(k)}(a)}{k!}(x-a)^k=f(a)+f'(a)(x-a)+\frac{f''(a)}{2!}(x-a)^2+\cdots+\frac{f^{(n)}(a)}{n!}(x-a)^n. \]
+    Si $a=0$, se llama \resaltar{polinomio de Maclaurin}.
+  \end{definicion}
+  \begin{teorema}
+    $T_n$ es el \textbf{único} polinomio de grado $\le n$ con $T_n^{(k)}(a)=f^{(k)}(a)$ para $k=0,1,\dots,n$.
+  \end{teorema}
+  \textbf{¿Por qué $k!$?} \ Si $P(x)=\sum c_k(x-a)^k$, derivando $k$ veces y evaluando en $a$: $P^{(k)}(a)=k!\,c_k$.
+  Imponer $P^{(k)}(a)=f^{(k)}(a)$ da $c_k=\dfrac{f^{(k)}(a)}{k!}$.
+\end{frame}
+
+\begin{frame}{Polinomios de Maclaurin fundamentales}
+  \renewcommand{\arraystretch}{1.6}
+  \begin{center}
+    \begin{tabular}{l|l}
+      $f(x)$ & $T_n(x)$ en $a=0$\\ \hline
+      $e^x$ & $1+x+\dfrac{x^2}{2!}+\dfrac{x^3}{3!}+\cdots+\dfrac{x^n}{n!}$\\
+      $\sen x$ & $x-\dfrac{x^3}{3!}+\dfrac{x^5}{5!}-\cdots+(-1)^k\dfrac{x^{2k+1}}{(2k+1)!}$\\
+      $\cos x$ & $1-\dfrac{x^2}{2!}+\dfrac{x^4}{4!}-\cdots+(-1)^k\dfrac{x^{2k}}{(2k)!}$\\
+      $\ln(1+x)$ & $x-\dfrac{x^2}{2}+\dfrac{x^3}{3}-\cdots+(-1)^{n+1}\dfrac{x^n}{n}$\\
+      $\dfrac{1}{1-x}$ & $1+x+x^2+\cdots+x^n$\\
+      $(1+x)^\alpha$ & $1+\alpha x+\dfrac{\alpha(\alpha-1)}{2!}x^2+\cdots+\dbinom{\alpha}{n}x^n$
+    \end{tabular}
+  \end{center}
+  \small \textbf{Ejemplo de construcción} ($e^x$): todas las derivadas son $e^x$ y valen $1$ en $0$; así $c_k=\frac1{k!}$.
+\end{frame}
+
+\begin{frame}{Construcción paso a paso: $\ln x$ en $a=1$}
+  \begin{ejemplo}[1]
+    \begin{center}
+      \renewcommand{\arraystretch}{1.3}
+      \begin{tabular}{c|c|c|c}
+        $k$ & $f^{(k)}(x)$ & $f^{(k)}(1)$ & $\frac{f^{(k)}(1)}{k!}$\\ \hline
+        0 & $\ln x$ & $0$ & $0$\\
+        1 & $x^{-1}$ & $1$ & $1$\\
+        2 & $-x^{-2}$ & $-1$ & $-\frac12$\\
+        3 & $2x^{-3}$ & $2$ & $\frac13$\\
+        4 & $-6x^{-4}$ & $-6$ & $-\frac14$
+      \end{tabular}
+    \end{center}
+    \[ T_4(x)=(x-1)-\frac{(x-1)^2}{2}+\frac{(x-1)^3}{3}-\frac{(x-1)^4}{4}. \]
+  \end{ejemplo}
+  \small Coincide con el de $\ln(1+u)$ con $u=x-1$.
+\end{frame}
+
+\section{Gráficas y aproximaciones}
+
+\begin{frame}{Polinomios de Taylor de $e^x$}
+  \begin{columns}
+    \begin{column}{0.55\textwidth}
+      \centering
+      \begin{tikzpicture}
+        \begin{axis}[bma, xmin=-3.5, xmax=2.6, ymin=-2, ymax=9, width=7.5cm, height=6.3cm, xtick={-2,-1,1,2}, ytick={1,5}, samples=100, domain=-3.5:2.6, restrict y to domain=-4:12]
+          \addplot[black, very thick] {exp(x)};
+          \addplot[curva] {1+x};
+          \addplot[curva2] {1+x+x^2/2};
+          \addplot[uniVerde, very thick] {1+x+x^2/2+x^3/6};
+          \addplot[uniNaranja, very thick] {1+x+x^2/2+x^3/6+x^4/24};
+          \node[uniAzul] at (axis cs:2.3,2.6) {\scriptsize $T_1$};
+          \node[uniGranate] at (axis cs:-3.1,3.5) {\scriptsize $T_2$};
+          \node[uniVerde] at (axis cs:-2.4,-1.6) {\scriptsize $T_3$};
+          \node[uniNaranja] at (axis cs:-2.9,1.7) {\scriptsize $T_4$};
+          \node at (axis cs:1.7,8) {\scriptsize $e^x$};
+        \end{axis}
+      \end{tikzpicture}
+    \end{column}
+    \begin{column}{0.45\textwidth}
+      \begin{ejemplo}[2: calcular $e$]
+        $e\approx T_n(1)=\sum_{k=0}^n\frac1{k!}$:
+        \begin{center}
+          \small
+          \begin{tabular}{c|l}
+            $n$ & $T_n(1)$\\ \hline
+            2 & 2.5\\
+            4 & 2.708333\\
+            6 & 2.718056\\
+            7 & 2.718254
+          \end{tabular}
+        \end{center}
+        ($e=2.718282\dots$)
+      \end{ejemplo}
+      \small Al aumentar $n$, la aproximación mejora y vale en un intervalo más amplio.
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\begin{frame}{Aproximaciones numéricas}
+  \begin{ejemplo}[3]
+    $\sen(0.5)$: \ $T_3(0.5)=0.5-\frac{0.125}6\approx0.479167$; \ $T_5(0.5)\approx0.479427$. \ Real: $0.479426$.
+  \end{ejemplo}
+  \begin{ejemplo}[4]
+    $\sqrt{1.1}=(1+0.1)^{1/2}$: \ $T_2=1+\frac12(0.1)-\frac18(0.01)=1.04875$; \ real $1.048809$.
+  \end{ejemplo}
+  \begin{ejemplo}[5]
+    $\ln1.2\approx0.2-\frac{0.04}{2}+\frac{0.008}{3}\approx0.182667$; \ real $0.182322$.
+  \end{ejemplo}
+  \begin{ejemplo}[6: física, energía potencial gravitatoria]
+    $U(h)=-\dfrac{GMm}{R+h}=-\dfrac{GMm}{R}\left(1+\frac hR\right)^{-1}\approx-\dfrac{GMm}R\left(1-\frac hR\right)$, \ es decir
+    $U(h)\approx U(0)+mgh$ con $g=\frac{GM}{R^2}$. ¡La fórmula escolar $mgh$ es un polinomio de Taylor de grado 1!
+  \end{ejemplo}
+\end{frame}
+
+\section{Operaciones y límites}
+
+\begin{frame}{Obtener nuevos polinomios sin derivar}
+  \begin{proposicion}
+    Los polinomios de Taylor se pueden obtener por \textbf{sustitución}, \textbf{producto}, \textbf{derivación} e \textbf{integración}
+    de polinomios conocidos (truncando al grado deseado).
+  \end{proposicion}
+  \begin{ejemplo}[7: sustitución]
+    $e^{-x^2}\approx1-x^2+\dfrac{x^4}{2}-\dfrac{x^6}{6}$ \ (con $u=-x^2$ en $e^u$).
+  \end{ejemplo}
+  \begin{ejemplo}[8: producto]
+    $e^x\sen x\approx\left(1+x+\frac{x^2}2\right)\left(x-\frac{x^3}6\right)\approx x+x^2+\frac{x^3}{3}$ \ (hasta grado 3).
+  \end{ejemplo}
+  \begin{ejemplo}[9: derivación]
+    De $\frac{1}{1-x}\approx1+x+x^2+x^3$: \ $\frac{1}{(1-x)^2}\approx1+2x+3x^2$.
+  \end{ejemplo}
+\end{frame}
+
+\begin{frame}{Cálculo de límites con Taylor}
+  \small
+  \begin{idea}
+    Reemplazar cada función por su polinomio de Taylor (con suficientes términos) y quedarse con el término dominante.
+  \end{idea}
+  \begin{ejemplo}[10]
+    $\displaystyle\lim_{x\to0}\frac{\sen x-x}{x^3}=\lim_{x\to0}\frac{\left(x-\frac{x^3}{6}+\cdots\right)-x}{x^3}=-\frac16$.
+  \end{ejemplo}
+  \begin{ejemplo}[11]
+    $\displaystyle\lim_{x\to0}\frac{e^{x^2}-\cos x}{x^2}=\lim_{x\to0}\frac{\left(1+x^2+\cdots\right)-\left(1-\frac{x^2}2+\cdots\right)}{x^2}=\frac32$.
+  \end{ejemplo}
+  \begin{ejemplo}[12]
+    $\displaystyle\lim_{x\to0}\frac{\ln(1+x)-x+\frac{x^2}2}{x^3}=\frac13$. \ (Con L'Hospital: tres aplicaciones.)
+  \end{ejemplo}
+  \small Notación: ``$\cdots$'' denota términos de orden superior, que divididos por la potencia del denominador tienden a $0$.
+\end{frame}
+
+\section{Ejercicios}
+
+\begin{frame}{Ejercicios propuestos}
+  \small
+  \begin{ejercicio}
+    \begin{enumerate}
+      \item Halle $T_3$ de: (a) $f(x)=\tan x$ en $0$, \ (b) $g(x)=\sqrt x$ en $4$, \ (c) $h(x)=\frac1x$ en $1$, \ (d) $k(x)=\arctan x$ en $0$.
+      \item Halle el polinomio de Maclaurin de grado $5$ de $\senh x$ y de $\cosh x$; compárelos con los de $\sen$ y $\cos$.
+      \item Use polinomios de Taylor para aproximar $\sqrt[3]{8.1}$, $\cos(0.2)$ y $e^{-0.1}$; compare con la calculadora.
+      \item Obtenga sin derivar: (a) $T_6$ de $\cos(x^2)$, \ (b) $T_4$ de $\dfrac{1}{1+x^2}$, \ (c) $T_3$ de $e^x\cos x$.
+      \item Calcule con Taylor: (a) $\displaystyle\lim_{x\to0}\frac{x-\arctan x}{x^3}$, \ (b) $\displaystyle\lim_{x\to0}\frac{2\cos x-2+x^2}{x^4}$,
+        \ (c) $\displaystyle\lim_{x\to0}\left(\frac1{x}-\frac1{\sen x}\right)$.
+      \item Si $T_3(x)=2-3(x-1)+4(x-1)^2-(x-1)^3$ es el polinomio de Taylor de $f$ en $1$, halle $f(1)$, $f'(1)$, $f''(1)$ y $f'''(1)$.
+      \item Pruebe que la energía cinética relativista $E_c=mc^2\big(\gamma-1\big)$ se aproxima por $\frac12mv^2+\frac38\frac{mv^4}{c^2}$.
+    \end{enumerate}
+  \end{ejercicio}
+\end{frame}
+
+\begin{frame}{Resumen}
+  \begin{itemize}
+    \item $T_n(x)=\sum_{k=0}^n\frac{f^{(k)}(a)}{k!}(x-a)^k$: coincide con $f$ en $a$ hasta la derivada $n$.
+    \item Maclaurin: $e^x$, $\sen x$, $\cos x$, $\ln(1+x)$, $\frac1{1-x}$, $(1+x)^\alpha$.
+    \item A mayor $n$, mejor aproximación cerca de $a$.
+    \item Nuevos polinomios por sustitución, producto y derivación.
+    \item Límites: sustituir por polinomios de Taylor y comparar términos dominantes.
+  \end{itemize}
+  \vspace{3mm}
+  \textbf{Próxima sesión:} el residuo de Taylor y la estimación del error.
+\end{frame}
+
+\end{document}

@@ -1,0 +1,302 @@
+\documentclass[10pt,aspectratio=169]{beamer}
+\usepackage{bma01}
+
+\title[Supremo, Bolzano y Weierstrass]{Ínfimo y supremo de un subconjunto de $\R$}
+\subtitle{Teoremas de continuidad: valor intermedio de Bolzano y de Weierstrass\\[2pt]\small Semana 5 -- Sesión 2}
+
+\begin{document}
+
+\begin{frame}
+  \titlepage
+\end{frame}
+
+\begin{frame}{Objetivos de la sesión}
+  \begin{enumerate}
+    \item Definir cotas, \resaltar{supremo} e \resaltar{ínfimo}; distinguirlos de máximo y mínimo.
+    \item Comprender el \resaltar{axioma del supremo} (completitud de $\R$).
+    \item Enunciar y aplicar el \resaltar{teorema de Bolzano} y el \resaltar{teorema del valor intermedio}; método de bisección.
+    \item Enunciar y aplicar el \resaltar{teorema de Weierstrass} (valores extremos).
+  \end{enumerate}
+  \begin{block}{Plan (2 horas)}
+    \begin{tabular}{ll}
+      0:00 -- 0:35 & Cotas, supremo e ínfimo. Axioma del supremo\\
+      0:35 -- 1:10 & Teorema de Bolzano y del valor intermedio. Bisección\\
+      1:10 -- 1:40 & Teorema de Weierstrass. Importancia de las hipótesis\\
+      1:40 -- 2:00 & Ejercicios y resumen
+    \end{tabular}
+  \end{block}
+\end{frame}
+
+\section{Supremo e ínfimo}
+
+\begin{frame}{Cotas, supremo e ínfimo}
+  Sea $A\subseteq\R$, $A\neq\emptyset$.
+  \begin{definicion}
+    \begin{itemize}
+      \item $M$ es \resaltar{cota superior} de $A$ si $a\le M$ para todo $a\in A$. $A$ es \emph{acotado superiormente} si tiene una.
+      \item $s=\sup A$ (\resaltar{supremo}) es la \textbf{menor} cota superior: (i) $s$ es cota superior y (ii) si $M$ es cota superior, $s\le M$.
+      \item Análogamente: cota inferior e \resaltar{ínfimo} $\inf A$ (la mayor cota inferior).
+      \item Si $\sup A\in A$, se llama \resaltar{máximo}; si $\inf A\in A$, \resaltar{mínimo}.
+    \end{itemize}
+  \end{definicion}
+  \begin{center}
+    \begin{tikzpicture}[scale=1.1]
+      \draw[->] (-0.5,0) -- (9.5,0);
+      \draw[uniAzul, line width=3pt] (1.5,0) -- (5,0);
+      \draw[uniAzul, thick, fill=white] (1.5,0) circle (2.5pt);
+      \fill[uniAzul] (5,0) circle (2.5pt);
+      \node[above, uniAzul] at (3.2,0.1) {\scriptsize $A=(1,4]$};
+      \node[below] at (1.5,-0.15) {\scriptsize $\inf A=1$ (no es mínimo)};
+      \node[below] at (5,-0.15) {\scriptsize $\sup A=\max A=4$};
+      \foreach \x in {6,7,8.5} \draw[uniGranate, thick] (\x,0.12) -- (\x,-0.12);
+      \node[above, uniGranate] at (7.2,0.1) {\scriptsize cotas superiores};
+    \end{tikzpicture}
+  \end{center}
+\end{frame}
+
+\begin{frame}{Caracterización y ejemplos}
+  \begin{teorema}[caracterización con $\varepsilon$]
+    Si $s$ es cota superior de $A$: \quad $s=\sup A\iff\forall\varepsilon>0\ \exists a\in A:\ a>s-\varepsilon$.
+  \end{teorema}
+  \small (Ningún número menor que $s$ es cota superior: siempre hay elementos de $A$ ``muy cerca'' de $s$.)
+  \normalsize
+  \begin{ejemplo}
+    \begin{enumerate}
+      \item $A=\left\{1-\frac1n:n\in\N\right\}=\{0,\frac12,\frac23,\dots\}$: \ $\inf A=\min A=0$, \ $\sup A=1\notin A$.
+        \ Dado $\varepsilon$, basta $n>\frac1\varepsilon$.
+      \item $A=\{x\in\R:x^2<2\}=(-\sqrt2,\sqrt2)$: \ $\sup A=\sqrt2$, sin máximo.
+      \item $\N$ no es acotado superiormente (propiedad arquimediana).
+      \item $A=\{\sen x:x\in\R\}$: \ $\sup A=\max A=1$.
+    \end{enumerate}
+  \end{ejemplo}
+\end{frame}
+
+\begin{frame}{El axioma del supremo}
+  \begin{teorema}[Axioma del supremo (completitud)]
+    Todo subconjunto no vacío de $\R$ acotado superiormente tiene supremo \textbf{en $\R$}.
+  \end{teorema}
+  \begin{ejemplo}[$\Q$ no es completo]
+    $B=\{q\in\Q:\ q>0,\ q^2<2\}$ está acotado en $\Q$, pero no tiene supremo en $\Q$: su supremo en $\R$ es $\sqrt2\notin\Q$.
+  \end{ejemplo}
+  \begin{idea}
+    La completitud es lo que distingue a $\R$ de $\Q$: la recta real ``no tiene huecos''. Es la base de los teoremas de esta sesión
+    (y de casi todo el cálculo).
+  \end{idea}
+  \begin{observacion}
+    Para funciones: $\sup_{x\in I}f(x)=\sup\{f(x):x\in I\}$. \ Ej.: $\sup_{x>0}\frac{x}{x+1}=1$ (no se alcanza).
+  \end{observacion}
+\end{frame}
+
+\section{Teorema de Bolzano y del valor intermedio}
+
+\begin{frame}{Teorema de Bolzano}
+  \begin{columns}
+    \begin{column}{0.55\textwidth}
+      \begin{teorema}[Bolzano]
+        Si $f$ es continua en $[a,b]$ y $f(a)\cdot f(b)<0$, entonces existe $c\in(a,b)$ con $f(c)=0$.
+      \end{teorema}
+      \textbf{Idea de la prueba} ($f(a)<0<f(b)$). Sea $A=\{x\in[a,b]:f(x)<0\}$, no vacío y acotado; $c=\sup A$.
+      \begin{itemize}
+        \item Si $f(c)<0$, por continuidad $f<0$ un poco a la derecha de $c$: contradice que $c$ es cota superior.
+        \item Si $f(c)>0$, $f>0$ cerca de $c$: entonces $c-\delta$ sería cota menor. Contradicción.
+      \end{itemize}
+      Luego $f(c)=0$. \ $\blacksquare$
+    \end{column}
+    \begin{column}{0.45\textwidth}
+      \centering
+      \begin{tikzpicture}
+        \begin{axis}[bma, xmin=0, xmax=4, ymin=-3, ymax=2.5, width=6.5cm, height=5.5cm, xtick={0.5,2.17,3.5}, xticklabels={$a$,$c$,$b$}, ytick=\empty, samples=100, domain=0.5:3.5]
+          \addplot[curva] {0.4*(x-2.17)^3+0.3*(x-2.17)+0.2*sin(deg(4*x))*(x-2.17)};
+          \addplot[only marks, mark=*, uniGranate] coordinates {(2.17,0)};
+          \addplot[only marks, mark=*, uniAzul] coordinates {(0.5,-2.668) (3.5,1.604)};
+        \end{axis}
+      \end{tikzpicture}
+
+      \small Una curva continua que pasa de negativa a positiva debe cruzar el eje.
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\begin{frame}{Método de bisección}
+  \begin{columns}
+    \begin{column}{0.55\textwidth}
+      Bolzano sugiere un algoritmo: partir el intervalo por la mitad y quedarse con la mitad donde hay cambio de signo.
+      \begin{ejemplo}[1]
+        $f(x)=x^3-x-1$ en $[1,2]$: $f(1)=-1<0$, $f(2)=5>0$.
+        \begin{center}
+          \small
+          \begin{tabular}{c|c|c|c}
+            $a$ & $b$ & $m$ & $f(m)$\\ \hline
+            1 & 2 & 1.5 & $+0.875$\\
+            1 & 1.5 & 1.25 & $-0.297$\\
+            1.25 & 1.5 & 1.375 & $+0.225$\\
+            1.25 & 1.375 & 1.3125 & $-0.052$\\
+            1.3125 & 1.375 & 1.34375 & $+0.083$\\
+            1.3125 & 1.34375 & 1.328125 & $+0.015$
+          \end{tabular}
+        \end{center}
+        Raíz $\approx1.3247$. Tras $n$ pasos, el error es $\le\frac{b-a}{2^n}$.
+      \end{ejemplo}
+    \end{column}
+    \begin{column}{0.45\textwidth}
+      \centering
+      \begin{tikzpicture}
+        \begin{axis}[bma, xmin=0.9, xmax=2.1, ymin=-1.5, ymax=5.5, width=6.3cm, height=5.6cm, xtick={1,1.25,1.5,2}, ytick=\empty, samples=100, domain=0.95:2.05]
+          \addplot[curva] {x^3-x-1};
+          \addplot[only marks, mark=*, uniGranate] coordinates {(1.5,0.875) (1.25,-0.297) (1.375,0.225)};
+          \addplot[only marks, mark=*, uniVerde] coordinates {(1.3247,0)};
+        \end{axis}
+      \end{tikzpicture}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\begin{frame}{Teorema del valor intermedio y aplicaciones}
+  \begin{teorema}[Valor intermedio]
+    Si $f$ es continua en $[a,b]$ y $k$ está entre $f(a)$ y $f(b)$, existe $c\in[a,b]$ con $f(c)=k$.
+  \end{teorema}
+  \textbf{Prueba.} Aplique Bolzano a $g(x)=f(x)-k$. \ $\blacksquare$
+  \begin{ejemplo}[2: polinomios de grado impar]
+    Todo polinomio de grado impar tiene al menos una raíz real: $P(x)\to\pm\infty$ con signos opuestos en $\pm\infty$.
+  \end{ejemplo}
+  \begin{ejemplo}[3: punto fijo]
+    $\cos x=x$ tiene solución en $[0,1]$: $g(x)=\cos x-x$, $g(0)=1>0$, $g(1)=\cos1-1<0$. \ ($x^*\approx0.7391$.)
+  \end{ejemplo}
+  \begin{ejemplo}[4: física]
+    Si la temperatura en un anillo varía continuamente, existen dos puntos diametralmente opuestos con la misma temperatura:
+    $g(\theta)=T(\theta)-T(\theta+\pi)$ cumple $g(\pi)=-g(0)$.
+  \end{ejemplo}
+\end{frame}
+
+\begin{frame}{¡Las hipótesis importan!}
+  \begin{columns}
+    \begin{column}{0.5\textwidth}
+      \begin{ejemplo}[sin continuidad]
+        $f(x)=\sgn(x)$ en $[-1,1]$: $f(-1)=-1$, $f(1)=1$, pero nunca vale $\frac12$.
+      \end{ejemplo}
+      \begin{ejemplo}
+        $\frac1x$ en $[-1,1]$: cambia de signo y no se anula; no es continua en $0$.
+      \end{ejemplo}
+      \begin{observacion}
+        El recíproco es falso: $f$ puede tener la propiedad del valor intermedio sin ser continua (p.\,ej.\ $\sen\frac1x$ con $f(0)=0$).
+      \end{observacion}
+    \end{column}
+    \begin{column}{0.5\textwidth}
+      \centering
+      \begin{tikzpicture}
+        \begin{axis}[bma, xmin=-1.3, xmax=1.3, ymin=-1.5, ymax=1.5, width=6.3cm, height=5cm, xtick={-1,1}, ytick={-1,0.5,1}]
+          \addplot[curva] coordinates {(-1,-1) (0,-1)};
+          \addplot[curva] coordinates {(0,1) (1,1)};
+          \draw[uniGranate, dashed] (axis cs:-1.3,0.5) -- (axis cs:1.3,0.5);
+          \node[uniGranate] at (axis cs:-0.7,0.7) {\scriptsize $y=\frac12$ nunca se alcanza};
+        \end{axis}
+      \end{tikzpicture}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\section{Teorema de Weierstrass}
+
+\begin{frame}{Teorema de Weierstrass (valores extremos)}
+  \begin{columns}
+    \begin{column}{0.55\textwidth}
+      \begin{teorema}[Weierstrass]
+        Si $f$ es continua en un intervalo \textbf{cerrado y acotado} $[a,b]$, entonces $f$ es acotada y alcanza un máximo y un mínimo:
+        existen $x_1,x_2\in[a,b]$ con
+        \[ f(x_1)\le f(x)\le f(x_2)\quad\forall x\in[a,b]. \]
+      \end{teorema}
+      \begin{proposicion}[consecuencia]
+        La imagen de $[a,b]$ por una función continua es un intervalo cerrado $[m,M]$ (por Weierstrass y el TVI).
+      \end{proposicion}
+      \small En la Semana 9 usaremos este teorema para garantizar que un problema de optimización tiene solución.
+    \end{column}
+    \begin{column}{0.45\textwidth}
+      \centering
+      \begin{tikzpicture}
+        \begin{axis}[bma, xmin=0, xmax=4.3, ymin=0, ymax=3.3, width=6.5cm, height=5.5cm, xtick={0.4,1.35,3.42,4}, xticklabels={$a$,$x_2$,$x_1$,$b$}, ytick=\empty, samples=100, domain=0.4:4]
+          \addplot[curva] {1.7+0.9*sin(deg(1.4*x-0.2))+0.15*x};
+          \addplot[only marks, mark=*, uniGranate] coordinates {(1.35,2.80) (3.42,1.32)};
+          \draw[dashed, uniGranate] (axis cs:0,2.80) -- (axis cs:4.3,2.80);
+          \draw[dashed, uniGranate] (axis cs:0,1.32) -- (axis cs:4.3,1.32);
+          \node[uniGranate] at (axis cs:2.3,3.05) {\scriptsize máximo $M$};
+          \node[uniGranate] at (axis cs:2.3,1.1) {\scriptsize mínimo $m$};
+        \end{axis}
+      \end{tikzpicture}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\begin{frame}{Las hipótesis de Weierstrass son necesarias}
+  \begin{columns}
+    \begin{column}{0.33\textwidth}
+      \centering
+      \begin{tikzpicture}
+        \begin{axis}[bma, xmin=0, xmax=1.2, ymin=0, ymax=8, width=4.8cm, height=4.3cm, xtick={1}, ytick=\empty, samples=100]
+          \addplot[curva, domain=0.13:1] {1/x};
+          \addplot[only marks, mark=*, uniAzul] coordinates {(1,1)};
+        \end{axis}
+      \end{tikzpicture}\\
+      \small $\frac1x$ en $(0,1]$: no es cerrado; no acotada.
+    \end{column}
+    \begin{column}{0.33\textwidth}
+      \centering
+      \begin{tikzpicture}
+        \begin{axis}[bma, xmin=-0.1, xmax=1.2, ymin=0, ymax=1.3, width=4.8cm, height=4.3cm, xtick={1}, ytick={1}]
+          \addplot[curva, domain=0:1] {x};
+          \addplot[only marks, mark=*, uniAzul] coordinates {(0,0)};
+          \addplot[only marks, mark=o, uniAzul, fill=white] coordinates {(1,1)};
+        \end{axis}
+      \end{tikzpicture}\\
+      \small $x$ en $[0,1)$: $\sup=1$ no se alcanza.
+    \end{column}
+    \begin{column}{0.33\textwidth}
+      \centering
+      \begin{tikzpicture}
+        \begin{axis}[bma, xmin=-0.1, xmax=1.2, ymin=0, ymax=1.3, width=4.8cm, height=4.3cm, xtick={1}, ytick={1}]
+          \addplot[curva, domain=0:0.98] {x};
+          \addplot[only marks, mark=o, uniAzul, fill=white] coordinates {(1,1)};
+          \addplot[only marks, mark=*, uniAzul] coordinates {(1,0)};
+        \end{axis}
+      \end{tikzpicture}\\
+      \small $f(x)=x$, $f(1)=0$ en $[0,1]$: discontinua; sin máximo.
+    \end{column}
+  \end{columns}
+  \begin{ejemplo}[5]
+    $f(x)=x^3-3x$ en $[-2,3]$: continua en un cerrado, así que tiene máximo y mínimo absolutos. (Los hallaremos con derivadas:
+    $\max=f(3)=18$, $\min=f(-2)=f(1)=-2$.)
+  \end{ejemplo}
+\end{frame}
+
+\section{Ejercicios}
+
+\begin{frame}{Ejercicios propuestos}
+  \small
+  \begin{ejercicio}
+    \begin{enumerate}
+      \item Halle supremo, ínfimo, máximo y mínimo (si existen): (a) $\left\{\frac{n}{n+1}:n\in\N\right\}$, \ (b) $\left\{\frac{(-1)^n}{n}:n\in\N\right\}$,
+        \ (c) $\{x:x^2-3x<4\}$, \ (d) $\left\{\frac{x^2}{1+x^2}:x\in\R\right\}$.
+      \item Pruebe que $\sup\left\{1-\frac1{2^n}\right\}=1$ usando la caracterización con $\varepsilon$.
+      \item Pruebe que si $A\subseteq B$ y $B$ es acotado, entonces $\sup A\le\sup B$.
+      \item Pruebe que $x^5-3x+1=0$ tiene al menos tres raíces reales.
+      \item Aproxime con 4 pasos de bisección la raíz de $e^{-x}=x$ en $[0,1]$.
+      \item Pruebe que si $f:[0,1]\to[0,1]$ es continua, existe $c$ con $f(c)=c$ (punto fijo).
+      \item ¿Tiene máximo $f(x)=\frac{x}{1+x^2}$ en $[0,\infty)$? (Weierstrass no se aplica directamente; analice.)
+      \item Un excursionista sube una montaña de 6:00 a 18:00 y baja por el mismo camino al día siguiente, de 6:00 a 18:00. Pruebe que hay
+        un instante en que estuvo en el mismo lugar a la misma hora ambos días.
+    \end{enumerate}
+  \end{ejercicio}
+\end{frame}
+
+\begin{frame}{Resumen}
+  \begin{itemize}
+    \item $\sup A$: menor cota superior; si pertenece a $A$, es el máximo. Axioma del supremo: $\R$ es completo.
+    \item \resaltar{Bolzano}: continua en $[a,b]$ y cambio de signo $\Rightarrow$ hay una raíz. Bisección: error $\le\frac{b-a}{2^n}$.
+    \item \resaltar{TVI}: una función continua toma todos los valores intermedios.
+    \item \resaltar{Weierstrass}: continua en $[a,b]$ $\Rightarrow$ alcanza máximo y mínimo.
+    \item Sin continuidad o sin intervalo cerrado y acotado, las conclusiones pueden fallar.
+  \end{itemize}
+  \vspace{3mm}
+  \textbf{Próxima sesión:} la derivada; rectas tangente y normal.
+\end{frame}
+
+\end{document}

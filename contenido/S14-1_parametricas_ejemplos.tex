@@ -1,0 +1,267 @@
+\documentclass[10pt,aspectratio=169]{beamer}
+\usepackage{bma01}
+
+\title[Paramétricas: ejemplos]{Curvas paramétricas: ejemplos}
+\subtitle{Cicloide, astroide, cardioide, folium y curvas de Lissajous\\[2pt]\small Semana 14 -- Sesión 1}
+
+\begin{document}
+
+\begin{frame}
+  \titlepage
+\end{frame}
+
+\begin{frame}{Objetivos de la sesión}
+  \begin{enumerate}
+    \item Analizar curvas paramétricas notables: tangentes, \resaltar{cúspides} y \resaltar{autointersecciones}.
+    \item Estudiar el movimiento en el plano: \resaltar{velocidad}, \resaltar{rapidez} y \resaltar{aceleración}.
+    \item Relacionar descripciones paramétricas, cartesianas e implícitas de una misma curva.
+  \end{enumerate}
+  \begin{block}{Plan (2 horas)}
+    \begin{tabular}{ll}
+      0:00 -- 0:30 & La cicloide: tangentes y cúspides\\
+      0:30 -- 0:55 & Astroide y cardioide\\
+      0:55 -- 1:20 & Folium de Descartes y curvas de Lissajous: autointersecciones\\
+      1:20 -- 1:45 & Movimiento en el plano\\
+      1:45 -- 2:00 & Ejercicios y resumen
+    \end{tabular}
+  \end{block}
+\end{frame}
+
+\section{La cicloide}
+
+\begin{frame}{La cicloide}
+  \begin{columns}
+    \begin{column}{0.5\textwidth}
+      Un punto $P$ de una rueda de radio $r$ que rueda sin deslizar sobre el eje $x$ describe
+      \[ x=r(t-\sen t),\qquad y=r(1-\cos t), \]
+      con $t$ el ángulo girado.
+      \begin{itemize}
+        \item El centro está en $(rt,r)$; \ $P$ está a distancia $r$ del centro.
+        \item Al rodar sin deslizar, el arco recorrido $rt$ es igual al desplazamiento del centro.
+      \end{itemize}
+    \end{column}
+    \begin{column}{0.5\textwidth}
+      \centering
+      \begin{tikzpicture}
+        \begin{axis}[bma, xmin=-0.5, xmax=13.5, ymin=0, ymax=3, axis equal image, width=7.5cm, height=3.8cm, xtick={6.2832,12.566}, xticklabels={$2\pi r$,$4\pi r$}, ytick={2}, yticklabels={$2r$}, samples=200]
+          \addplot[curva, domain=0:720] ({rad(x)-sin(x)},{1-cos(x)});
+          \draw[gray] (axis cs:2.4,1) circle[radius=1];
+          \fill (axis cs:2.4,1) circle (1.5pt);
+          \addplot[only marks, mark=*, uniGranate] coordinates {(1.725,1.737)};
+          \draw[uniGranate] (axis cs:2.4,1) -- (axis cs:1.725,1.737);
+        \end{axis}
+      \end{tikzpicture}
+    \end{column}
+  \end{columns}
+  \begin{ejemplo}[1: tangentes]
+    \[ \frac{dy}{dx}=\frac{r\sen t}{r(1-\cos t)}=\frac{2\sen\frac t2\cos\frac t2}{2\sen^2\frac t2}=\ctg\frac t2. \]
+    \begin{itemize}
+      \item Tangente horizontal: $\ctg\frac t2=0$, $t=\pi$ (punto más alto $(\pi r,2r)$).
+      \item En $t=2k\pi$: $x'=y'=0$. Como $\ctg\frac t2\to\pm\infty$, la tangente es vertical: \resaltar{cúspides} en el suelo.
+    \end{itemize}
+  \end{ejemplo}
+\end{frame}
+
+\begin{frame}{La cicloide en la física}
+  \begin{columns}
+    \begin{column}{0.55\textwidth}
+      \begin{itemize}
+        \item \textbf{Braquistócrona} (Johann Bernoulli, 1696): la curva por la que una bola desciende de $A$ a $B$ en el \textbf{menor tiempo}
+          es una cicloide invertida, no la recta.
+        \item \textbf{Tautócrona} (Huygens): una bola soltada desde cualquier punto de la cicloide invertida tarda lo mismo en llegar al fondo.
+          Huygens la usó para diseñar relojes de péndulo isócronos.
+        \item \textbf{Velocidad del punto de la rueda}: $|\mathbf v|=r\sqrt{2-2\cos t}=2r\left|\sen\frac t2\right|$.
+          En el suelo ($t=0$) el punto está \textbf{instantáneamente en reposo}; arriba ($t=\pi$) va al \textbf{doble} de la velocidad del centro.
+      \end{itemize}
+    \end{column}
+    \begin{column}{0.45\textwidth}
+      \centering
+      \begin{tikzpicture}
+        \begin{axis}[bma, xmin=-0.3, xmax=3.6, ymin=-2.3, ymax=0.4, axis equal image, width=6.4cm, height=4.3cm, xtick=\empty, ytick=\empty, samples=100]
+          \addplot[curva2, domain=0:180] ({rad(x)-sin(x)},{-(1-cos(x))});
+          \draw[gray, dashed] (axis cs:0,0) -- (axis cs:3.1416,-2);
+          \fill (axis cs:0,0) circle (2pt) node[above] {\scriptsize $A$};
+          \fill (axis cs:3.1416,-2) circle (2pt) node[right] {\scriptsize $B$};
+        \end{axis}
+      \end{tikzpicture}
+
+      \small La cicloide (granate) es más rápida que la recta (gris).
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\section{Astroide y cardioide}
+
+\begin{frame}{La astroide}
+  \begin{columns}
+    \begin{column}{0.55\textwidth}
+      \begin{ejemplo}[2]
+        $x=\cos^3t$, $y=\sen^3t$, \ $t\in[0,2\pi]$. Cartesiana: $x^{2/3}+y^{2/3}=1$.
+        \[ \frac{dy}{dx}=\frac{3\sen^2t\cos t}{-3\cos^2t\sen t}=-\tan t. \]
+        \begin{itemize}
+          \item En $t=0,\frac\pi2,\pi,\frac{3\pi}2$: $x'=y'=0$: \resaltar{cuatro cúspides} en $(\pm1,0)$, $(0,\pm1)$.
+          \item Propiedad: el segmento de cada tangente comprendido entre los ejes mide siempre $1$ (una escalera que resbala ``envuelve'' una astroide).
+        \end{itemize}
+      \end{ejemplo}
+    \end{column}
+    \begin{column}{0.45\textwidth}
+      \centering
+      \begin{tikzpicture}
+        \begin{axis}[bma, xmin=-1.3, xmax=1.3, ymin=-1.3, ymax=1.3, axis equal image, width=6cm, height=6cm, xtick={1}, ytick={1}, samples=200]
+          \addplot[curva, domain=0:360] ({cos(x)^3},{sin(x)^3});
+          \addplot[uniVerde, thin, domain=0:0.5] {-tan(60)*(x-0.125)+0.6495};
+          \addplot[uniVerde, thin, domain=0:0.866] {-tan(30)*(x-0.6495)+0.125};
+          \addplot[uniVerde, thin, domain=0:0.7071] {-(x-0.3536)+0.3536};
+        \end{axis}
+      \end{tikzpicture}
+
+      \small Tangentes (verde): segmentos de longitud $1$ entre los ejes.
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\begin{frame}{La cardioide}
+  \begin{columns}
+    \begin{column}{0.55\textwidth}
+      \begin{ejemplo}[3]
+        Un círculo de radio $1$ rueda alrededor de otro igual; un punto de su borde describe
+        \[ x=2\cos t-\cos2t,\qquad y=2\sen t-\sen2t. \]
+        \begin{itemize}
+          \item $x'=-2\sen t+2\sen2t$, \ $y'=2\cos t-2\cos2t$.
+          \item En $t=0$: $x'=y'=0$: \resaltar{cúspide} en $(1,0)$.
+          \item Tangente horizontal: $\cos t=\cos2t$, $t=\pm\frac{2\pi}3$: puntos $\left(-\frac12,\pm\frac{3\sqrt3}{2}\right)$.
+        \end{itemize}
+      \end{ejemplo}
+      \small (La semana próxima la veremos en polares: $r=2(1-\cos\theta)$, trasladada.)
+    \end{column}
+    \begin{column}{0.45\textwidth}
+      \centering
+      \begin{tikzpicture}
+        \begin{axis}[bma, xmin=-3.5, xmax=1.8, ymin=-2.8, ymax=2.8, axis equal image, width=6cm, height=6.3cm, xtick={-3,1}, ytick={-2.598,2.598}, yticklabels={,}, samples=200]
+          \addplot[curva2, domain=0:360] ({2*cos(x)-cos(2*x)},{2*sin(x)-sin(2*x)});
+          \addplot[only marks, mark=*, black] coordinates {(1,0) (-0.5,2.598) (-0.5,-2.598)};
+          \addplot[uniVerde, thin, domain=-1.5:0.5] {2.598};
+          \addplot[uniVerde, thin, domain=-1.5:0.5] {-2.598};
+        \end{axis}
+      \end{tikzpicture}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\section{Autointersecciones}
+
+\begin{frame}{El folium de Descartes}
+  \begin{columns}
+    \begin{column}{0.55\textwidth}
+      \begin{ejemplo}[4]
+        La curva implícita $x^3+y^3=3xy$ se parametriza con $y=tx$:
+        \[ x=\frac{3t}{1+t^3},\qquad y=\frac{3t^2}{1+t^3},\quad t\neq-1. \]
+        \begin{itemize}
+          \item $t=0$ y $t\to\infty$ dan el origen: la curva pasa \textbf{dos veces} por $(0,0)$ (lazo).
+          \item Si $t\to-1$: $x,y\to\pm\infty$ con $x+y\to-1$: \resaltar{asíntota} $x+y+1=0$.
+          \item Tangente horizontal: $y'(t)=\dfrac{3t(2-t^3)}{(1+t^3)^2}=0$, $t=\sqrt[3]2$.
+        \end{itemize}
+      \end{ejemplo}
+    \end{column}
+    \begin{column}{0.45\textwidth}
+      \centering
+      \begin{tikzpicture}
+        \begin{axis}[bma, xmin=-3, xmax=2.5, ymin=-3, ymax=2.5, axis equal image, width=6.3cm, height=6.3cm, xtick={1}, ytick={1}]
+          \addplot[curva, domain=-0.6:12, samples=400] ({3*x/(1+x^3)},{3*x^2/(1+x^3)});
+          \addplot[curva, domain=-12:-1.5, samples=200] ({3*x/(1+x^3)},{3*x^2/(1+x^3)});
+          \addplot[curva2, dashed, domain=-3:2] {-1-x};
+        \end{axis}
+      \end{tikzpicture}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\begin{frame}{Curvas de Lissajous}
+  \begin{columns}
+    \begin{column}{0.55\textwidth}
+      \begin{ejemplo}[5]
+        $x=\sen t$, \ $y=\sen2t$ (cociente de frecuencias $1:2$), \ $t\in[0,2\pi]$.
+        \begin{itemize}
+          \item Pasa por el origen en $t=0$ y $t=\pi$: \resaltar{autointersección}.
+          \item $\dfrac{dy}{dx}=\dfrac{2\cos2t}{\cos t}$: en $t=0$, pendiente $2$; en $t=\pi$, pendiente $-2$. \ Dos tangentes: $y=\pm2x$.
+          \item Horizontal: $\cos2t=0$, $t=\frac\pi4,\frac{3\pi}4,\dots$; \ vertical: $\cos t=0$, $t=\frac\pi2,\frac{3\pi}2$.
+          \item Cartesiana: $y^2=4x^2(1-x^2)$.
+        \end{itemize}
+      \end{ejemplo}
+      \small En el laboratorio, las figuras de Lissajous en un osciloscopio permiten comparar frecuencias y fases de dos señales.
+    \end{column}
+    \begin{column}{0.45\textwidth}
+      \centering
+      \begin{tikzpicture}
+        \begin{axis}[bma, xmin=-1.4, xmax=1.4, ymin=-1.3, ymax=1.3, axis equal image, width=6.3cm, height=6cm, xtick={-1,1}, ytick={-1,1}, samples=300]
+          \addplot[uniVerde, very thick, domain=0:360] ({sin(x)},{sin(2*x)});
+          \addplot[curva2, thin, domain=-0.6:0.6] {2*x};
+          \addplot[curva2, thin, domain=-0.6:0.6] {-2*x};
+        \end{axis}
+      \end{tikzpicture}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\section{Movimiento en el plano}
+
+\begin{frame}{Velocidad, rapidez y aceleración}
+  \begin{columns}
+    \begin{column}{0.55\textwidth}
+      Para $\mathbf r(t)=(x(t),y(t))$:
+      \[ \mathbf v=(x',y'),\quad|\mathbf v|=\sqrt{x'^2+y'^2},\quad\mathbf a=(x'',y''). \]
+      \begin{ejemplo}[6: movimiento elíptico]
+        $\mathbf r(t)=(3\cos t,\ 2\sen t)$:
+        \begin{itemize}
+          \item $\mathbf v=(-3\sen t,\ 2\cos t)$, \ $|\mathbf v|=\sqrt{9\sen^2t+4\cos^2t}$.
+          \item Rapidez máxima $3$ (en $(0,\pm2)$); mínima $2$ (en $(\pm3,0)$).
+          \item $\mathbf a=(-3\cos t,-2\sen t)=-\mathbf r$: siempre apunta al \textbf{centro} (fuerza tipo resorte, oscilador 2D).
+        \end{itemize}
+      \end{ejemplo}
+    \end{column}
+    \begin{column}{0.45\textwidth}
+      \centering
+      \begin{tikzpicture}[scale=0.85]
+        \draw[thick, uniAzul] (0,0) ellipse (3 and 2);
+        \draw[->] (-3.4,0) -- (3.5,0); \draw[->] (0,-2.4) -- (0,2.5);
+        \foreach \t in {30,100,200,290} {
+          \draw[->, uniGranate, thick] ({3*cos(\t)},{2*sin(\t)}) -- ++({-0.45*3*sin(\t)},{0.45*2*cos(\t)});
+          \draw[->, uniVerde, thick] ({3*cos(\t)},{2*sin(\t)}) -- ++({-0.3*3*cos(\t)},{-0.3*2*sin(\t)});
+        }
+        \node[uniGranate] at (2.6,2.1) {\scriptsize $\mathbf v$};
+        \node[uniVerde] at (1.5,0.5) {\scriptsize $\mathbf a$};
+      \end{tikzpicture}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\section{Ejercicios}
+
+\begin{frame}{Ejercicios propuestos}
+  \small
+  \begin{ejercicio}
+    \begin{enumerate}
+      \item Para la cicloide $x=2(t-\sen t)$, $y=2(1-\cos t)$, halle la tangente en $t=\frac\pi3$ y la rapidez del punto en ese instante.
+      \item Pruebe la propiedad de la astroide: el segmento de tangente entre los ejes mide $1$.
+      \item Halle los puntos de tangente horizontal y vertical de la curva de Lissajous $x=\sen2t$, $y=\sen3t$, y esbócela.
+      \item Pruebe que la curva $x=t^2-1$, $y=t^3-t$ se corta a sí misma; halle el punto y las dos tangentes.
+      \item Para la epicicloide $x=3\cos t-\cos3t$, $y=3\sen t-\sen3t$: halle las cúspides y esboce.
+      \item Una partícula se mueve según $\mathbf r(t)=(t-\sen t,\ 1-\cos t)$. Halle $\mathbf v$, $\mathbf a$ y pruebe que $|\mathbf a|$ es constante.
+      \item Pruebe que el folium $x=\frac{3t}{1+t^3}$, $y=\frac{3t^2}{1+t^3}$ satisface $x^3+y^3=3xy$ y que es simétrico respecto de $y=x$
+        (compare $t$ y $\frac1t$).
+    \end{enumerate}
+  \end{ejercicio}
+\end{frame}
+
+\begin{frame}{Resumen}
+  \begin{itemize}
+    \item \resaltar{Cúspides}: $x'=y'=0$; analizar $\lim\frac{dy}{dx}$ (cicloide, astroide, cardioide).
+    \item \resaltar{Autointersecciones}: $t_1\neq t_2$ con el mismo punto; puede haber dos tangentes (folium, Lissajous).
+    \item Una parametrización puede revelar asíntotas ($t\to$ valores donde $x,y\to\infty$).
+    \item Movimiento: $\mathbf v=(x',y')$ tangente, rapidez $|\mathbf v|$, aceleración $(x'',y'')$.
+  \end{itemize}
+  \vspace{3mm}
+  \textbf{Próxima sesión:} coordenadas polares: gráfica de una ecuación polar y simetrías.
+\end{frame}
+
+\end{document}

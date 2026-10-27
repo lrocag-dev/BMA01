@@ -1,0 +1,271 @@
+\documentclass[10pt,aspectratio=169]{beamer}
+\usepackage{bma01}
+
+\title[Coordenadas polares]{Coordenadas polares}
+\subtitle{Gráfica polar de una ecuación polar. Simetrías\\[2pt]\small Semana 14 -- Sesión 2}
+
+\begin{document}
+
+\begin{frame}
+  \titlepage
+\end{frame}
+
+\begin{frame}{Objetivos de la sesión}
+  \begin{enumerate}
+    \item Representar puntos en \resaltar{coordenadas polares} y convertir entre polares y cartesianas.
+    \item Graficar ecuaciones polares $r=f(\theta)$ mediante tablas y la gráfica cartesiana $r$ vs.\ $\theta$.
+    \item Aplicar los \resaltar{criterios de simetría} para simplificar el trazado.
+    \item Calcular pendientes de tangentes a curvas polares y tangentes en el polo.
+  \end{enumerate}
+  \begin{block}{Plan (2 horas)}
+    \begin{tabular}{ll}
+      0:00 -- 0:25 & Coordenadas polares; conversión; representaciones múltiples\\
+      0:25 -- 0:50 & Ecuaciones polares sencillas: circunferencias y rectas\\
+      0:50 -- 1:20 & Simetrías y trazado (cardioide, rosa)\\
+      1:20 -- 1:45 & Tangentes a curvas polares\\
+      1:45 -- 2:00 & Ejercicios y resumen
+    \end{tabular}
+  \end{block}
+\end{frame}
+
+\section{Coordenadas polares}
+
+\begin{frame}{Coordenadas polares}
+  \begin{columns}
+    \begin{column}{0.55\textwidth}
+      Un punto $P$ se ubica con su distancia $r$ al \resaltar{polo} $O$ y el ángulo $\theta$ desde el \resaltar{eje polar} (semieje $x$ positivo):
+      \[ x=r\cos\theta,\qquad y=r\sen\theta, \]
+      \[ r^2=x^2+y^2,\qquad \tan\theta=\frac yx\ (x\neq0). \]
+      \begin{observacion}[representaciones múltiples]
+        $(r,\theta)$, \ $(r,\theta+2k\pi)$ \ y \ $(-r,\theta+\pi)$ representan el \textbf{mismo} punto. Con $r<0$ se avanza en la dirección opuesta.
+        El polo es $(0,\theta)$ para cualquier $\theta$.
+      \end{observacion}
+    \end{column}
+    \begin{column}{0.45\textwidth}
+      \centering
+      \begin{tikzpicture}[scale=1.4]
+        \draw[->] (-0.5,0) -- (2.6,0) node[right] {\scriptsize $x$};
+        \draw[->] (0,-0.5) -- (0,2.2) node[above] {\scriptsize $y$};
+        \coordinate (P) at (35:2.2);
+        \draw[thick, uniAzul] (0,0) -- (P) node[midway, above left] {$r$};
+        \fill[uniGranate] (P) circle (1.5pt) node[above right] {$P(r,\theta)$};
+        \draw[dashed] (P) -- (P|-0,0) node[below] {\scriptsize $x$};
+        \draw[dashed] (P) -- (0,1.262) node[left] {\scriptsize $y$};
+        \draw (0.6,0) arc (0:35:0.6); \node at (0.8,0.25) {\scriptsize $\theta$};
+        \fill (0,0) circle (1pt) node[below left] {\scriptsize $O$};
+      \end{tikzpicture}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\begin{frame}{Conversiones}
+  \begin{ejemplo}[1: polar $\to$ cartesiana]
+    $\left(2,\frac{\pi}{3}\right)$: \ $x=2\cos\frac\pi3=1$, \ $y=2\sen\frac\pi3=\sqrt3$. \qquad
+    $\left(-2,\frac\pi4\right)$: \ $(-\sqrt2,-\sqrt2)$.
+  \end{ejemplo}
+  \begin{ejemplo}[2: cartesiana $\to$ polar]
+    $(-1,1)$: \ $r=\sqrt2$; \ $\tan\theta=-1$ con el punto en el II cuadrante: $\theta=\frac{3\pi}{4}$. \ Punto $\left(\sqrt2,\frac{3\pi}4\right)$.
+    \ \alert{Cuidado} con el cuadrante: $\arctan(-1)=-\frac\pi4$ no es correcto aquí.
+  \end{ejemplo}
+  \begin{ejemplo}[3: ecuaciones]
+    \begin{itemize}
+      \item $x^2+y^2=9\ \iff\ r=3$.
+      \item $y=x\ \iff\ \theta=\frac\pi4$ (incluyendo $r<0$).
+      \item $x^2+y^2=4y\ \iff\ r^2=4r\sen\theta\ \iff\ r=4\sen\theta$.
+      \item $r=\dfrac{2}{1-\cos\theta}\iff r=2+r\cos\theta\iff\sqrt{x^2+y^2}=2+x\iff y^2=4x+4$ (parábola).
+    \end{itemize}
+  \end{ejemplo}
+\end{frame}
+
+\section{Ecuaciones polares sencillas}
+
+\begin{frame}{Circunferencias y rectas}
+  \begin{columns}
+    \begin{column}{0.5\textwidth}
+      \renewcommand{\arraystretch}{1.4}
+      \begin{tabular}{l|l}
+        \textbf{Polar} & \textbf{Curva}\\ \hline
+        $r=a$ & circunferencia, centro $O$, radio $|a|$\\
+        $\theta=\alpha$ & recta por el polo\\
+        $r=2a\cos\theta$ & circunferencia centro $(a,0)$, radio $|a|$\\
+        $r=2a\sen\theta$ & circunferencia centro $(0,a)$, radio $|a|$\\
+        $r=a\sec\theta$ & recta vertical $x=a$\\
+        $r=a\csc\theta$ & recta horizontal $y=a$
+      \end{tabular}
+      \medskip
+
+      \small Prueba de la tercera: $r^2=2ar\cos\theta\iff x^2+y^2=2ax\iff(x-a)^2+y^2=a^2$.
+    \end{column}
+    \begin{column}{0.5\textwidth}
+      \centering
+      \begin{tikzpicture}
+        \begin{axis}[bma, xmin=-3.3, xmax=3.3, ymin=-3.3, ymax=3.3, axis equal image, width=6.5cm, height=6.5cm, xtick={-2,2}, ytick={-2,2}, samples=150]
+          \addplot[curva, domain=0:360] ({2*cos(x)},{2*sin(x)});
+          \addplot[curva2, domain=0:180] ({2*cos(x)*cos(x)},{2*cos(x)*sin(x)});
+          \addplot[uniVerde, very thick, domain=0:180] ({3*sin(x)*cos(x)},{3*sin(x)*sin(x)});
+          \addplot[uniNaranja, very thick, domain=-3.3:3.3] {x};
+          \node[uniAzul] at (axis cs:-1.9,-2.3) {\scriptsize $r=2$};
+          \node[uniGranate] at (axis cs:2.6,-0.6) {\scriptsize $r=2\cos\theta$};
+          \node[uniVerde] at (axis cs:-1.7,2.6) {\scriptsize $r=3\sen\theta$};
+          \node[uniNaranja] at (axis cs:2.6,3.0) {\scriptsize $\theta=\frac\pi4$};
+        \end{axis}
+      \end{tikzpicture}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\section{Simetrías y trazado}
+
+\begin{frame}{Criterios de simetría}
+  \begin{teorema}[criterios suficientes]
+    La gráfica de $r=f(\theta)$ es simétrica respecto de:
+    \begin{itemize}
+      \item el \resaltar{eje polar} ($x$) si la ecuación no cambia al sustituir $\theta\to-\theta$ \ (p.\,ej.\ $f$ es función de $\cos\theta$);
+      \item la recta $\theta=\frac\pi2$ ($y$) si no cambia al sustituir $\theta\to\pi-\theta$ \ (p.\,ej.\ función de $\sen\theta$);
+      \item el \resaltar{polo} si no cambia al sustituir $r\to-r$ ó $\theta\to\theta+\pi$.
+    \end{itemize}
+  \end{teorema}
+  \begin{center}
+    \begin{tikzpicture}[scale=0.85]
+      \begin{scope}
+        \draw[->] (-1.5,0) -- (1.6,0); \draw[->] (0,-1.3) -- (0,1.4);
+        \fill[uniAzul] (40:1.2) circle (2pt); \fill[uniGranate] (-40:1.2) circle (2pt);
+        \draw[dashed] (40:1.2) -- (-40:1.2);
+        \node at (0,-1.7) {\scriptsize $(r,\theta)\leftrightarrow(r,-\theta)$};
+      \end{scope}
+      \begin{scope}[xshift=4.5cm]
+        \draw[->] (-1.5,0) -- (1.6,0); \draw[->] (0,-1.3) -- (0,1.4);
+        \fill[uniAzul] (40:1.2) circle (2pt); \fill[uniGranate] (140:1.2) circle (2pt);
+        \draw[dashed] (40:1.2) -- (140:1.2);
+        \node at (0,-1.7) {\scriptsize $(r,\theta)\leftrightarrow(r,\pi-\theta)$};
+      \end{scope}
+      \begin{scope}[xshift=9cm]
+        \draw[->] (-1.5,0) -- (1.6,0); \draw[->] (0,-1.3) -- (0,1.4);
+        \fill[uniAzul] (40:1.2) circle (2pt); \fill[uniGranate] (220:1.2) circle (2pt);
+        \draw[dashed] (40:1.2) -- (220:1.2);
+        \node at (0,-1.7) {\scriptsize $(r,\theta)\leftrightarrow(-r,\theta)$};
+      \end{scope}
+    \end{tikzpicture}
+  \end{center}
+  \small Son condiciones \emph{suficientes}: una curva puede ser simétrica sin que la prueba lo detecte (por las representaciones múltiples).
+\end{frame}
+
+\begin{frame}{Ejemplo: la cardioide $r=1+\cos\theta$}
+  \begin{columns}
+    \begin{column}{0.5\textwidth}
+      \begin{itemize}
+        \item Simétrica respecto del eje polar ($\cos(-\theta)=\cos\theta$): basta $\theta\in[0,\pi]$.
+        \item Tabla:
+      \end{itemize}
+      \begin{center}
+        \small
+        \begin{tabular}{c|ccccc}
+          $\theta$ & $0$ & $\frac\pi3$ & $\frac\pi2$ & $\frac{2\pi}3$ & $\pi$\\ \hline
+          $r$ & $2$ & $1.5$ & $1$ & $0.5$ & $0$
+        \end{tabular}
+      \end{center}
+      \begin{itemize}
+        \item $r$ decrece de $2$ a $0$: la curva se acerca al polo, al que llega en $\theta=\pi$.
+      \end{itemize}
+      \centering
+      \begin{tikzpicture}
+        \begin{axis}[bma, xlabel={$\theta$}, ylabel={$r$}, xmin=0, xmax=6.6, ymin=0, ymax=2.3, width=6cm, height=3.3cm, xtick={3.1416,6.2832}, xticklabels={$\pi$,$2\pi$}, ytick={1,2}, samples=100, domain=0:6.2832]
+          \addplot[uniVerde, very thick] {1+cos(deg(x))};
+        \end{axis}
+      \end{tikzpicture}\\
+      \small Gráfica cartesiana auxiliar $r$ vs.\ $\theta$.
+    \end{column}
+    \begin{column}{0.5\textwidth}
+      \centering
+      \begin{tikzpicture}
+        \begin{axis}[bma, xmin=-0.7, xmax=2.4, ymin=-1.5, ymax=1.5, axis equal image, width=6.4cm, height=6.2cm, xtick={2}, ytick={-1,1}, samples=200]
+          \addplot[curva2, domain=0:360] ({(1+cos(x))*cos(x)},{(1+cos(x))*sin(x)});
+          \addplot[only marks, mark=*, uniAzul] coordinates {(2,0) (0.75,1.299) (0,1) (-0.25,0.433)};
+          \draw[gray, dashed] (axis cs:0,0) -- (axis cs:0.75,1.299);
+          \draw[gray, dashed] (axis cs:0,0) -- (axis cs:-0.25,0.433);
+        \end{axis}
+      \end{tikzpicture}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\begin{frame}{Ejemplo: la rosa de cuatro pétalos $r=\cos2\theta$}
+  \begin{columns}
+    \begin{column}{0.5\textwidth}
+      \begin{itemize}
+        \item Simetrías: eje polar ($\cos(-2\theta)=\cos2\theta$), eje $y$ ($\cos(2\pi-2\theta)=\cos2\theta$) y polo.
+        \item $r=0$ en $\theta=\frac\pi4,\frac{3\pi}{4},\dots$: la curva pasa por el polo.
+        \item En $\left(\frac\pi4,\frac{3\pi}4\right)$, $r<0$: ese pétalo se dibuja en la dirección \textbf{opuesta} (hacia abajo).
+      \end{itemize}
+      \centering
+      \begin{tikzpicture}
+        \begin{axis}[bma, xlabel={$\theta$}, ylabel={$r$}, xmin=0, xmax=6.6, ymin=-1.3, ymax=1.3, width=6cm, height=3.3cm, xtick={0.7854,2.3562,3.1416}, xticklabels={$\frac\pi4$,$\frac{3\pi}4$,$\pi$}, ytick={-1,1}, samples=200, domain=0:6.2832]
+          \addplot[uniVerde, very thick] {cos(deg(2*x))};
+        \end{axis}
+      \end{tikzpicture}
+    \end{column}
+    \begin{column}{0.5\textwidth}
+      \centering
+      \begin{tikzpicture}
+        \begin{axis}[bma, xmin=-1.2, xmax=1.2, ymin=-1.2, ymax=1.2, axis equal image, width=6.2cm, height=6.2cm, xtick={1}, ytick={1}, samples=300]
+          \addplot[curva2, domain=0:360] ({cos(2*x)*cos(x)},{cos(2*x)*sin(x)});
+          \addplot[fill=uniAzul!25, draw=uniAzul, thick, domain=45:135, samples=60] ({cos(2*x)*cos(x)},{cos(2*x)*sin(x)});
+          \draw[dashed, gray] (axis cs:-1,-1) -- (axis cs:1,1);
+          \draw[dashed, gray] (axis cs:-1,1) -- (axis cs:1,-1);
+        \end{axis}
+      \end{tikzpicture}
+
+      \small Azul: pétalo con $\theta\in\left(\frac\pi4,\frac{3\pi}4\right)$ y $r<0$ (aparece abajo).
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\section{Tangentes a curvas polares}
+
+\begin{frame}{Pendiente de la tangente}
+  Una curva $r=f(\theta)$ es paramétrica con parámetro $\theta$: \ $x=f(\theta)\cos\theta$, \ $y=f(\theta)\sen\theta$.
+  \begin{teorema}
+    \[ \frac{dy}{dx}=\frac{dy/d\theta}{dx/d\theta}=\frac{f'(\theta)\sen\theta+f(\theta)\cos\theta}{f'(\theta)\cos\theta-f(\theta)\sen\theta}. \]
+  \end{teorema}
+  \begin{proposicion}[tangentes en el polo]
+    Si $f(\theta_0)=0$ y $f'(\theta_0)\neq0$, la recta $\theta=\theta_0$ es tangente a la curva en el polo \ (pues $\frac{dy}{dx}=\tan\theta_0$).
+  \end{proposicion}
+  \begin{ejemplo}[4]
+    Cardioide $r=1+\cos\theta$: \ $\dfrac{dy}{dx}=\dfrac{-\sen^2\theta+(1+\cos\theta)\cos\theta}{-\sen\theta\cos\theta-(1+\cos\theta)\sen\theta}=\dfrac{\cos\theta+\cos2\theta}{-\sen\theta-\sen2\theta}$.
+    \begin{itemize}
+      \item Horizontal: $\cos2\theta+\cos\theta=0\Rightarrow\cos\theta=\frac12$ ó $\cos\theta=-1$: \ $\theta=\pm\frac\pi3$ (en $\theta=\pi$, ambas se anulan: cúspide).
+      \item En $\theta=\frac\pi2$: $\frac{dy}{dx}=\frac{-1}{-1}=1$.
+    \end{itemize}
+  \end{ejemplo}
+\end{frame}
+
+\section{Ejercicios}
+
+\begin{frame}{Ejercicios propuestos}
+  \small
+  \begin{ejercicio}
+    \begin{enumerate}
+      \item Convierta a cartesianas: $\left(4,-\frac{2\pi}3\right)$, $\left(-3,\frac{5\pi}{6}\right)$; y a polares: $(2,-2)$, $(-\sqrt3,1)$, $(0,-5)$.
+      \item Convierta la ecuación: (a) $r=6\cos\theta-2\sen\theta$ a cartesiana; \ (b) $x^2-y^2=1$ a polar; \ (c) $r^2=\sen2\theta$ a cartesiana.
+      \item Analice simetrías y grafique: (a) $r=2-2\sen\theta$, \ (b) $r=\sen3\theta$, \ (c) $r=1+2\cos\theta$, \ (d) $r=\theta$ ($\theta\ge0$).
+      \item Halle la pendiente de la tangente: (a) $r=2\sen\theta$ en $\theta=\frac\pi6$, \ (b) $r=\theta$ en $\theta=\frac\pi2$, \ (c) $r=\cos2\theta$ en $\theta=\frac\pi8$.
+      \item Halle las tangentes en el polo de $r=\sen3\theta$.
+      \item Halle los puntos con tangente horizontal y vertical de $r=2\cos\theta$. ¿Coinciden con lo esperado para una circunferencia?
+      \item Muestre con un ejemplo que $(r,\theta)$ satisface $r=f(\theta)$ pero otra representación del mismo punto no la satisface (p.\,ej.\ $r=\theta$).
+    \end{enumerate}
+  \end{ejercicio}
+\end{frame}
+
+\begin{frame}{Resumen}
+  \begin{itemize}
+    \item $x=r\cos\theta$, $y=r\sen\theta$; \ $r^2=x^2+y^2$, $\tan\theta=\frac yx$ (cuidar el cuadrante).
+    \item Un punto tiene infinitas representaciones polares: $(r,\theta+2k\pi)$, $(-r,\theta+\pi)$.
+    \item $r=a$, $r=2a\cos\theta$, $r=2a\sen\theta$: circunferencias; $\theta=\alpha$: rectas por el polo.
+    \item Simetrías: $\theta\to-\theta$ (eje polar), $\theta\to\pi-\theta$ (eje $y$), $r\to-r$ (polo). Graficar $r$ vs.\ $\theta$ ayuda.
+    \item $\frac{dy}{dx}=\frac{r'\sen\theta+r\cos\theta}{r'\cos\theta-r\sen\theta}$; en el polo, tangente $\theta=\theta_0$.
+  \end{itemize}
+  \vspace{3mm}
+  \textbf{Próxima sesión:} gráficas polares especiales (caracoles, rosas, lemniscatas, espirales, cónicas).
+\end{frame}
+
+\end{document}

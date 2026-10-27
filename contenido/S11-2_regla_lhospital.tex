@@ -1,0 +1,208 @@
+\documentclass[10pt,aspectratio=169]{beamer}
+\usepackage{bma01}
+
+\title[Regla de L'Hospital]{La regla de L'Hospital}
+\subtitle{Formas indeterminadas $\frac00$ y $\frac\infty\infty$\\[2pt]\small Semana 11 -- Sesión 2}
+
+\begin{document}
+
+\begin{frame}
+  \titlepage
+\end{frame}
+
+\begin{frame}{Objetivos de la sesión}
+  \begin{enumerate}
+    \item Enunciar la \resaltar{regla de L'Hospital} y justificarla con el TVM de Cauchy.
+    \item Aplicarla a formas $\frac00$ y $\frac\infty\infty$, incluso repetidamente.
+    \item Comparar órdenes de crecimiento: logaritmos, potencias, exponenciales.
+    \item Reconocer los errores frecuentes y los casos en que la regla no ayuda.
+  \end{enumerate}
+  \begin{block}{Plan (2 horas)}
+    \begin{tabular}{ll}
+      0:00 -- 0:15 & Motivación: límites que no se resuelven algebraicamente\\
+      0:15 -- 0:40 & Enunciado e idea de la prueba\\
+      0:40 -- 1:15 & Ejemplos $\frac00$ y $\frac\infty\infty$; aplicación repetida\\
+      1:15 -- 1:45 & Jerarquía de crecimiento. Errores frecuentes\\
+      1:45 -- 2:00 & Ejercicios y resumen
+    \end{tabular}
+  \end{block}
+\end{frame}
+
+\section{Motivación y enunciado}
+
+\begin{frame}{Motivación}
+  \begin{columns}
+    \begin{column}{0.55\textwidth}
+      ¿Cómo calcular $\displaystyle\lim_{x\to0}\frac{e^x-1}{x}$ \ o \ $\displaystyle\lim_{x\to\infty}\frac{\ln x}{\sqrt x}$?
+      \medskip
+
+      Factorizar o racionalizar no sirve. Pero cerca de $a$, si $f(a)=g(a)=0$, las linealizaciones dan
+      \[ \frac{f(x)}{g(x)}\approx\frac{f'(a)(x-a)}{g'(a)(x-a)}=\frac{f'(a)}{g'(a)}. \]
+      \begin{idea}
+        El cociente de dos funciones que se anulan se comporta como el cociente de sus \textbf{pendientes}.
+      \end{idea}
+    \end{column}
+    \begin{column}{0.45\textwidth}
+      \centering
+      \begin{tikzpicture}
+        \begin{axis}[bma, xmin=-0.5, xmax=1.3, ymin=-0.6, ymax=2, width=6.3cm, height=5.5cm, xtick=\empty, ytick=\empty, samples=100, domain=-0.4:1.2]
+          \addplot[curva] {exp(x)-1};
+          \addplot[curva2] {x};
+          \addplot[curva, thin, dashed, domain=-0.4:1.2] {x};
+          \node[uniAzul] at (axis cs:1.05,1.95) {\scriptsize $e^x-1$};
+          \node[uniGranate] at (axis cs:1.15,0.9) {\scriptsize $x$};
+        \end{axis}
+      \end{tikzpicture}
+
+      \small Ambas se anulan en $0$ con la misma pendiente: el cociente $\to\frac11=1$.
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\begin{frame}{La regla de L'Hospital}
+  \begin{teorema}[L'Hospital]
+    Sean $f,g$ derivables cerca de $a$ (salvo quizá en $a$), con $g'(x)\neq0$. Supongamos que
+    \[ \lim_{x\to a}f(x)=\lim_{x\to a}g(x)=0\qquad\text{o}\qquad\lim_{x\to a}f(x)=\pm\infty,\ \lim_{x\to a}g(x)=\pm\infty. \]
+    Si $\displaystyle\lim_{x\to a}\frac{f'(x)}{g'(x)}=L$ (finito o $\pm\infty$), entonces
+    \[ \lim_{x\to a}\frac{f(x)}{g(x)}=L. \]
+    Vale también para $x\to a^\pm$ y $x\to\pm\infty$.
+  \end{teorema}
+  \textbf{Idea de la prueba} ($\frac00$, $x\to a^+$). Definiendo $f(a)=g(a)=0$, por el TVM de Cauchy en $[a,x]$:
+  \[ \frac{f(x)}{g(x)}=\frac{f(x)-f(a)}{g(x)-g(a)}=\frac{f'(c_x)}{g'(c_x)},\quad a<c_x<x. \]
+  Si $x\to a^+$, también $c_x\to a^+$, y el cociente tiende a $L$. \ $\blacksquare$
+\end{frame}
+
+\section{Ejemplos}
+
+\begin{frame}{Forma $\frac00$}
+  \begin{ejemplo}[1]
+    $\displaystyle\lim_{x\to0}\frac{e^x-1}{x}\overset{0/0}{=}\lim_{x\to0}\frac{e^x}{1}=1$.
+  \end{ejemplo}
+  \begin{ejemplo}[2: aplicación repetida]
+    $\displaystyle\lim_{x\to0}\frac{e^x-1-x}{x^2}\overset{0/0}{=}\lim_{x\to0}\frac{e^x-1}{2x}\overset{0/0}{=}\lim_{x\to0}\frac{e^x}{2}=\frac12$.
+  \end{ejemplo}
+  \begin{ejemplo}[3]
+    $\displaystyle\lim_{x\to0}\frac{x-\sen x}{x^3}\overset{0/0}{=}\lim\frac{1-\cos x}{3x^2}\overset{0/0}{=}\lim\frac{\sen x}{6x}=\frac16$.
+  \end{ejemplo}
+  \begin{ejemplo}[4]
+    $\displaystyle\lim_{x\to1}\frac{\ln x}{x^2-1}\overset{0/0}{=}\lim_{x\to1}\frac{1/x}{2x}=\frac12$. \qquad
+    $\displaystyle\lim_{x\to0}\frac{\tan x-x}{x-\sen x}\overset{0/0}{=}\lim\frac{\sec^2x-1}{1-\cos x}=\lim\frac{1+\cos x}{\cos^2x}=2$.
+  \end{ejemplo}
+\end{frame}
+
+\begin{frame}{Forma $\frac\infty\infty$}
+  \begin{ejemplo}[5]
+    $\displaystyle\lim_{x\to\infty}\frac{\ln x}{\sqrt x}\overset{\infty/\infty}{=}\lim_{x\to\infty}\frac{1/x}{\frac{1}{2\sqrt x}}=\lim_{x\to\infty}\frac{2}{\sqrt x}=0$.
+  \end{ejemplo}
+  \begin{ejemplo}[6]
+    $\displaystyle\lim_{x\to\infty}\frac{x^3}{e^x}\overset{\infty/\infty}{=}\lim\frac{3x^2}{e^x}=\lim\frac{6x}{e^x}=\lim\frac{6}{e^x}=0$.
+  \end{ejemplo}
+  \begin{ejemplo}[7]
+    $\displaystyle\lim_{x\to0^+}\frac{\ln x}{\ctg x}\overset{\infty/\infty}{=}\lim_{x\to0^+}\frac{1/x}{-\csc^2x}=\lim_{x\to0^+}\left(-\frac{\sen x}{x}\cdot\sen x\right)=0$.
+  \end{ejemplo}
+  \begin{observacion}
+    A menudo conviene \textbf{simplificar} entre aplicaciones (como en el Ej.\,7), o reescribir antes de derivar.
+  \end{observacion}
+\end{frame}
+
+\begin{frame}{Jerarquía de crecimiento}
+  \begin{columns}
+    \begin{column}{0.55\textwidth}
+      \begin{teorema}
+        Para todo $p>0$ y $a>1$:
+        \[ \lim_{x\to\infty}\frac{\ln x}{x^p}=0,\qquad\lim_{x\to\infty}\frac{x^p}{a^x}=0. \]
+      \end{teorema}
+      \textbf{Prueba.} $\dfrac{\ln x}{x^p}\to\dfrac{1/x}{px^{p-1}}=\dfrac1{px^p}\to0$. Para $\frac{x^p}{a^x}$, aplicar L'Hospital $\lceil p\rceil$ veces.
+      \begin{idea}
+        \[ \ln x\ \ll\ x^p\ \ll\ a^x\ \ll\ x^x. \]
+        El logaritmo es más lento que cualquier potencia; la exponencial, más rápida que cualquier potencia.
+      \end{idea}
+    \end{column}
+    \begin{column}{0.45\textwidth}
+      \centering
+      \begin{tikzpicture}
+        \begin{axis}[bma, xmin=0, xmax=12, ymin=0, ymax=50, width=6.3cm, height=5.5cm, xtick={5,10}, ytick={20,40}, samples=100, domain=0.1:12]
+          \addplot[uniVerde, very thick] {5*ln(x)};
+          \addplot[curva] {x^1.5};
+          \addplot[curva2, domain=0:5.7] {exp(x/1.5)};
+          \node[uniVerde] at (axis cs:10.5,8.5) {\scriptsize $5\ln x$};
+          \node[uniAzul] at (axis cs:10.5,28) {\scriptsize $x^{3/2}$};
+          \node[uniGranate] at (axis cs:4.2,45) {\scriptsize $e^{2x/3}$};
+        \end{axis}
+      \end{tikzpicture}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\section{Cuidados}
+
+\begin{frame}{Errores frecuentes}
+  \begin{enumerate}
+    \item \textbf{No verificar la indeterminación.} \
+      $\displaystyle\lim_{x\to0}\frac{\cos x}{x+1}=1$, pero ``L'Hospital'' daría $\frac{-\sen0}{1}=0$. \ \alert{¡Incorrecto!}
+    \item \textbf{Derivar el cociente} en lugar de numerador y denominador por separado: se usa $\frac{f'}{g'}$, \alert{no} $\left(\frac fg\right)'$.
+    \item \textbf{Concluir que no existe} si $\lim\frac{f'}{g'}$ no existe: el teorema solo va en una dirección.
+      \[ \lim_{x\to\infty}\frac{x+\sen x}{x}=1,\quad\text{pero}\quad\frac{1+\cos x}{1}\ \text{no tiene límite.} \]
+    \item \textbf{Ciclos:} $\displaystyle\lim_{x\to\infty}\frac{\sqrt{x^2+1}}{x}\to\frac{x/\sqrt{x^2+1}}{1}\to\frac{\sqrt{x^2+1}}{x}\to\cdots$ \
+      Mejor: dividir por $x$: el límite es $1$.
+    \item \textbf{Usarla para probar $\frac{\sen x}{x}\to1$}: es circular, pues $(\sen x)'=\cos x$ se dedujo de ese límite.
+  \end{enumerate}
+\end{frame}
+
+\begin{frame}{L'Hospital y Taylor (adelanto)}
+  \begin{ejemplo}[8]
+    $\displaystyle\lim_{x\to0}\frac{\cos x-1+\frac{x^2}2}{x^4}$: requiere 4 aplicaciones:
+    \[ \overset{0/0}{=}\lim\frac{-\sen x+x}{4x^3}=\lim\frac{-\cos x+1}{12x^2}=\lim\frac{\sen x}{24x}=\frac1{24}. \]
+  \end{ejemplo}
+  \begin{idea}
+    Este resultado dice que $\cos x\approx1-\frac{x^2}2+\frac{x^4}{24}$ cerca de $0$: es el comienzo del \textbf{polinomio de Taylor}
+    (Semana 12). L'Hospital y Taylor están íntimamente ligados.
+  \end{idea}
+  \begin{ejemplo}[9: física, límite clásico]
+    La energía media de un oscilador cuántico, $\bar E=\dfrac{h\nu}{e^{h\nu/kT}-1}$. Cuando $T\to\infty$, con $u=\frac{h\nu}{kT}\to0$:
+    $\bar E=kT\dfrac{u}{e^u-1}\to kT\cdot1=kT$ \ (equipartición clásica).
+  \end{ejemplo}
+\end{frame}
+
+\section{Ejercicios}
+
+\begin{frame}{Ejercicios propuestos}
+  \small
+  \begin{ejercicio}
+    \begin{multicols}{2}
+    \begin{enumerate}
+      \item $\displaystyle\lim_{x\to0}\frac{\sen3x}{\tan5x}$
+      \item $\displaystyle\lim_{x\to0}\frac{e^{2x}-1-2x}{x^2}$
+      \item $\displaystyle\lim_{x\to0}\frac{\arctan x-x}{x^3}$
+      \item $\displaystyle\lim_{x\to\pi/2}\frac{1-\sen x}{\cos^2x}$
+      \item $\displaystyle\lim_{x\to1}\frac{x^a-1}{x^b-1}$
+      \item $\displaystyle\lim_{x\to\infty}\frac{(\ln x)^3}{x}$
+      \item $\displaystyle\lim_{x\to\infty}\frac{e^x+x}{e^x-x^2}$
+      \item $\displaystyle\lim_{x\to0}\frac{\senh x-\sen x}{x^3}$
+      \item $\displaystyle\lim_{x\to0^+}\frac{\ln(\sen x)}{\ln x}$
+      \item $\displaystyle\lim_{x\to0}\frac{\ln\cos x}{x^2}$
+    \end{enumerate}
+    \end{multicols}
+  \end{ejercicio}
+  \begin{ejercicio}[: análisis]
+    \begin{enumerate}
+      \setcounter{enumi}{10}
+      \item ¿Por qué no se puede aplicar L'Hospital a $\lim_{x\to0}\frac{x^2\sen(1/x)}{\sen x}$? Calcule el límite de otra forma.
+      \item Halle $a,b$ para que $\displaystyle\lim_{x\to0}\frac{\sen2x+ax+bx^3}{x^3}=0$.
+    \end{enumerate}
+  \end{ejercicio}
+\end{frame}
+
+\begin{frame}{Resumen}
+  \begin{itemize}
+    \item Si $\frac fg$ es $\frac00$ ó $\frac\infty\infty$ y $\frac{f'}{g'}\to L$, entonces $\frac fg\to L$.
+    \item Fundamento: TVM de Cauchy. Vale para límites laterales y al infinito.
+    \item Puede aplicarse varias veces; simplificar entre pasos.
+    \item $\ln x\ll x^p\ll a^x$ cuando $x\to\infty$.
+    \item Verificar siempre la indeterminación; derivar numerador y denominador por separado.
+  \end{itemize}
+  \vspace{3mm}
+  \textbf{Próxima sesión:} otras formas indeterminadas ($0\cdot\infty$, $\infty-\infty$, $1^\infty$, $0^0$, $\infty^0$).
+\end{frame}
+
+\end{document}

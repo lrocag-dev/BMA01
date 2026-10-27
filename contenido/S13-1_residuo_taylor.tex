@@ -17,14 +17,34 @@
     \item Comprender por qué el residuo determina \emph{dónde} sirve una aproximación.
     \item Aplicar el residuo a extremos locales (derivadas de orden superior) y a la irracionalidad de $e$.
   \end{enumerate}
-  \begin{block}{Plan (2 horas)}
+  \vspace{1mm}
+  {\small\textbf{Competencia 4 del sílabo:} Evalúa la aproximación con polinomios de Taylor y la utilidad de otros sistemas de referencia.}
+  \begin{block}{Plan (2 horas; incluye verificación previa de 5 min)}
     \begin{tabular}{ll}
       0:00 -- 0:25 & El residuo: forma de Lagrange e idea de la prueba\\
       0:25 -- 1:05 & Acotación del error: ejemplos numéricos\\
       1:05 -- 1:25 & ¿Dónde funciona la aproximación? ($\ln(1+x)$, $e^{-1/x^2}$)\\
       1:25 -- 1:45 & Aplicaciones: criterio de extremos, $e$ es irracional\\
-      1:45 -- 2:00 & Ejercicios y resumen
+      1:45 -- 2:00 & Actividad colaborativa, resumen y cierre metacognitivo
     \end{tabular}
+  \end{block}
+\end{frame}
+
+\begin{frame}{Aula invertida: preparación y verificación}
+  \small
+  \begin{previa}[antes de la sesión]
+    \begin{enumerate}
+      \item Lea la fórmula de Taylor con residuo de Lagrange.
+      \item Acote el error de aproximar $e^{0.5}$ con $P_3$ en $0$.
+      \item Pregunta guía: ¿qué dice el residuo sobre el error cometido?
+    \end{enumerate}
+  \end{previa}
+  \begin{block}{Verificación al inicio (5 min, en pares)}
+    \begin{enumerate}
+      \item Escriba el residuo de Lagrange $R_n$.
+      \item ¿Cómo se acota $|f^{(n+1)}(c)|$ en un intervalo?
+    \end{enumerate}
+    Los pares discuten y votan; el docente aclara solo lo que genera dudas y ajusta el ritmo de la sesión.
   \end{block}
 \end{frame}
 
@@ -227,6 +247,18 @@
   \end{idea}
 \end{frame}
 
+\begin{frame}{Actividad colaborativa: ¿Cuántos términos necesito?}
+  \small
+  \begin{activa}[Aprendizaje basado en investigación]
+    \textbf{(a)} ¿Cuántos términos de Maclaurin bastan para calcular $e$ con error $<10^{-5}$? \textbf{(b)} Calcule $\sen 0.5$ con error $<10^{-6}$. Justifique cada cota con el residuo de Lagrange y contraste con la calculadora. Redacte un breve \textbf{informe} con el método, las cotas y la conclusión.
+  \end{activa}
+  \begin{itemize}
+    \item \textbf{Organización:} equipos de 3 a 4 con roles rotativos (coordinador, redactor, verificador, portavoz); 12--15 minutos.
+    \item \textbf{Producto:} Informe breve con cotas justificadas y comparación con la calculadora.
+    \item \textbf{Retroalimentación:} el docente recorre los equipos, hace preguntas y no da la solución hasta la puesta en común.
+  \end{itemize}
+\end{frame}
+
 \section{Ejercicios}
 
 \begin{frame}{Ejercicios propuestos}
@@ -244,6 +276,26 @@
   \end{ejercicio}
 \end{frame}
 
+\begin{frame}{Metacognición y uso responsable de la IA}
+  \small
+  \begin{columns}[t]
+    \begin{column}{0.5\textwidth}
+      \begin{metacog}[cierre, 3 min]
+        \begin{enumerate}
+          \metacomun
+          \item ¿Puedo explicar con mis palabras por qué el residuo es la clave de la aproximación?
+        \end{enumerate}
+      \end{metacog}
+    \end{column}
+    \begin{column}{0.5\textwidth}
+      \begin{iabox}
+        Pida a una IA una cota de error para $e^{0.5}\approx P_3(0.5)$. Verifique que use la derivada correcta y el máximo en el intervalo adecuado.\\[2pt]
+        \textit{Regla:} primero intente usted; luego use la herramienta para contrastar, nunca para sustituir su razonamiento. Anote el cambio en su bitácora.
+      \end{iabox}
+    \end{column}
+  \end{columns}
+\end{frame}
+
 \begin{frame}{Resumen}
   \begin{itemize}
     \item $f(x)=T_n(x)+R_n(x)$, \ $R_n(x)=\dfrac{f^{(n+1)}(c)}{(n+1)!}(x-a)^{n+1}$ (Lagrange).
@@ -253,6 +305,19 @@
   \end{itemize}
   \vspace{3mm}
   \textbf{Próxima sesión:} curvas paramétricas: ecuaciones paramétricas y sus derivadas.
+\end{frame}
+
+
+\begin{frame}{Evaluación y trabajo posterior}
+  \small
+  \begin{evalbox}[Práctica del miércoles de la semana 13: PD8]
+    \textbf{Cobertura:} semana 13. \textbf{Naturaleza:} práctica dirigida en equipo, con retroalimentación inmediata.
+  \end{evalbox}
+  \begin{itemize}
+    \item \criterios
+    \item \declaracionia
+    \item \textbf{Portafolio:} guarde el producto de la actividad, la bitácora de metacognición y los ejercicios propuestos de esta sesión; son evidencia de progreso y base de la retroalimentación.
+  \end{itemize}
 \end{frame}
 
 \end{document}

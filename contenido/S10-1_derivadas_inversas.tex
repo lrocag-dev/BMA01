@@ -17,13 +17,33 @@
     \item Derivar las funciones hiperbólicas y sus inversas.
     \item Combinar estas derivadas con la regla de la cadena.
   \end{enumerate}
-  \begin{block}{Plan (2 horas)}
+  \vspace{1mm}
+  {\small\textbf{Competencia 3 del sílabo:} Aplica la derivada y su utilidad en problemas de ciencia e ingeniería.}
+  \begin{block}{Plan (2 horas; incluye verificación previa de 5 min)}
     \begin{tabular}{ll}
       0:00 -- 0:30 & Derivada de la inversa: teorema e interpretación geométrica\\
       0:30 -- 1:15 & Funciones trigonométricas inversas y sus derivadas\\
       1:15 -- 1:45 & Hiperbólicas y sus inversas\\
-      1:45 -- 2:00 & Ejercicios y resumen
+      1:45 -- 2:00 & Actividad colaborativa, resumen y cierre metacognitivo
     \end{tabular}
+  \end{block}
+\end{frame}
+
+\begin{frame}{Aula invertida: preparación y verificación}
+  \small
+  \begin{previa}[antes de la sesión]
+    \begin{enumerate}
+      \item Lea el teorema de la derivada de la función inversa.
+      \item Si $f(x)=x^3+x$, halle $(f^{-1})'(2)$.
+      \item Pregunta guía: ¿qué relación hay entre las gráficas de $f$ y $f^{-1}$ en los puntos correspondientes?
+    \end{enumerate}
+  \end{previa}
+  \begin{block}{Verificación al inicio (5 min, en pares)}
+    \begin{enumerate}
+      \item Escriba $(f^{-1})'(b)$ en términos de $f'$.
+      \item ¿Cuánto es $\frac{d}{dx}\arctan x$?
+    \end{enumerate}
+    Los pares discuten y votan; el docente aclara solo lo que genera dudas y ajusta el ritmo de la sesión.
   \end{block}
 \end{frame}
 
@@ -246,6 +266,18 @@
   \end{idea}
 \end{frame}
 
+\begin{frame}{Actividad colaborativa: Derivadas inversas, en equipo}
+  \small
+  \begin{activa}[Enseñanza entre pares (rompecabezas)]
+    Cada integrante deduce una derivada con el teorema de la inversa: $\arcsen$, $\arccos$, $\arctan$ o $\arcsenh$. Regresa a su grupo y \textbf{enseña} su deducción; juntos completan la tabla y resuelven una derivada compuesta que mezcla dos de ellas.
+  \end{activa}
+  \begin{itemize}
+    \item \textbf{Organización:} equipos de 3 a 4 con roles rotativos (coordinador, redactor, verificador, portavoz); 12--15 minutos.
+    \item \textbf{Producto:} Tabla con las deducciones y un ejemplo compuesto resuelto.
+    \item \textbf{Retroalimentación:} el docente recorre los equipos, hace preguntas y no da la solución hasta la puesta en común.
+  \end{itemize}
+\end{frame}
+
 \section{Ejercicios}
 
 \begin{frame}{Ejercicios propuestos}
@@ -265,6 +297,26 @@
   \end{ejercicio}
 \end{frame}
 
+\begin{frame}{Metacognición y uso responsable de la IA}
+  \small
+  \begin{columns}[t]
+    \begin{column}{0.5\textwidth}
+      \begin{metacog}[cierre, 3 min]
+        \begin{enumerate}
+          \metacomun
+          \item ¿Pude explicar mi deducción a otra persona? ¿Qué pregunta de mis compañeros me hizo dudar?
+        \end{enumerate}
+      \end{metacog}
+    \end{column}
+    \begin{column}{0.5\textwidth}
+      \begin{iabox}
+        Pida a una IA la derivada de $\arcsenh x$. Compruebe el resultado derivando $\senh(\arcsenh x)=x$ implícitamente.\\[2pt]
+        \textit{Regla:} primero intente usted; luego use la herramienta para contrastar, nunca para sustituir su razonamiento. Anote el cambio en su bitácora.
+      \end{iabox}
+    \end{column}
+  \end{columns}
+\end{frame}
+
 \begin{frame}{Resumen}
   \begin{itemize}
     \item $\left(f^{-1}\right)'(b)=\dfrac{1}{f'(a)}$ con $b=f(a)$: pendientes recíprocas.
@@ -274,6 +326,19 @@
   \end{itemize}
   \vspace{3mm}
   \textbf{Próxima sesión:} tasa de cambio instantánea (razones relacionadas) y esbozo de gráficas.
+\end{frame}
+
+
+\begin{frame}{Evaluación y trabajo posterior}
+  \small
+  \begin{evalbox}[Práctica del miércoles de la semana 10: PD6]
+    \textbf{Cobertura:} semana 10. \textbf{Naturaleza:} práctica dirigida en equipo, con retroalimentación inmediata.
+  \end{evalbox}
+  \begin{itemize}
+    \item \criterios
+    \item \declaracionia
+    \item \textbf{Portafolio:} guarde el producto de la actividad, la bitácora de metacognición y los ejercicios propuestos de esta sesión; son evidencia de progreso y base de la retroalimentación.
+  \end{itemize}
 \end{frame}
 
 \end{document}

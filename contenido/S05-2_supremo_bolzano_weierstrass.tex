@@ -17,13 +17,33 @@
     \item Enunciar y aplicar el \resaltar{teorema de Bolzano} y el \resaltar{teorema del valor intermedio}; método de bisección.
     \item Enunciar y aplicar el \resaltar{teorema de Weierstrass} (valores extremos).
   \end{enumerate}
-  \begin{block}{Plan (2 horas)}
+  \vspace{1mm}
+  {\small\textbf{Competencia 2 del sílabo:} Evalúa propiedades de límites y continuidad y su utilidad en aplicaciones de ciencia e ingeniería.}
+  \begin{block}{Plan (2 horas; incluye verificación previa de 5 min)}
     \begin{tabular}{ll}
       0:00 -- 0:35 & Cotas, supremo e ínfimo. Axioma del supremo\\
       0:35 -- 1:10 & Teorema de Bolzano y del valor intermedio. Bisección\\
       1:10 -- 1:40 & Teorema de Weierstrass. Importancia de las hipótesis\\
-      1:40 -- 2:00 & Ejercicios y resumen
+      1:40 -- 2:00 & Actividad colaborativa, resumen y cierre metacognitivo
     \end{tabular}
+  \end{block}
+\end{frame}
+
+\begin{frame}{Aula invertida: preparación y verificación}
+  \small
+  \begin{previa}[antes de la sesión]
+    \begin{enumerate}
+      \item Lea sobre cotas, supremo e ínfimo y los teoremas de Bolzano y Weierstrass.
+      \item Halle $\sup$ e $\inf$ de $\{1/n:n\in\N\}$ y de $(0,1)$.
+      \item Pregunta guía: ¿qué falla en Bolzano si la función no es continua?
+    \end{enumerate}
+  \end{previa}
+  \begin{block}{Verificación al inicio (5 min, en pares)}
+    \begin{enumerate}
+      \item ¿Tiene máximo el conjunto $(0,1)$? ¿Y supremo?
+      \item Enuncie las hipótesis del teorema de Bolzano.
+    \end{enumerate}
+    Los pares discuten y votan; el docente aclara solo lo que genera dudas y ajusta el ritmo de la sesión.
   \end{block}
 \end{frame}
 
@@ -267,6 +287,18 @@
   \end{ejemplo}
 \end{frame}
 
+\begin{frame}{Actividad colaborativa: Bisección en Python}
+  \small
+  \begin{activa}[Aprendizaje basado en la experiencia]
+    Demuestre que $\cos x=x$ tiene una solución en $[0,1]$. Luego \textbf{programe} (Python u hoja de cálculo) el método de bisección, haga 10 iteraciones, estime la raíz y acote el error con $\frac{b-a}{2^n}$. Compare con la solución de un CAS.
+  \end{activa}
+  \begin{itemize}
+    \item \textbf{Organización:} equipos de 3 a 4 con roles rotativos (coordinador, redactor, verificador, portavoz); 12--15 minutos.
+    \item \textbf{Producto:} Código, tabla de iteraciones y justificación de la cota.
+    \item \textbf{Retroalimentación:} el docente recorre los equipos, hace preguntas y no da la solución hasta la puesta en común.
+  \end{itemize}
+\end{frame}
+
 \section{Ejercicios}
 
 \begin{frame}{Ejercicios propuestos}
@@ -287,6 +319,26 @@
   \end{ejercicio}
 \end{frame}
 
+\begin{frame}{Metacognición y uso responsable de la IA}
+  \small
+  \begin{columns}[t]
+    \begin{column}{0.5\textwidth}
+      \begin{metacog}[cierre, 3 min]
+        \begin{enumerate}
+          \metacomun
+          \item ¿Puedo explicar por qué la bisección converge sin invocar al código? Escríbalo.
+        \end{enumerate}
+      \end{metacog}
+    \end{column}
+    \begin{column}{0.5\textwidth}
+      \begin{iabox}
+        Pida a una IA el código de bisección. Léalo línea por línea, pruébelo con una función de raíz conocida e indique qué cambió.\\[2pt]
+        \textit{Regla:} primero intente usted; luego use la herramienta para contrastar, nunca para sustituir su razonamiento. Anote el cambio en su bitácora.
+      \end{iabox}
+    \end{column}
+  \end{columns}
+\end{frame}
+
 \begin{frame}{Resumen}
   \begin{itemize}
     \item $\sup A$: menor cota superior; si pertenece a $A$, es el máximo. Axioma del supremo: $\R$ es completo.
@@ -297,6 +349,19 @@
   \end{itemize}
   \vspace{3mm}
   \textbf{Próxima sesión:} la derivada; rectas tangente y normal.
+\end{frame}
+
+
+\begin{frame}{Evaluación y trabajo posterior}
+  \small
+  \begin{evalbox}[Práctica del miércoles de la semana 5: PD3]
+    \textbf{Cobertura:} semanas 4 y 5. \textbf{Naturaleza:} práctica dirigida en equipo, con retroalimentación inmediata.
+  \end{evalbox}
+  \begin{itemize}
+    \item \criterios
+    \item \declaracionia
+    \item \textbf{Portafolio:} guarde el producto de la actividad, la bitácora de metacognición y los ejercicios propuestos de esta sesión; son evidencia de progreso y base de la retroalimentación.
+  \end{itemize}
 \end{frame}
 
 \end{document}

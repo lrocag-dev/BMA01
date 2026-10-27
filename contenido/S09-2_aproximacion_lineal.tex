@@ -17,14 +17,34 @@
     \item Obtener aproximaciones clásicas de la física ($\sen\theta\approx\theta$, $(1+x)^k\approx1+kx$).
     \item Aplicar la linealización para resolver ecuaciones: \resaltar{método de Newton}.
   \end{enumerate}
-  \begin{block}{Plan (2 horas)}
+  \vspace{1mm}
+  {\small\textbf{Competencia 3 del sílabo:} Aplica la derivada y su utilidad en problemas de ciencia e ingeniería.}
+  \begin{block}{Plan (2 horas; incluye verificación previa de 5 min)}
     \begin{tabular}{ll}
       0:00 -- 0:30 & Linealización: idea geométrica y ejemplos numéricos\\
       0:30 -- 1:00 & Diferenciales y propagación de errores\\
       1:00 -- 1:20 & Aproximaciones en física\\
       1:20 -- 1:45 & Método de Newton\\
-      1:45 -- 2:00 & Ejercicios y resumen
+      1:45 -- 2:00 & Actividad colaborativa, resumen y cierre metacognitivo
     \end{tabular}
+  \end{block}
+\end{frame}
+
+\begin{frame}{Aula invertida: preparación y verificación}
+  \small
+  \begin{previa}[antes de la sesión]
+    \begin{enumerate}
+      \item Lea sobre linealización, diferenciales y el método de Newton.
+      \item Calcule la linealización de $f(x)=\sqrt x$ en $a=25$.
+      \item Pregunta guía: ¿cuándo es confiable la aproximación lineal?
+    \end{enumerate}
+  \end{previa}
+  \begin{block}{Verificación al inicio (5 min, en pares)}
+    \begin{enumerate}
+      \item Escriba la linealización $L(x)$ de $f$ en $a$.
+      \item ¿Cuánto es $df$ si $f(x)=x^2$?
+    \end{enumerate}
+    Los pares discuten y votan; el docente aclara solo lo que genera dudas y ajusta el ritmo de la sesión.
   \end{block}
 \end{frame}
 
@@ -234,6 +254,18 @@
   \end{idea}
 \end{frame}
 
+\begin{frame}{Actividad colaborativa: Estimación sin calculadora}
+  \small
+  \begin{activa}[Trabajo colaborativo]
+    Estime con linealización $\sqrt{26}$, $\sqrt[3]{8.1}$, $\ln 1.05$ y $\sen 31^\circ$. Luego calcule el \textbf{error relativo} con una calculadora y explique por qué unas aproximaciones son mejores. Además: el radio de una esfera mide $10\pm0.1$ cm; estime el error en el volumen con diferenciales.
+  \end{activa}
+  \begin{itemize}
+    \item \textbf{Organización:} equipos de 3 a 4 con roles rotativos (coordinador, redactor, verificador, portavoz); 12--15 minutos.
+    \item \textbf{Producto:} Tabla de estimaciones, errores y propagación de error.
+    \item \textbf{Retroalimentación:} el docente recorre los equipos, hace preguntas y no da la solución hasta la puesta en común.
+  \end{itemize}
+\end{frame}
+
 \section{Ejercicios}
 
 \begin{frame}{Ejercicios propuestos}
@@ -251,6 +283,26 @@
   \end{ejercicio}
 \end{frame}
 
+\begin{frame}{Metacognición y uso responsable de la IA}
+  \small
+  \begin{columns}[t]
+    \begin{column}{0.5\textwidth}
+      \begin{metacog}[cierre, 3 min]
+        \begin{enumerate}
+          \metacomun
+          \item ¿Cómo decido qué punto $a$ elegir para linealizar? ¿Qué criterio uso?
+        \end{enumerate}
+      \end{metacog}
+    \end{column}
+    \begin{column}{0.5\textwidth}
+      \begin{iabox}
+        Pida a una IA estimar $\sen 31^\circ$ por linealización. Revise si usó radianes y el punto base correcto.\\[2pt]
+        \textit{Regla:} primero intente usted; luego use la herramienta para contrastar, nunca para sustituir su razonamiento. Anote el cambio en su bitácora.
+      \end{iabox}
+    \end{column}
+  \end{columns}
+\end{frame}
+
 \begin{frame}{Resumen}
   \begin{itemize}
     \item $L(x)=f(a)+f'(a)(x-a)$: la recta tangente aproxima $f$ cerca de $a$.
@@ -260,6 +312,19 @@
   \end{itemize}
   \vspace{3mm}
   \textbf{Próxima sesión:} derivadas de funciones inversas (trigonométricas e hiperbólicas inversas).
+\end{frame}
+
+
+\begin{frame}{Evaluación y trabajo posterior}
+  \small
+  \begin{evalbox}[Práctica del miércoles de la semana 9: PD5]
+    \textbf{Cobertura:} semanas 7 y 9. \textbf{Naturaleza:} práctica dirigida en equipo, con retroalimentación inmediata.
+  \end{evalbox}
+  \begin{itemize}
+    \item \criterios
+    \item \declaracionia
+    \item \textbf{Portafolio:} guarde el producto de la actividad, la bitácora de metacognición y los ejercicios propuestos de esta sesión; son evidencia de progreso y base de la retroalimentación.
+  \end{itemize}
 \end{frame}
 
 \end{document}

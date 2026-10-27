@@ -17,14 +17,34 @@
     \item Usar polinomios de Taylor para \resaltar{aproximar valores} y \resaltar{calcular límites}.
     \item Obtener nuevos polinomios por sustitución, derivación y productos.
   \end{enumerate}
-  \begin{block}{Plan (2 horas)}
+  \vspace{1mm}
+  {\small\textbf{Competencia 4 del sílabo:} Evalúa la aproximación con polinomios de Taylor y la utilidad de otros sistemas de referencia.}
+  \begin{block}{Plan (2 horas; incluye verificación previa de 5 min)}
     \begin{tabular}{ll}
       0:00 -- 0:20 & De la aproximación lineal a la cuadrática\\
       0:20 -- 0:50 & Definición y construcción. Polinomios de Maclaurin básicos\\
       0:50 -- 1:20 & Gráficas y aproximaciones numéricas\\
       1:20 -- 1:45 & Operaciones con polinomios de Taylor; cálculo de límites\\
-      1:45 -- 2:00 & Ejercicios y resumen
+      1:45 -- 2:00 & Actividad colaborativa, resumen y cierre metacognitivo
     \end{tabular}
+  \end{block}
+\end{frame}
+
+\begin{frame}{Aula invertida: preparación y verificación}
+  \small
+  \begin{previa}[antes de la sesión]
+    \begin{enumerate}
+      \item Lea la definición del polinomio de Taylor y de Maclaurin.
+      \item Escriba el polinomio de Maclaurin de grado 3 de $e^x$.
+      \item Pregunta guía: ¿qué información de $f$ en $a$ usa el polinomio de grado $n$?
+    \end{enumerate}
+  \end{previa}
+  \begin{block}{Verificación al inicio (5 min, en pares)}
+    \begin{enumerate}
+      \item ¿Cuánto es $P_2$ de $\cos x$ en $0$?
+      \item ¿Qué relación hay entre $P_1$ y la recta tangente?
+    \end{enumerate}
+    Los pares discuten y votan; el docente aclara solo lo que genera dudas y ajusta el ritmo de la sesión.
   \end{block}
 \end{frame}
 
@@ -201,6 +221,18 @@
   \small Notación: ``$\cdots$'' denota términos de orden superior, que divididos por la potencia del denominador tienden a $0$.
 \end{frame}
 
+\begin{frame}{Actividad colaborativa: ¿Hasta dónde sirve el polinomio?}
+  \small
+  \begin{activa}[Aprendizaje basado en la experiencia]
+    En Python o GeoGebra grafique $\sen x$ junto con $P_1,P_3,P_5,P_7$ en $[-2\pi,2\pi]$. \textbf{Investigue}: ¿hasta qué $|x|$ el error es menor que $0.01$ para cada grado? Concluya cómo crece el intervalo útil con el grado.
+  \end{activa}
+  \begin{itemize}
+    \item \textbf{Organización:} equipos de 3 a 4 con roles rotativos (coordinador, redactor, verificador, portavoz); 12--15 minutos.
+    \item \textbf{Producto:} Gráficas, tabla de errores por grado y conclusión.
+    \item \textbf{Retroalimentación:} el docente recorre los equipos, hace preguntas y no da la solución hasta la puesta en común.
+  \end{itemize}
+\end{frame}
+
 \section{Ejercicios}
 
 \begin{frame}{Ejercicios propuestos}
@@ -219,6 +251,26 @@
   \end{ejercicio}
 \end{frame}
 
+\begin{frame}{Metacognición y uso responsable de la IA}
+  \small
+  \begin{columns}[t]
+    \begin{column}{0.5\textwidth}
+      \begin{metacog}[cierre, 3 min]
+        \begin{enumerate}
+          \metacomun
+          \item ¿Qué relación observo entre el grado y la calidad de la aproximación? ¿Qué me falta para demostrarla?
+        \end{enumerate}
+      \end{metacog}
+    \end{column}
+    \begin{column}{0.5\textwidth}
+      \begin{iabox}
+        Pida a una IA el polinomio de Taylor de $\ln x$ en $a=1$ hasta grado 4. Compare coeficientes con los que obtiene derivando.\\[2pt]
+        \textit{Regla:} primero intente usted; luego use la herramienta para contrastar, nunca para sustituir su razonamiento. Anote el cambio en su bitácora.
+      \end{iabox}
+    \end{column}
+  \end{columns}
+\end{frame}
+
 \begin{frame}{Resumen}
   \begin{itemize}
     \item $T_n(x)=\sum_{k=0}^n\frac{f^{(k)}(a)}{k!}(x-a)^k$: coincide con $f$ en $a$ hasta la derivada $n$.
@@ -229,6 +281,19 @@
   \end{itemize}
   \vspace{3mm}
   \textbf{Próxima sesión:} el residuo de Taylor y la estimación del error.
+\end{frame}
+
+
+\begin{frame}{Evaluación y trabajo posterior}
+  \small
+  \begin{evalbox}[Práctica del miércoles de la semana 12: PD7]
+    \textbf{Cobertura:} semanas 11 y 12. \textbf{Naturaleza:} práctica dirigida en equipo, con retroalimentación inmediata.
+  \end{evalbox}
+  \begin{itemize}
+    \item \criterios
+    \item \declaracionia
+    \item \textbf{Portafolio:} guarde el producto de la actividad, la bitácora de metacognición y los ejercicios propuestos de esta sesión; son evidencia de progreso y base de la retroalimentación.
+  \end{itemize}
 \end{frame}
 
 \end{document}

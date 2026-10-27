@@ -1,3 +1,6 @@
+# Curso de Calculo Diferencial (BMA01)
+Dirigido a estudiantes de pregrado de ciencias e ingeniería
+
 # El Modelo Didáctico
 ## El aprendizaje activo como orientación central
 El modelo adopta el aprendizaje activo como su orientación didáctica central: el estudiante construye, cuestiona, aplica y comunica el conocimiento; el docente diseña las condiciones para que ese proceso ocurra con rigor, intencionalidad, orientación pedagógica en escenarios de complejidad creciente y niveles progresivos de autonomía. 

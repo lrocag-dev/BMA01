@@ -17,13 +17,33 @@
     \item Hallar las ecuaciones de las \resaltar{rectas tangente y normal}.
     \item Reconocer tangentes horizontales y verticales.
   \end{enumerate}
-  \begin{block}{Plan (2 horas)}
+  \vspace{1mm}
+  {\small\textbf{Competencia 3 del sílabo:} Aplica la derivada y su utilidad en problemas de ciencia e ingeniería.}
+  \begin{block}{Plan (2 horas; incluye verificación previa de 5 min)}
     \begin{tabular}{ll}
       0:00 -- 0:20 & Dos problemas: tangente y velocidad\\
       0:20 -- 1:00 & Definición de derivada; cálculo por definición\\
       1:00 -- 1:40 & Rectas tangente y normal. Tangentes desde un punto exterior\\
-      1:40 -- 2:00 & Ejercicios y resumen
+      1:40 -- 2:00 & Actividad colaborativa, resumen y cierre metacognitivo
     \end{tabular}
+  \end{block}
+\end{frame}
+
+\begin{frame}{Aula invertida: preparación y verificación}
+  \small
+  \begin{previa}[antes de la sesión]
+    \begin{enumerate}
+      \item Lea la definición de derivada y de recta tangente.
+      \item Calcule el cociente incremental de $f(x)=x^2$ en $a=1$ para $h=0.1,\,0.01$.
+      \item Pregunta guía: ¿qué relación hay entre la pendiente de la secante y la de la tangente?
+    \end{enumerate}
+  \end{previa}
+  \begin{block}{Verificación al inicio (5 min, en pares)}
+    \begin{enumerate}
+      \item Escriba la definición de $f'(a)$.
+      \item Halle la ecuación de la tangente a $y=x^2$ en $x=1$.
+    \end{enumerate}
+    Los pares discuten y votan; el docente aclara solo lo que genera dudas y ajusta el ritmo de la sesión.
   \end{block}
 \end{frame}
 
@@ -253,6 +273,18 @@
   \end{columns}
 \end{frame}
 
+\begin{frame}{Actividad colaborativa: De la secante a la tangente}
+  \small
+  \begin{activa}[Aprendizaje basado en la experiencia]
+    La altura de una pelota es $s(t)=-4.9t^2+20t$ m. Con una hoja de cálculo estime $s'(1)$ con $h=0.1,0.01,0.001$ y compare con la definición. En GeoGebra construya la recta tangente con un deslizador en $t$; halle el instante en que es horizontal e \textbf{interprete} físicamente.
+  \end{activa}
+  \begin{itemize}
+    \item \textbf{Organización:} equipos de 3 a 4 con roles rotativos (coordinador, redactor, verificador, portavoz); 12--15 minutos.
+    \item \textbf{Producto:} Tabla de cocientes incrementales, construcción en GeoGebra e interpretación.
+    \item \textbf{Retroalimentación:} el docente recorre los equipos, hace preguntas y no da la solución hasta la puesta en común.
+  \end{itemize}
+\end{frame}
+
 \section{Ejercicios}
 
 \begin{frame}{Ejercicios propuestos}
@@ -271,6 +303,26 @@
   \end{ejercicio}
 \end{frame}
 
+\begin{frame}{Metacognición y uso responsable de la IA}
+  \small
+  \begin{columns}[t]
+    \begin{column}{0.5\textwidth}
+      \begin{metacog}[cierre, 3 min]
+        \begin{enumerate}
+          \metacomun
+          \item ¿Qué diferencia hay entre velocidad media e instantánea? Dé un ejemplo propio.
+        \end{enumerate}
+      \end{metacog}
+    \end{column}
+    \begin{column}{0.5\textwidth}
+      \begin{iabox}
+        Pida a una IA la derivada por definición de $f(x)=1/\sqrt x$. Verifique cada paso algebraico y detecte si omite alguna condición.\\[2pt]
+        \textit{Regla:} primero intente usted; luego use la herramienta para contrastar, nunca para sustituir su razonamiento. Anote el cambio en su bitácora.
+      \end{iabox}
+    \end{column}
+  \end{columns}
+\end{frame}
+
 \begin{frame}{Resumen}
   \begin{itemize}
     \item $f'(a)=\lim_{h\to0}\frac{f(a+h)-f(a)}{h}$: pendiente de la tangente y razón de cambio instantánea.
@@ -281,6 +333,19 @@
   \end{itemize}
   \vspace{3mm}
   \textbf{Próxima sesión:} reglas de derivación, derivadas laterales e interpretación geométrica.
+\end{frame}
+
+
+\begin{frame}{Evaluación y trabajo posterior}
+  \small
+  \begin{evalbox}[Práctica del miércoles de la semana 6: PD4]
+    \textbf{Cobertura:} semana 6. \textbf{Naturaleza:} práctica dirigida en equipo, con retroalimentación inmediata. Cierra la materia del \textbf{Examen Parcial} (semanas 1--6).
+  \end{evalbox}
+  \begin{itemize}
+    \item \criterios
+    \item \declaracionia
+    \item \textbf{Portafolio:} guarde el producto de la actividad, la bitácora de metacognición y los ejercicios propuestos de esta sesión; son evidencia de progreso y base de la retroalimentación.
+  \end{itemize}
 \end{frame}
 
 \end{document}

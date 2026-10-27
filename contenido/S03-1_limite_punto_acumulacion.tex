@@ -17,14 +17,34 @@
     \item Enunciar la definición \resaltar{$\varepsilon$--$\delta$} de límite y usarla en demostraciones.
     \item Probar la \resaltar{unicidad} del límite y reconocer límites que no existen.
   \end{enumerate}
-  \begin{block}{Plan (2 horas)}
+  \vspace{1mm}
+  {\small\textbf{Competencia 2 del sílabo:} Evalúa propiedades de límites y continuidad y su utilidad en aplicaciones de ciencia e ingeniería.}
+  \begin{block}{Plan (2 horas; incluye verificación previa de 5 min)}
     \begin{tabular}{ll}
       0:00 -- 0:20 & Idea intuitiva: tablas y gráficas\\
       0:20 -- 0:40 & Vecindades y puntos de acumulación\\
       0:40 -- 1:30 & Definición $\varepsilon$--$\delta$: interpretación y demostraciones\\
       1:30 -- 1:45 & Unicidad. Límites que no existen\\
-      1:45 -- 2:00 & Ejercicios y resumen
+      1:45 -- 2:00 & Actividad colaborativa, resumen y cierre metacognitivo
     \end{tabular}
+  \end{block}
+\end{frame}
+
+\begin{frame}{Aula invertida: preparación y verificación}
+  \small
+  \begin{previa}[antes de la sesión]
+    \begin{enumerate}
+      \item Lea la definición $\varepsilon$--$\delta$ y mire un video corto sobre vecindades reducidas.
+      \item Complete: $|2x-1-3|<\varepsilon$ se cumple si $|x-2|<\ \underline{\hspace{1cm}}$.
+      \item Pregunta guía: ¿puede un límite existir si $f$ no está definida en el punto?
+    \end{enumerate}
+  \end{previa}
+  \begin{block}{Verificación al inicio (5 min, en pares)}
+    \begin{enumerate}
+      \item ¿Cuál es el límite de $x+1$ cuando $x\to2$?
+      \item ¿$0$ es punto de acumulación de $\{1/n:n\in\N\}$?
+    \end{enumerate}
+    Los pares discuten y votan; el docente aclara solo lo que genera dudas y ajusta el ritmo de la sesión.
   \end{block}
 \end{frame}
 
@@ -284,6 +304,18 @@
   \end{columns}
 \end{frame}
 
+\begin{frame}{Actividad colaborativa: Duelo $\varepsilon$--$\delta$}
+  \small
+  \begin{activa}[Trabajo colaborativo (reto y defensa)]
+    El equipo A propone un $\varepsilon$ para $\lim_{x\to2}(3x-1)=5$; el equipo B halla un $\delta$ y lo justifica. Luego intercambian roles con $\lim_{x\to1}x^2=1$ (acotando $|x+1|$). Cada equipo escribe la demostración completa y el otro la \textbf{revisa con la lista}: ¿$\delta$ depende de $\varepsilon$? ¿Se acotó el factor extra?
+  \end{activa}
+  \begin{itemize}
+    \item \textbf{Organización:} equipos de 3 a 4 con roles rotativos (coordinador, redactor, verificador, portavoz); 12--15 minutos.
+    \item \textbf{Producto:} Dos demostraciones revisadas por pares.
+    \item \textbf{Retroalimentación:} el docente recorre los equipos, hace preguntas y no da la solución hasta la puesta en común.
+  \end{itemize}
+\end{frame}
+
 \section{Ejercicios}
 
 \begin{frame}{Ejercicios propuestos}
@@ -302,6 +334,26 @@
   \end{ejercicio}
 \end{frame}
 
+\begin{frame}{Metacognición y uso responsable de la IA}
+  \small
+  \begin{columns}[t]
+    \begin{column}{0.5\textwidth}
+      \begin{metacog}[cierre, 3 min]
+        \begin{enumerate}
+          \metacomun
+          \item ¿Entiendo por qué $\delta$ depende de $\varepsilon$ y no al revés? Escriba la razón en una frase.
+        \end{enumerate}
+      \end{metacog}
+    \end{column}
+    \begin{column}{0.5\textwidth}
+      \begin{iabox}
+        Pida a una IA una demostración $\varepsilon$--$\delta$ de $\lim_{x\to3}x^2=9$. Ubique el paso donde se acota $|x+3|$ y evalúe si es válido.\\[2pt]
+        \textit{Regla:} primero intente usted; luego use la herramienta para contrastar, nunca para sustituir su razonamiento. Anote el cambio en su bitácora.
+      \end{iabox}
+    \end{column}
+  \end{columns}
+\end{frame}
+
 \begin{frame}{Resumen}
   \begin{itemize}
     \item El límite describe el comportamiento \textbf{cerca} de $a$, no en $a$.
@@ -312,6 +364,19 @@
   \end{itemize}
   \vspace{3mm}
   \textbf{Próxima sesión:} aritmética de límites y límites laterales.
+\end{frame}
+
+
+\begin{frame}{Evaluación y trabajo posterior}
+  \small
+  \begin{evalbox}[Práctica del miércoles de la semana 3: PD2]
+    \textbf{Cobertura:} semana 3. \textbf{Naturaleza:} práctica dirigida en equipo, con retroalimentación inmediata.
+  \end{evalbox}
+  \begin{itemize}
+    \item \criterios
+    \item \declaracionia
+    \item \textbf{Portafolio:} guarde el producto de la actividad, la bitácora de metacognición y los ejercicios propuestos de esta sesión; son evidencia de progreso y base de la retroalimentación.
+  \end{itemize}
 \end{frame}
 
 \end{document}
